@@ -8,7 +8,8 @@ public class Book {
     private Author author;
     private Date publishDate;
     private int pageCount;
-    private double basicOrderPrice;
+    private double basicOrderPricePerDay;
+    private boolean isOrdered = false;
 
     public Book(int ID,String title, Author author, Date publishDate, int pageCount, double basicOrderPrice) {
         this.ID = ID;
@@ -16,7 +17,7 @@ public class Book {
         this.author = author;
         this.publishDate = publishDate;
         this.pageCount = pageCount;
-        this.basicOrderPrice = basicOrderPrice;
+        this.basicOrderPricePerDay = basicOrderPrice;
     }
 
     public int getID() {
@@ -24,7 +25,7 @@ public class Book {
     }
 
     public double getBasicOrderPrice() {
-        return basicOrderPrice;
+        return basicOrderPricePerDay;
     }
 
     public String getTitle() {
@@ -41,5 +42,13 @@ public class Book {
 
     public int getPageCount() {
         return pageCount;
+    }
+
+    public boolean isOrdered() {
+        return isOrdered;
+    }
+
+    public void setOrdered(boolean ordered) {
+        isOrdered = ordered;
     }
 }

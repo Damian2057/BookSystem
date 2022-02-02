@@ -5,7 +5,7 @@ import org.example.model.Client.types.Premium;
 import org.example.model.Client.types.Type;
 
 public class Client {
-    private int ID;
+    private final int ID;
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -22,6 +22,10 @@ public class Client {
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         Address = address;
+    }
+
+    public double getReduction() {
+        return type.getReduction();
     }
 
     public int getID() {
@@ -78,5 +82,13 @@ public class Client {
 
     public void setAddress(String address) {
         Address = address;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

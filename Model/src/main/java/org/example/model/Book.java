@@ -3,8 +3,8 @@ package org.example.model;
 import java.util.Date;
 
 public class Book {
-    private int ID;
-    private String title;
+    private final int ID;
+    private final String title;
     private Author author;
     private Date publishDate;
     private int pageCount;

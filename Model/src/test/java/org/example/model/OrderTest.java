@@ -50,7 +50,7 @@ class OrderTest {
     }
 
     @Test
-    void removeBookToOrder() {
+    void removeBookToOrder() throws Throwable {
         Book book2 = new Book(1,"Titanic", new Author(1,"xyz", "zyx"
                 , new Date(2001,10,15))
                 ,new Date(2015,10,16),200,51.50);
@@ -60,7 +60,7 @@ class OrderTest {
         Order orderByPreviousOrder = new Order(client, LocalDate.now().plusDays(3),LocalDate.now().plusDays(5));
         orderByPreviousOrder.addBookFromOrder(book2);
         assertEquals(orderByPreviousOrder.getCountOfOrderedBooks(),1);
-        orderByPreviousOrder.removeBookFromOrder(book2);
+        orderByPreviousOrder.removeBookFromOrder(1);
         assertEquals(orderByPreviousOrder.getCountOfOrderedBooks(),0);
 
         orderByPreviousOrder.addBookFromOrder(book2);
@@ -70,7 +70,7 @@ class OrderTest {
         orderActual.addBookFromOrder(book3);
         assertEquals(orderActual.getCountOfOrderedBooks(),1);
         orderActual.setStartReservationdate(LocalDate.now().minusDays(5));
-        orderActual.removeBookFromOrder(book3);
+        orderActual.removeBookFromOrder(1);
         assertEquals(orderActual.getCountOfOrderedBooks(),1);
 
         orderActual.addBookFromOrder(book3);
@@ -80,7 +80,7 @@ class OrderTest {
         assertEquals(orderByPreviousOrder.getCountOfOrderedBooks(),1);
 
         orderActual.setStartReservationdate(LocalDate.now().plusDays(2));
-        orderActual.removeBookFromOrder(book3);
+        orderActual.removeBookFromOrder(1);
         assertEquals(orderActual.getCountOfOrderedBooks(),0);
 
         Order orderOLD = new Order(client, LocalDate.now().plusDays(2),LocalDate.now().plusDays(5));
@@ -88,7 +88,7 @@ class OrderTest {
         assertEquals(orderOLD.getCountOfOrderedBooks(), 1);
         orderOLD.setEndReservationDate(LocalDate.now().minusDays(5));
         orderOLD.setStartReservationdate(LocalDate.now().minusDays(3));
-        orderOLD.removeBookFromOrder(book3);
+        orderOLD.removeBookFromOrder(1);
         assertEquals(orderOLD.getCountOfOrderedBooks(), 1);
 
     }

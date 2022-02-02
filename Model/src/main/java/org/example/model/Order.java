@@ -1,6 +1,8 @@
 package org.example.model;
 
 import org.example.model.Client.Client;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 
 public class Order {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private ArrayList<Book> books = new ArrayList<Book>();
     private Client client;
     private LocalDate  startReservationdate;
@@ -18,6 +21,9 @@ public class Order {
         this.client = client;
         this.startReservationdate = startReservationdate;
         this.endReservationDate = endReservationDate;
+        logger.info("Create Order, client ID: "+client.getID()+", SDate:"+startReservationdate+"" +
+                ", EDate:"+endReservationDate);
+
     }
 
     public int getCountOfOrderedBooks() {
@@ -29,6 +35,7 @@ public class Order {
     }
 
     public void setStartReservationdate(LocalDate startReservationdate) {
+        logger.info("Order SDate change to: " + startReservationdate);
         this.startReservationdate = startReservationdate;
     }
 
@@ -37,6 +44,7 @@ public class Order {
     }
 
     public void setEndReservationDate(LocalDate endReservationDate) {
+        logger.info("Order EDate change to: " + endReservationDate);
         this.endReservationDate = endReservationDate;
     }
 
@@ -44,17 +52,24 @@ public class Order {
         if(!obj.isOrdered()) {
             int period = Period.between(LocalDate.now(),startReservationdate).getDays();
             if(period >= 0) {
+                logger.info("Book ID:"+ obj.getID()+" successfully added");
                 books.add(obj);
                 obj.setOrdered(true);
             }
+        } else {
+            logger.error("Book ID:"+ obj.getID()+" cannot be added");
         }
     }
 
-    public void removeBookFromOrder(Book obj) {
+    public void removeBookFromOrder(int objID) {
         int period = Period.between(LocalDate.now(), startReservationdate).getDays();
         if(period >= 0) {
-            if(books.remove(obj)){
-                obj.setOrdered(false);
+            for (int i = 0; i < books.size(); i++) {
+                if(objID == books.get(i).getID()) {
+                    books.get(i).setOrdered(false);
+                    logger.info("Book ID:"+ objID+" successfully removed");
+                    books.remove(i);
+                }
             }
         }
     }
@@ -78,6 +93,7 @@ public class Order {
                 o.setOrdered(false);
             }
         }
+        logger.info("Order successfully removed, amount to pay: "+ sum*client.getReduction());
         realEndReservation = LocalDate.now();
         return sum*client.getReduction();
     }

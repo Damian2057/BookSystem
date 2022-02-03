@@ -7,7 +7,13 @@ import org.slf4j.LoggerFactory;
 
 public class ClientStorage extends Storage<Client>{
 
+    private String URL;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public ClientStorage(String URL) {
+        this.URL = URL;
+        initwithBase(URL);
+    }
 
     public Client getClient(int ID) throws Exception {
         for (int i = 0; i < getAllElementsFromStorage().size(); i++) {
@@ -31,6 +37,14 @@ public class ClientStorage extends Storage<Client>{
         }
         logger.error("Cannot Find Client with ID: "+ ID);
         throw new WrongBookIDException();
+    }
+
+    public int getTopID() {
+        if(getAllElementsFromStorage().isEmpty()) {
+            return 0;
+        } else {
+            return getAllElementsFromStorage().get(getAllElementsFromStorage().size()-1).getID();
+        }
     }
 
     @Override

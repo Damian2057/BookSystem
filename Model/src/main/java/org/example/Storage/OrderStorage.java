@@ -1,5 +1,6 @@
 package org.example.Storage;
 
+import org.example.Exceptions.Model.EmptyOrderList;
 import org.example.Exceptions.Model.WrongOrderIDException;
 import org.example.model.Order;
 import org.slf4j.Logger;
@@ -9,7 +10,13 @@ import java.util.ArrayList;
 
 public class OrderStorage extends Storage<Order>{
 
+    private String URL;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public OrderStorage(String URL) {
+        this.URL = URL;
+        initwithBase(URL);
+    }
 
     public Order getOrder(int ID) throws Exception {
         for (int i = 0; i < getAllElementsFromStorage().size(); i++) {
@@ -28,6 +35,11 @@ public class OrderStorage extends Storage<Order>{
                 temp.add(getAllElementsFromStorage().get(i));
             }
         }
+        if(temp.isEmpty()) {
+            logger.error("The given customer has no orders");
+            throw new EmptyOrderList();
+        }
+        logger.info("List of orders Complete");
         return temp;
     }
 

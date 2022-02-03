@@ -7,11 +7,13 @@ import org.slf4j.LoggerFactory;
 
 public class BookStorage extends Storage<Book> {
 
+    private String URL;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     public BookStorage(String URL) {
+        this.URL = URL;
         initwithBase(URL);
     }
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public Book getBook(int ID) throws Exception {
         for (int i = 0; i < getAllElementsFromStorage().size(); i++) {

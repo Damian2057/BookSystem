@@ -17,7 +17,7 @@ public abstract class Storage<T> implements StorageInterface<T> {
     }
     @Override
     public void initwithBase(String URL) {
-        //elementCollection =
+        //elementCollection = connect with dataBASE
     }
 
 }

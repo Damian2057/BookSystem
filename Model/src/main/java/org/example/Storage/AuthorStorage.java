@@ -7,7 +7,13 @@ import org.slf4j.LoggerFactory;
 
 public class AuthorStorage extends Storage<Author>{
 
+    private String URL;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public AuthorStorage(String URL) {
+        this.URL = URL;
+        initwithBase(URL);
+    }
 
     public Author getAuthor(int ID) throws Exception {
         for (int i = 0; i < getAllElementsFromStorage().size(); i++) {

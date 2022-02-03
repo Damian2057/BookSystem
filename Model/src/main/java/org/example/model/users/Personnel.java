@@ -1,5 +1,7 @@
 package org.example.model.users;
 
+import org.example.Storage.MainStorage;
+
 public abstract class Personnel {
 
     private String nickName;
@@ -12,6 +14,10 @@ public abstract class Personnel {
         this.password = password;
         this.ID = ID;
         this.permLevel = permLevel;
+    }
+
+    public void addClient(MainStorage mainStorage,String firstName, String lastName, String phoneNumber, String email, String address) {
+        mainStorage.addClient(firstName,lastName,phoneNumber,email,address);
     }
 
 

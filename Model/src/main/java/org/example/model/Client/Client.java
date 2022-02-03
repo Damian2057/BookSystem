@@ -15,7 +15,8 @@ public class Client {
     private int OrderCount = 0;
     private Type type = new Normal();
 
-    public Client(int ID,String firstName, String lastName, String phoneNumber, String emailAddress, String address) {
+    public Client(int ID,String firstName, String lastName, String phoneNumber
+            , String emailAddress, String address) {
         this.ID = ID;
         this.firstName = firstName;
         this.lastName = lastName;

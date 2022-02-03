@@ -18,11 +18,9 @@ class BookStorageTest {
         BookStorage bookStorage = new BookStorage("test");
 
         bookStorage.addElement(book);
-        System.out.println(bookStorage.getCountOfElements());
 
-        ClientStorage clientStorage = new ClientStorage();
-        System.out.println(clientStorage.getCountOfElements());
-        System.out.println(bookStorage.getBook(1).getTitle());
+        ClientStorage clientStorage = new ClientStorage("test");
+        System.out.println(bookStorage.getAllElementsFromStorage().get(bookStorage.getAllElementsFromStorage().size()-1));
 
     }
 }

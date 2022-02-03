@@ -7,6 +7,7 @@ import org.example.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainStorage {
@@ -45,6 +46,15 @@ public class MainStorage {
         clientStorage.addElement(new Client(clientStorage.getTopID()+1,firstName,lastName,phoneNumber,email,address));
     }
 
+    public void removeClient(int ID) {
+        clientStorage.removeElement(ID);
+    }
+
+    public Client getClient(int ID) throws Exception {
+        return clientStorage.getClient(ID);
+    }
+
+
     public void addAuthor(String firstName, String lastName, Date birthdate, Date deathDate) {
         if(deathDate == null) {
             authorStorage.addElement(new Author(authorStorage.getTopID()+1,firstName,lastName,birthdate));
@@ -54,13 +64,42 @@ public class MainStorage {
         }
     }
 
+    public Author getAuthor(int ID) throws Exception {
+        return authorStorage.getAuthor(ID);
+    }
+
     public void addBook(String title, Author author, Date publishDate, int pagecount, double price) {
         bookStorage.addElement(new Book(bookStorage.getTopID()+1, title, author, publishDate, pagecount, price));
+    }
+
+    public void removeBook(int ID) {
+        bookStorage.removeElement(ID);
+    }
+
+    public Book getBook(int ID) throws Exception {
+        return bookStorage.getBook(ID);
     }
 
     public void createOrder(Client client, LocalDate SDate, LocalDate EDate) {
         orderStorage.addElement(new Order(orderStorage.getTopID()+1,client, SDate, EDate));
     }
+
+    public void addBookToOrder(int OrderID, int bookID) throws Exception {
+        orderStorage.getOrder(OrderID).addBookToOrder(bookStorage.getBook(bookID));
+    }
+
+    public void removeBookFromOrder(int OrderID, int bookID) throws Exception {
+        orderStorage.getOrder(OrderID).removeBookFromOrder(bookID);
+    }
+
+    public Order getOrder(int ID) throws Exception {
+        return orderStorage.getOrder(ID);
+    }
+
+    public ArrayList<Order> getOrdersByClientID(int clientID) {
+        return  orderStorage.getOrdersByClientID(clientID);
+    }
+
 
 
 }

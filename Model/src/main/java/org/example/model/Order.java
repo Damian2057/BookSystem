@@ -11,19 +11,25 @@ import java.util.ArrayList;
 public class Order {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final int ID;
     private ArrayList<Book> books = new ArrayList<Book>();
     private Client client;
     private LocalDate  startReservationdate;
     private LocalDate  endReservationDate;
     private LocalDate  realEndReservation;
 
-    public Order(Client client, LocalDate startReservationdate, LocalDate endReservationDate) {
+    public Order(int ID, Client client, LocalDate startReservationdate, LocalDate endReservationDate) {
+        this.ID = ID;
         this.client = client;
         this.startReservationdate = startReservationdate;
         this.endReservationDate = endReservationDate;
         logger.info("Create Order, client ID: "+client.getID()+", SDate:"+startReservationdate+"" +
                 ", EDate:"+endReservationDate);
 
+    }
+
+    public int getClientID() {
+        return client.getID();
     }
 
     public int getCountOfOrderedBooks() {
@@ -98,4 +104,7 @@ public class Order {
         return sum*client.getReduction();
     }
 
+    public int getID() {
+        return 0;
+    }
 }

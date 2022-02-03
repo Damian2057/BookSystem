@@ -1,5 +1,6 @@
 package org.example.model;
 
+import org.example.Exceptions.Model.BookalreadyOrderedException;
 import org.example.Exceptions.Model.OrderTimeException;
 import org.example.Exceptions.Model.IncorrectOrderDateException;
 import org.example.model.Client.Client;
@@ -68,10 +69,13 @@ public class Order {
                 logger.info("Book ID:"+ obj.getID()+" successfully added");
                 books.add(obj);
                 obj.setOrdered(true);
+            } else {
+                logger.error("Book ID:"+ obj.getID()+" cannot be added");
+                throw new OrderTimeException();
             }
         } else {
-            logger.error("Book ID:"+ obj.getID()+" cannot be added");
-            throw new OrderTimeException();
+            logger.error("Book ID:"+ obj.getID()+" is already on loan");
+            throw new BookalreadyOrderedException();
         }
     }
 

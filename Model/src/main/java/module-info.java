@@ -22,8 +22,8 @@ module org.example.model {
     exports org.example.model.users;
     opens org.example.model.users;
 
-    exports org.example.Storage;
-    opens org.example.Storage;
+    exports org.example.dao.Storage;
+    opens org.example.dao.Storage;
 
     exports org.example.Exceptions;
     opens org.example.Exceptions;

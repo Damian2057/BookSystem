@@ -1,5 +1,6 @@
 package org.example.model;
 
+import org.example.Exceptions.Model.BookalreadyOrderedException;
 import org.example.Exceptions.Model.IncorrectOrderDateException;
 import org.example.Exceptions.Model.OrderException;
 import org.example.Exceptions.Model.OrderTimeException;
@@ -52,11 +53,11 @@ class OrderTest {
                 , new Date(2001,10,15))
                 ,new Date(2015,10,16),200,51.50);
 
-        orderByOldDate.addBookToOrder(book2);
+        assertThrows(OrderTimeException.class,()->orderByOldDate.addBookToOrder(book2));
         assertEquals(orderByOldDate.getCountOfOrderedBooks(),0);
 
         Order orderByOldDatebyActual = new Order(3,client, LocalDate.now().minusDays(5),LocalDate.now().plusDays(5));
-        orderByOldDate.addBookToOrder(book2);
+        assertThrows(OrderTimeException.class, ()->orderByOldDate.addBookToOrder(book2));
         assertEquals(orderByOldDate.getCountOfOrderedBooks(),0);
 
         Order orderByPreviousOrder = new Order(4,client, LocalDate.now().plusDays(3),LocalDate.now().plusDays(5));
@@ -90,10 +91,10 @@ class OrderTest {
         assertThrows(OrderTimeException.class,()->orderActual.removeBookFromOrder(1));
         assertEquals(orderActual.getCountOfOrderedBooks(),1);
 
-        assertThrows(OrderTimeException.class,()->orderActual.addBookToOrder(book3));
+        assertThrows(BookalreadyOrderedException.class,()->orderActual.addBookToOrder(book3));
         assertEquals(orderActual.getCountOfOrderedBooks(),1);
 
-        assertThrows(OrderTimeException.class,()->orderByPreviousOrder.addBookToOrder(book3));
+        assertThrows(BookalreadyOrderedException.class,()->orderByPreviousOrder.addBookToOrder(book3));
         assertEquals(orderByPreviousOrder.getCountOfOrderedBooks(),1);
 
         orderActual.setStartReservationdate(LocalDate.now().plusDays(2));

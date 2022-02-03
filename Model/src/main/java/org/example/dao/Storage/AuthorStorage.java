@@ -1,4 +1,4 @@
-package org.example.Storage;
+package org.example.dao.Storage;
 
 import org.example.Exceptions.Model.WrongAuthorExeption;
 import org.example.model.Author;

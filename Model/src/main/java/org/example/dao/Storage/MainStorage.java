@@ -1,4 +1,4 @@
-package org.example.Storage;
+package org.example.dao.Storage;
 
 import org.example.model.Author;
 import org.example.model.Book;

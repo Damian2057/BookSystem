@@ -1,6 +1,8 @@
 package org.example.model;
 
 import org.example.Exceptions.Model.IncorrectOrderDateException;
+import org.example.Exceptions.Model.OrderException;
+import org.example.Exceptions.Model.OrderTimeException;
 import org.example.model.Client.Client;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +41,7 @@ class OrderTest {
         order2.addBookToOrder(book);
         assertEquals(order2.getCountOfOrderedBooks(),1);
 
-        order2.addBookToOrder(book);
+        assertThrows(OrderException.class, ()->order2.addBookToOrder(book));
         assertEquals(order2.getCountOfOrderedBooks(),1);
     }
 
@@ -84,13 +86,14 @@ class OrderTest {
         orderActual.addBookToOrder(book3);
         assertEquals(orderActual.getCountOfOrderedBooks(),1);
         orderActual.setStartReservationdate(LocalDate.now().minusDays(5));
-        orderActual.removeBookFromOrder(1);
+
+        assertThrows(OrderTimeException.class,()->orderActual.removeBookFromOrder(1));
         assertEquals(orderActual.getCountOfOrderedBooks(),1);
 
-        orderActual.addBookToOrder(book3);
+        assertThrows(OrderTimeException.class,()->orderActual.addBookToOrder(book3));
         assertEquals(orderActual.getCountOfOrderedBooks(),1);
 
-        orderByPreviousOrder.addBookToOrder(book3);
+        assertThrows(OrderTimeException.class,()->orderByPreviousOrder.addBookToOrder(book3));
         assertEquals(orderByPreviousOrder.getCountOfOrderedBooks(),1);
 
         orderActual.setStartReservationdate(LocalDate.now().plusDays(2));
@@ -102,7 +105,7 @@ class OrderTest {
         assertEquals(orderOLD.getCountOfOrderedBooks(), 1);
         orderOLD.setEndReservationDate(LocalDate.now().minusDays(5));
         orderOLD.setStartReservationdate(LocalDate.now().minusDays(3));
-        orderOLD.removeBookFromOrder(1);
+        assertThrows(OrderTimeException.class,()->orderOLD.removeBookFromOrder(1));
         assertEquals(orderOLD.getCountOfOrderedBooks(), 1);
 
     }

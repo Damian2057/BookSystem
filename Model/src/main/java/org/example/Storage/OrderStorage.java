@@ -28,6 +28,14 @@ public class OrderStorage extends Storage<Order>{
         throw new WrongOrderIDException();
     }
 
+    public int getTopID() {
+        if(getAllElementsFromStorage().isEmpty()) {
+            return 0;
+        } else {
+            return getAllElementsFromStorage().get(getAllElementsFromStorage().size()-1).getID();
+        }
+    }
+
     public ArrayList<Order> getOrdersByClientID(int ID) {
         ArrayList<Order> temp = new ArrayList<>();
         for (int i = 0; i < getAllElementsFromStorage().size(); i++) {

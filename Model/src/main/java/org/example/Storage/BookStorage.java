@@ -38,6 +38,14 @@ public class BookStorage extends Storage<Book> {
         throw new WrongBookIDException();
     }
 
+    public int getTopID() {
+        if(getAllElementsFromStorage().isEmpty()) {
+            return 0;
+        } else {
+            return getAllElementsFromStorage().get(getAllElementsFromStorage().size()-1).getID();
+        }
+    }
+
     @Override
     public void addElement(Book obj) {
         getAllElementsFromStorage().add(obj);

@@ -25,6 +25,14 @@ public class AuthorStorage extends Storage<Author>{
         throw new WrongAuthorExeption();
     }
 
+    public int getTopID() {
+        if(getAllElementsFromStorage().isEmpty()) {
+            return 0;
+        } else {
+            return getAllElementsFromStorage().get(getAllElementsFromStorage().size()-1).getID();
+        }
+    }
+
     @Override
     public void addElement(Author obj) {
         getAllElementsFromStorage().add(obj);

@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.example.Exceptions.Model.OrderTimeException;
+import org.example.Exceptions.Model.IncorrectOrderDateException;
 import org.example.model.Client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +21,16 @@ public class Order {
     private LocalDate  realEndReservation;
 
     public Order(int ID, Client client, LocalDate startReservationdate, LocalDate endReservationDate) {
+
+        if(Period.between(startReservationdate,endReservationDate).getDays() < 0) {
+            throw new IncorrectOrderDateException();
+        }
+
         this.ID = ID;
         this.client = client;
         this.startReservationdate = startReservationdate;
         this.endReservationDate = endReservationDate;
-        logger.info("Create Order, client ID: "+client.getID()+", SDate:"+startReservationdate+"" +
+        logger.info("Create Order ID:"+ID+", client ID: "+client.getID()+", SDate:"+startReservationdate+"" +
                 ", EDate:"+endReservationDate);
 
     }
@@ -54,7 +61,7 @@ public class Order {
         this.endReservationDate = endReservationDate;
     }
 
-    public void addBookFromOrder(Book obj) {
+    public void addBookToOrder(Book obj) {
         if(!obj.isOrdered()) {
             int period = Period.between(LocalDate.now(),startReservationdate).getDays();
             if(period >= 0) {
@@ -64,6 +71,7 @@ public class Order {
             }
         } else {
             logger.error("Book ID:"+ obj.getID()+" cannot be added");
+            throw new OrderTimeException();
         }
     }
 
@@ -77,6 +85,8 @@ public class Order {
                     books.remove(i);
                 }
             }
+        } else {
+            throw new OrderTimeException();
         }
     }
 
@@ -105,6 +115,6 @@ public class Order {
     }
 
     public int getID() {
-        return 0;
+        return ID;
     }
 }

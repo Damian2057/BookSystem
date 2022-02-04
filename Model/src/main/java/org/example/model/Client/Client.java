@@ -23,6 +23,7 @@ public class Client {
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         Address = address;
+        setType();
     }
 
     public double getReduction() {

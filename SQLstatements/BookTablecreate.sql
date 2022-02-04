@@ -5,6 +5,7 @@ CREATE TABLE Books (
     publicationDate VARCHAR (30) NOT NULL,
     pageCount INTEGER NOT NULL,
     price DOUBLE NOT NULL,
+    isOrdered INTEGER NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (AuthorID) REFERENCES Authors(id)
 )

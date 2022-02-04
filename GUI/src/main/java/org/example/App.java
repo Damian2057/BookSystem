@@ -25,15 +25,18 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.debug("Starting Application...");
+        Author author = new Author(1,"xyz", "zyx", LocalDate.parse("2020-01-08"));
+        Book book = new Book(1,"Titanic", new Author(1,"xyz", "zyx"
+                , LocalDate.parse("2001-10-15"))
+                ,LocalDate.parse("2015-10-16"),200,51.50);
 
-       Author author = new Author(3,"xyz", "zyx", LocalDate.parse("2020-01-08"));
-        Client client = new Client(2,"Kate", "yzx"
-                ,"795648631","yxz@gmail.com","city 954 nr. 54");
-        client.setOrderCount(5);
        try (var bookSystem = new JDBCBookSystem("jdbc:derby:BookSystem;create=true")){
-          // bookSystem.createDataBase();
-           bookSystem.addClient(client);
-           System.out.println(bookSystem.getListofClients().get(1).getOrderCount());
+//            bookSystem.createDataBase();
+//         // bookSystem.addClient(client);
+//           bookSystem.addAuthor(author);
+//           bookSystem.addBook(book);
+           System.out.println(bookSystem.getListofBooks().get(0).isOrdered());
+
        }
 
         System.exit(0);

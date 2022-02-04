@@ -230,6 +230,29 @@ public class JDBCBookSystem implements AutoCloseable{
         }
     }
 
+    public void UpdateClient(int ID, String newData ,String partToUpdate) throws SQLException {
+        connectToDataBase();
+        logger.info("An attempt of update Client in the database");
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/updateClient"+ partToUpdate +".sql"))) {
+
+            connection.setAutoCommit(false);
+            preparedStatement.setString(1, newData);
+            preparedStatement.setString(2,String.valueOf(ID));
+            preparedStatement.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
+            logger.info("The Client has been Updated");
+            close();
+        } catch (SQLException throwables) {
+            connection.rollback();
+            logger.error("Something goes wrong during update");
+        } catch (Exception e) {
+            logger.error("Something goes wrong during update");
+            throw new StatementReadException();
+        }
+    }
+
     public void addBook(Book book) throws SQLException {
         connectToDataBase();
         logger.info("An attempt to enter the Book in the database");
@@ -244,6 +267,7 @@ public class JDBCBookSystem implements AutoCloseable{
                 preparedStatement.setString(4, book.getPublishDate().toString());
                 preparedStatement.setInt(5, book.getPageCount());
                 preparedStatement.setDouble(6, book.getBasicOrderPrice());
+                preparedStatement.setInt(7, btoi(book.isOrdered()));
 
                 preparedStatement.executeUpdate();
             } catch (SQLException throwables) {
@@ -259,6 +283,60 @@ public class JDBCBookSystem implements AutoCloseable{
         }
     }
 
+    public ArrayList<Book> getListofBooks() throws Exception {
+        connectToDataBase();
+        logger.info("Downloading Books");
+        var BookList = new ArrayList<Book>();
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/getAllBooks.sql"))) {
+            try {
+                var resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    Book temp;
+                    temp = new Book(resultSet.getInt(1),resultSet.getString(2), getAuthorByID(resultSet.getInt(3))
+                            ,LocalDate.parse(resultSet.getString(4)), resultSet.getInt(5),resultSet.getDouble(6));
+                    temp.setOrdered(itob(resultSet.getInt(7)));
+                    BookList.add(temp);
+                }
+                close();
+                return BookList;
+            } catch (SQLException throwables) {
+                logger.error("Error during getting list");
+                close();
+                throw new DownloadDataException();
+            }
+        } catch (SQLException throwables) {
+            logger.error("Error connected with Script");
+            close();
+            throw new StatementReadException();
+        }
+    }
+
+    public void UpdateBook(int ID, int newData ,String partToUpdate) throws SQLException {
+        connectToDataBase();
+        logger.info("An attempt of update Book in the database");
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/updateBook"+ partToUpdate +".sql"))) {
+
+            connection.setAutoCommit(false);
+            preparedStatement.setInt(1, newData);
+            preparedStatement.setString(2,String.valueOf(ID));
+            preparedStatement.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
+            logger.info("The Book has been Updated");
+            close();
+        } catch (SQLException throwables) {
+            connection.rollback();
+            logger.error("Something goes wrong during update");
+        } catch (Exception e) {
+            logger.error("Something goes wrong during update");
+            throw new StatementReadException();
+        }
+    }
+
+
+
 
 
     @Override
@@ -266,5 +344,26 @@ public class JDBCBookSystem implements AutoCloseable{
         logger.info("Disconnect");
         connection.close();
         statement.close();
+    }
+
+    private Author getAuthorByID(int ID) throws Exception {
+        for(int i = 0; i<getListofAuthors().size(); i++) {
+            if(ID == getListofAuthors().get(i).getID()) {
+                return getListofAuthors().get(i);
+            }
+        }
+        return null;
+    }
+
+    private int btoi(boolean b) {
+        if(b){
+            return 1;
+        } else{
+            return 0;
+        }
+    }
+
+    private boolean itob(int i) {
+        return i == 1;
     }
 }

@@ -51,4 +51,9 @@ public class BookStorage extends Storage<Book> {
         getAllElementsFromStorage().add(obj);
         // synchronization with data BASE aDD
     }
+
+    @Override
+    public void initwithBase(String URL) {
+
+    }
 }

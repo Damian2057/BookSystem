@@ -15,9 +15,5 @@ public abstract class Storage<T> implements StorageInterface<T> {
     public int getCountOfElements() {
         return elementCollection.size();
     }
-    @Override
-    public void initwithBase(String URL) {
-        //elementCollection = connect with dataBASE
-    }
 
 }

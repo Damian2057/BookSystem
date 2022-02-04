@@ -36,4 +36,5 @@ module org.example.model {
 
     exports org.example.SecurityLayer;
     opens org.example.SecurityLayer;
+    exports org.example.dao.jdbcmodel;
 }

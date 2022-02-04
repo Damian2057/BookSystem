@@ -100,6 +100,10 @@ public class MainStorage {
         return  orderStorage.getOrdersByClientID(clientID);
     }
 
+    public double endOrderandGetSum(int ID) throws Exception {
+        return orderStorage.getOrder(ID).endOrder();
+    }
+
 
 
 }

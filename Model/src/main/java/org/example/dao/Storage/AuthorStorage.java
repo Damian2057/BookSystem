@@ -38,4 +38,9 @@ public class AuthorStorage extends Storage<Author>{
         getAllElementsFromStorage().add(obj);
         // synchronization with data BASE aDD
     }
+
+    @Override
+    public void initwithBase(String URL) {
+
+    }
 }

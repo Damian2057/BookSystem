@@ -18,12 +18,16 @@ public abstract class Personnel {
     private final int permLevel;
     private MainStorage mainStorage;
 
-    public Personnel(String nickName, String password, int ID, int permLevel, MainStorage mainStorage) {
+    public Personnel(String nickName, String password, int ID, int permLevel, String URL) {
         this.nickName = nickName;
         this.password = password;
         this.ID = ID;
         this.permLevel = permLevel;
-        this.mainStorage = mainStorage;
+        this.mainStorage = new MainStorage(URL);
+    }
+
+    public MainStorage getMainStorage() {
+        return mainStorage;
     }
 
     public void addClient(String firstName, String lastName, String phoneNumber, String email, String address) {
@@ -73,6 +77,10 @@ public abstract class Personnel {
 
     public ArrayList<Order> getOrdersByClientID(int clientID) {
         return mainStorage.getOrdersByClientID(clientID);
+    }
+
+    public double endOrderandGetSum(int ID) throws Exception {
+        return mainStorage.endOrderandGetSum(ID);
     }
 
 

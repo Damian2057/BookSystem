@@ -57,4 +57,9 @@ public class OrderStorage extends Storage<Order>{
         // synchronization with data BASE aDD
     }
 
+    @Override
+    public void initwithBase(String URL) {
+
+    }
+
 }

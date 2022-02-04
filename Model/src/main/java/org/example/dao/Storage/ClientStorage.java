@@ -52,4 +52,9 @@ public class ClientStorage extends Storage<Client>{
         getAllElementsFromStorage().add(obj);
         // synchronization with data BASE aDD
     }
+
+    @Override
+    public void initwithBase(String URL) {
+
+    }
 }

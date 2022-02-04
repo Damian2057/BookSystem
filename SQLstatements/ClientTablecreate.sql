@@ -5,5 +5,6 @@ CREATE TABLE Clients (
     phoneNumber VARCHAR(20) NOT NULL,
     emailAddress VARCHAR (40) NOT NULL,
     Address VARCHAR (40) NOT NULL,
+    ordercount INTEGER NOT NULL,
     PRIMARY KEY (id)
 )

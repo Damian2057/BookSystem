@@ -1,0 +1,1 @@
+update Authors set DeathDay = (?) where id = (?)

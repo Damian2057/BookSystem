@@ -1,8 +1,8 @@
 package org.example.dao.jdbcmodel;
 
-import org.example.Exceptions.Dao.DownloadDataException;
-import org.example.Exceptions.Dao.StatementReadException;
+import org.example.Exceptions.Dao.*;
 import org.example.model.Author;
+import org.example.model.Book;
 import org.example.model.Client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +10,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class JDBCBookSystem implements AutoCloseable{
 
@@ -23,8 +20,10 @@ public class JDBCBookSystem implements AutoCloseable{
     private Statement statement;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public JDBCBookSystem(String URL) {
+    public JDBCBookSystem(String URL) throws Exception {
         JDBCBookSystem.URL = URL;
+        connectToDataBase();
+        close();
     }
 
     private void connectToDataBase() {
@@ -57,15 +56,15 @@ public class JDBCBookSystem implements AutoCloseable{
 
     public void createDataBase() {
         try {
-            logger.info("DataBase creation attempt");
             connectToDataBase();
+            logger.info("DataBase creation attempt");
             statement.execute(readstatement("@../../SQLStatements/AuthorTablecreate.sql"));
             statement.execute(readstatement("@../../SQLStatements/BookTablecreate.sql"));
             statement.execute(readstatement("@../../SQLStatements/ClientTablecreate.sql"));
             statement.execute(readstatement("@../../SQLStatements/OrderTablecreate.sql"));
             close();
         } catch (Exception throwables) {
-            throwables.printStackTrace();
+            throw new DataBaseCreateException();
         }
     }
 
@@ -130,6 +129,29 @@ public class JDBCBookSystem implements AutoCloseable{
         close();
     }
 
+    public void updateAuthor(int ID, String newData ,String partToUpdate) throws SQLException {
+        connectToDataBase();
+        logger.info("An attempt of update Author in the database");
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/updateAuthor"+ partToUpdate +".sql"))) {
+
+            connection.setAutoCommit(false);
+            preparedStatement.setString(1, newData);
+            preparedStatement.setString(2,String.valueOf(ID));
+            preparedStatement.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
+            logger.info("The Author has been Updated");
+            close();
+        } catch (SQLException throwables) {
+            connection.rollback();
+            logger.error("Something goes wrong during update");
+        } catch (Exception e) {
+            logger.error("Something goes wrong during update");
+            throw new StatementReadException();
+        }
+    }
+
     public void addClient(Client client) throws SQLException {
         connectToDataBase();
         logger.info("An attempt to enter the Client in the database");
@@ -143,6 +165,7 @@ public class JDBCBookSystem implements AutoCloseable{
             preparedStatement.setString(4, client.getPhoneNumber());
             preparedStatement.setString(5, client.getEmailAddress());
             preparedStatement.setString(6, client.getAddress());
+            preparedStatement.setInt(7, client.getOrderCount());
 
             preparedStatement.executeUpdate();
             connection.commit();
@@ -151,7 +174,7 @@ public class JDBCBookSystem implements AutoCloseable{
         } catch (SQLException throwables) {
             connection.rollback();
             logger.error("Something goes wrong during saving Client");
-            throwables.printStackTrace();
+            throw new StatementReadException();
         }
     }
 
@@ -168,6 +191,7 @@ public class JDBCBookSystem implements AutoCloseable{
                         temp = new Client(resultSet.getInt(1),resultSet.getString(2)
                                 ,resultSet.getString(3), resultSet.getString(4)
                                 ,resultSet.getString(5),resultSet.getString(6));
+                        temp.setOrderCount(resultSet.getInt(7));
                     ClientList.add(temp);
                 }
                 close();
@@ -192,15 +216,46 @@ public class JDBCBookSystem implements AutoCloseable{
 
             connection.setAutoCommit(false);
             preparedStatement.setString(1, String.valueOf(ID));
-
             preparedStatement.executeUpdate();
             connection.commit();
             connection.setAutoCommit(true);
             logger.info("The Client has been deleted from the database");
+            close();
         } catch (SQLException throwables) {
             connection.rollback();
-            logger.error("Something goes wrong during deleting Client");
-            throwables.printStackTrace();
+            logger.error("Something goes wrong during Client removal");
+        } catch (Exception e) {
+            logger.error("Something goes wrong during Client removal");
+            throw new StatementReadException();
+        }
+    }
+
+    public void addBook(Book book) throws SQLException {
+        connectToDataBase();
+        logger.info("An attempt to enter the Book in the database");
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/addBook.sql"))) {
+
+            connection.setAutoCommit(false);
+            try {
+                preparedStatement.setInt(1,book.getID());
+                preparedStatement.setString(2,book.getTitle());
+                preparedStatement.setInt(3,book.getAuthor().getID());
+                preparedStatement.setString(4, book.getPublishDate().toString());
+                preparedStatement.setInt(5, book.getPageCount());
+                preparedStatement.setDouble(6, book.getBasicOrderPrice());
+
+                preparedStatement.executeUpdate();
+            } catch (SQLException throwables) {
+                throw new ReferenceException();
+            }
+            connection.commit();
+            connection.setAutoCommit(true);
+            logger.info("The Book has been saved in the database");
+        } catch (SQLException throwables) {
+            connection.rollback();
+            logger.error("Something goes wrong during saving Book");
+            throw new StatementReadException();
         }
     }
 

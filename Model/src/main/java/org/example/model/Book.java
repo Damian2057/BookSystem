@@ -1,17 +1,18 @@
 package org.example.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Book {
     private final int ID;
     private final String title;
     private Author author;
-    private Date publishDate;
+    private LocalDate publishDate;
     private int pageCount;
     private double basicOrderPricePerDay;
     private boolean isOrdered = false;
 
-    public Book(int ID,String title, Author author, Date publishDate, int pageCount, double basicOrderPrice) {
+    public Book(int ID,String title, Author author, LocalDate publishDate, int pageCount, double basicOrderPrice) {
         this.ID = ID;
         this.title = title;
         this.author = author;
@@ -36,7 +37,7 @@ public class Book {
         return author;
     }
 
-    public Date getPublishDate() {
+    public LocalDate getPublishDate() {
         return publishDate;
     }
 

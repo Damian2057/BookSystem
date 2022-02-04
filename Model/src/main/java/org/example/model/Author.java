@@ -1,22 +1,23 @@
 package org.example.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Author {
     private int ID;
     private String firstName;
     private String lastName;
-    private Date birthDay;
-    private Date deathDate;
+    private LocalDate birthDay;
+    private LocalDate deathDate;
 
-    public Author(int ID, String firstName, String lastName, Date birthDay) {
+    public Author(int ID, String firstName, String lastName, LocalDate birthDay) {
         this.ID = ID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDay = birthDay;
     }
 
-    public Author(int ID,String firstName, String lastName, Date birthDay, Date deathDate) {
+    public Author(int ID,String firstName, String lastName, LocalDate birthDay, LocalDate deathDate) {
         this.ID = ID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,15 +33,15 @@ public class Author {
         return lastName;
     }
 
-    public Date getBirthDay() {
+    public LocalDate getBirthDay() {
         return birthDay;
     }
 
-    public Date getDeathDate() {
+    public LocalDate getDeathDate() {
         return deathDate;
     }
 
-    public void setDeathDate(Date deathDate) {
+    public void setDeathDate(LocalDate deathDate) {
         this.deathDate = deathDate;
     }
 

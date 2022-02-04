@@ -7,12 +7,9 @@ import org.slf4j.LoggerFactory;
 
 public class ClientStorage extends Storage<Client>{
 
-    private String URL;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public ClientStorage(String URL) {
-        this.URL = URL;
-        initwithBase(URL);
+    public ClientStorage() {
     }
 
     public Client getClient(int ID) throws Exception {
@@ -51,10 +48,5 @@ public class ClientStorage extends Storage<Client>{
     public void addElement(Client obj) {
         getAllElementsFromStorage().add(obj);
         // synchronization with data BASE aDD
-    }
-
-    @Override
-    public void initwithBase(String URL) {
-
     }
 }

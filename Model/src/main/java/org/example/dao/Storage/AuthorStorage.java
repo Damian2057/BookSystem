@@ -7,12 +7,9 @@ import org.slf4j.LoggerFactory;
 
 public class AuthorStorage extends Storage<Author>{
 
-    private String URL;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public AuthorStorage(String URL) {
-        this.URL = URL;
-        initwithBase(URL);
+    public AuthorStorage() {
     }
 
     public Author getAuthor(int ID) throws Exception {
@@ -37,10 +34,5 @@ public class AuthorStorage extends Storage<Author>{
     public void addElement(Author obj) {
         getAllElementsFromStorage().add(obj);
         // synchronization with data BASE aDD
-    }
-
-    @Override
-    public void initwithBase(String URL) {
-
     }
 }

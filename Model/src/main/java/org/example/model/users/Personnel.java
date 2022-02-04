@@ -38,7 +38,7 @@ public abstract class Personnel {
         return mainStorage.getClient(ID);
     }
 
-    public void addAuthor(String firstName, String lastName, Date birthdate, Date deathDate) {
+    public void addAuthor(String firstName, String lastName, LocalDate  birthdate, LocalDate  deathDate) {
         mainStorage.addAuthor(firstName, lastName, birthdate, deathDate);
     }
 
@@ -46,7 +46,7 @@ public abstract class Personnel {
         return mainStorage.getAuthor(ID);
     }
 
-    public void addBook(String title, int AuthorID, Date publishDate
+    public void addBook(String title, int AuthorID, LocalDate publishDate
             , int pagecount, double price) throws Exception {
         mainStorage.addBook(title, mainStorage.getAuthorStorage().getAuthor(AuthorID),publishDate,pagecount,price);
     }

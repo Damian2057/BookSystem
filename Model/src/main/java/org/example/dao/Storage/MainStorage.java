@@ -20,10 +20,11 @@ public class MainStorage {
 
 
     public MainStorage(String URL) {
-        authorStorage = new AuthorStorage(URL);
-        bookStorage = new BookStorage(URL);
-        clientStorage = new ClientStorage(URL);
-        orderStorage = new OrderStorage(URL);
+        authorStorage = new AuthorStorage();
+        bookStorage = new BookStorage();
+        clientStorage = new ClientStorage();
+        orderStorage = new OrderStorage();
+        synchronizationWithBase();
     }
 
     public AuthorStorage getAuthorStorage() {
@@ -55,7 +56,7 @@ public class MainStorage {
     }
 
 
-    public void addAuthor(String firstName, String lastName, Date birthdate, Date deathDate) {
+    public void addAuthor(String firstName, String lastName, LocalDate  birthdate, LocalDate deathDate) {
         if(deathDate == null) {
             authorStorage.addElement(new Author(authorStorage.getTopID()+1,firstName,lastName,birthdate));
 
@@ -68,7 +69,7 @@ public class MainStorage {
         return authorStorage.getAuthor(ID);
     }
 
-    public void addBook(String title, Author author, Date publishDate, int pagecount, double price) {
+    public void addBook(String title, Author author, LocalDate publishDate, int pagecount, double price) {
         bookStorage.addElement(new Book(bookStorage.getTopID()+1, title, author, publishDate, pagecount, price));
     }
 
@@ -102,6 +103,16 @@ public class MainStorage {
 
     public double endOrderandGetSum(int ID) throws Exception {
         return orderStorage.getOrder(ID).endOrder();
+    }
+
+    private void synchronizationWithBase() {
+        //AUTHORS
+
+        //CLIENTS
+
+        //BOOKS
+
+        //ORDERS
     }
 
 

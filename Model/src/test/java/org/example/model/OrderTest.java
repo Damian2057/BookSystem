@@ -18,8 +18,8 @@ class OrderTest {
             ,"795648631","yxz@gmail.com","city 954 nr. 54");
 
     private Book book = new Book(1,"Titanic", new Author(1,"xyz", "zyx"
-            , new Date(2001,10,15))
-            ,new Date(2015,10,16),200,51.50);
+            , LocalDate.parse("2001-10-15"))
+            ,LocalDate.parse("2015-10-16"),200,51.50);
 
 
     @Test
@@ -50,8 +50,8 @@ class OrderTest {
     void addBookToOrder() {
         Order orderByOldDate = new Order(2,client, LocalDate.now().minusDays(5),LocalDate.now().minusDays(3));
         Book book2 = new Book(1,"Titanic", new Author(1,"xyz", "zyx"
-                , new Date(2001,10,15))
-                ,new Date(2015,10,16),200,51.50);
+                , LocalDate.parse("2001-10-15"))
+                ,LocalDate.parse("2015-10-16"),200,51.50);
 
         assertThrows(OrderTimeException.class,()->orderByOldDate.addBookToOrder(book2));
         assertEquals(orderByOldDate.getCountOfOrderedBooks(),0);
@@ -69,11 +69,11 @@ class OrderTest {
     @Test
     void removeBookToOrder() throws Throwable {
         Book book2 = new Book(1,"Titanic", new Author(1,"xyz", "zyx"
-                , new Date(2001,10,15))
-                ,new Date(2015,10,16),200,51.50);
+                , LocalDate.parse("2001-10-15"))
+                ,LocalDate.parse("2015-10-16"),200,51.50);
         Book book3 = new Book(1,"Titanic", new Author(1,"xyz", "zyx"
-                , new Date(2001,10,15))
-                ,new Date(2015,10,16),200,51.50);
+                , LocalDate.parse("2001-10-15"))
+                ,LocalDate.parse("2015-10-16"),200,51.50);
         Order orderByPreviousOrder = new Order(5,client, LocalDate.now().plusDays(3),LocalDate.now().plusDays(5));
         orderByPreviousOrder.addBookToOrder(book2);
         assertEquals(orderByPreviousOrder.getCountOfOrderedBooks(),1);
@@ -114,8 +114,8 @@ class OrderTest {
     @Test
     void endOrder() {
         Book book3 = new Book(1,"Titanic", new Author(1,"xyz", "zyx"
-                , new Date(2001,10,15))
-                ,new Date(2015,10,16),200,5);
+                , LocalDate.parse("2001-10-15"))
+                ,LocalDate.parse("2015-10-16"),200,5);
         Order order = new Order(8,client, LocalDate.now().plusDays(2),LocalDate.now().plusDays(3));
         order.addBookToOrder(book3);
         order.setStartReservationdate(LocalDate.now().minusDays(5));
@@ -143,8 +143,8 @@ class OrderTest {
         assertEquals(order5.endOrder(), 25*0.7);
 
         Book book4 = new Book(1,"Titanic", new Author(1,"xyz", "zyx"
-                , new Date(2001,10,15))
-                ,new Date(2015,10,16),200,5);
+                , LocalDate.parse("2001-10-15"))
+                ,LocalDate.parse("2015-10-16"),200,5);
 
         Order order6 = new Order(11,client, LocalDate.now(),LocalDate.now().plusDays(3));
         order6.addBookToOrder(book4);

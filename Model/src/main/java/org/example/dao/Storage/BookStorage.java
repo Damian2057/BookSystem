@@ -7,12 +7,9 @@ import org.slf4j.LoggerFactory;
 
 public class BookStorage extends Storage<Book> {
 
-    private String URL;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public BookStorage(String URL) {
-        this.URL = URL;
-        initwithBase(URL);
+    public BookStorage() {
     }
 
     public Book getBook(int ID) throws Exception {
@@ -50,10 +47,5 @@ public class BookStorage extends Storage<Book> {
     public void addElement(Book obj) {
         getAllElementsFromStorage().add(obj);
         // synchronization with data BASE aDD
-    }
-
-    @Override
-    public void initwithBase(String URL) {
-
     }
 }

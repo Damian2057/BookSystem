@@ -2,15 +2,16 @@ package org.example.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AuthorTest {
 
-    private Author author = new Author(1,"xyz", "zyx", new Date(2001,05,11));
-    private Author authorD = new Author(2,"xyz", "zyx", new Date(2001,05,11)
-            , new Date(2080,5,16));
+    private Author author = new Author(1,"xyz", "zyx", LocalDate.parse("2020-01-08"));
+    private Author authorD = new Author(2,"xyz", "zyx", LocalDate.parse("2020-01-08")
+            , LocalDate.parse("2020-01-08"));
 
 
     @Test
@@ -25,22 +26,22 @@ class AuthorTest {
 
     @Test
     void getBirthDay() {
-        Date date = new Date(2001,05,11);
+        LocalDate date = LocalDate.parse("2020-01-08");
         assertEquals(author.getBirthDay(), date);
     }
 
     @Test
     void getDeathDate() {
-        Date date2 = new Date(2080,5,16);
+        LocalDate date = LocalDate.parse("2020-01-08");
         assertEquals(author.getDeathDate(), null);
-        assertEquals(authorD.getDeathDate(),date2);
+        assertEquals(authorD.getDeathDate(),date);
 
     }
 
     @Test
     void setDeathDate() {
-        Date date2 = new Date(2080,5,16);
-        author.setDeathDate(date2);
-        assertEquals(author.getDeathDate(),date2);
+        LocalDate date = LocalDate.parse("2020-01-08");
+        author.setDeathDate(date);
+        assertEquals(author.getDeathDate(),date);
     }
 }

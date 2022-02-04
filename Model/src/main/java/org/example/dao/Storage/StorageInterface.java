@@ -7,6 +7,5 @@ public interface StorageInterface<T> {
     void addElement(T obj);
     ArrayList<T> getAllElementsFromStorage();
     int getCountOfElements();
-    void initwithBase(String URL);
 
 }

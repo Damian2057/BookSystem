@@ -10,12 +10,9 @@ import java.util.ArrayList;
 
 public class OrderStorage extends Storage<Order>{
 
-    private String URL;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public OrderStorage(String URL) {
-        this.URL = URL;
-        initwithBase(URL);
+    public OrderStorage() {
     }
 
     public Order getOrder(int ID) throws Exception {
@@ -55,11 +52,6 @@ public class OrderStorage extends Storage<Order>{
     public void addElement(Order obj) {
         getAllElementsFromStorage().add(obj);
         // synchronization with data BASE aDD
-    }
-
-    @Override
-    public void initwithBase(String URL) {
-
     }
 
 }

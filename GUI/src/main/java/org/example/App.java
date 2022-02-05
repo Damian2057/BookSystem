@@ -34,7 +34,7 @@ public class App extends Application {
         Book book2 = new Book(2,"Titanic", new Author(1,"xyz", "zyx"
                 , LocalDate.parse("2001-10-15"))
                 ,LocalDate.parse("2015-10-16"),200,51.50);
-        Client client = new Client(1,"Kate", "yzx"
+        Client client = new Client(2,"roman", "yzx"
                 ,"795648631","yxz@gmail.com","city 954 nr. 54");
 
        try (var bookSystem = new JDBCBookSystem("jdbc:derby:BookSystem;create=true")){
@@ -42,11 +42,11 @@ public class App extends Application {
 //           bookSystem.addClient(client);
 //           bookSystem.addAuthor(author);
          //  bookSystem.addBook(book);
-           Order order = new Order(1,client, LocalDate.now().plusDays(1),LocalDate.now().plusDays(5));
-           order.addBookToOrder(book);
-           order.addBookToOrder(book2);
-           System.out.println(order.getCountOfOrderedBooks());
-           bookSystem.addOrder(order);
+//           Order order = new Order(5,client, LocalDate.now().plusDays(1),LocalDate.now().plusDays(5));
+//           order.addBookToOrder(book);
+//           order.addBookToOrder(book2);
+//           bookSystem.addOrder(order);
+           System.out.println(bookSystem.getClientOrders(1).size());
 
 
        }

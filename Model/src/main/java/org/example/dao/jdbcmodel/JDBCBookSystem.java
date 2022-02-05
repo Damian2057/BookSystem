@@ -29,7 +29,6 @@ public class JDBCBookSystem implements AutoCloseable{
 
     private void connectToDataBase() {
         try {
-            logger.info("Connection");
             connection = DriverManager.getConnection(URL);
             statement = connection.createStatement();
         } catch (SQLException throwables) {
@@ -71,7 +70,6 @@ public class JDBCBookSystem implements AutoCloseable{
 
     public ArrayList<Author> getListofAuthors() throws Exception {
         connectToDataBase();
-        logger.info("Downloading authors");
         var AuthorList = new ArrayList<Author>();
         try(PreparedStatement preparedStatement = connection
                 .prepareStatement(readstatement("@../../SQLStatements/getAllAuthors.sql"))) {
@@ -92,12 +90,12 @@ public class JDBCBookSystem implements AutoCloseable{
                 close();
                 return AuthorList;
             } catch (SQLException throwables) {
-                logger.error("Error during getting list");
+                logger.error("Error during getting list of Authors");
                 close();
                 throw new DownloadDataException();
             }
         } catch (SQLException throwables) {
-            logger.error("Error connected with Script");
+            logger.error("Error connected with Author SQL Script");
             close();
             throw new StatementReadException();
         }
@@ -105,7 +103,6 @@ public class JDBCBookSystem implements AutoCloseable{
 
     public void addAuthor(Author author) throws Exception {
         connectToDataBase();
-        logger.info("An attempt to enter the Author in the database");
         try(PreparedStatement preparedStatement = connection
                 .prepareStatement(readstatement("@../../SQLStatements/addAuthor.sql"))) {
 
@@ -181,7 +178,6 @@ public class JDBCBookSystem implements AutoCloseable{
 
     public ArrayList<Client> getListofClients() throws Exception {
         connectToDataBase();
-        logger.info("Downloading Clients");
         var ClientList = new ArrayList<Client>();
         try(PreparedStatement preparedStatement = connection
                 .prepareStatement(readstatement("@../../SQLStatements/getAllClients.sql"))) {
@@ -198,12 +194,12 @@ public class JDBCBookSystem implements AutoCloseable{
                 close();
                 return ClientList;
             } catch (SQLException throwables) {
-                logger.error("Error during getting list");
+                logger.error("Error during getting Client list");
                 close();
                 throw new DownloadDataException();
             }
         } catch (SQLException throwables) {
-            logger.error("Error connected with Script");
+            logger.error("Error connected with Client SQL Script");
             close();
             throw new StatementReadException();
         }
@@ -286,7 +282,6 @@ public class JDBCBookSystem implements AutoCloseable{
 
     public ArrayList<Book> getListofBooks() throws Exception {
         connectToDataBase();
-        logger.info("Downloading Books");
         var BookList = new ArrayList<Book>();
         try(PreparedStatement preparedStatement = connection
                 .prepareStatement(readstatement("@../../SQLStatements/getAllBooks.sql"))) {
@@ -302,12 +297,12 @@ public class JDBCBookSystem implements AutoCloseable{
                 close();
                 return BookList;
             } catch (SQLException throwables) {
-                logger.error("Error during getting list");
+                logger.error("Error during getting book list");
                 close();
                 throw new DownloadDataException();
             }
         } catch (SQLException throwables) {
-            logger.error("Error connected with Script");
+            logger.error("Error connected with Book SQL Script");
             close();
             throw new StatementReadException();
         }
@@ -368,12 +363,89 @@ public class JDBCBookSystem implements AutoCloseable{
         }
     }
 
-    public ArrayList<Order> getAllofOrders() {
-        return null;
+    public ArrayList<Order> getAllofOrders() throws Exception {
+        connectToDataBase();
+        var OrderList = new ArrayList<Order>();
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/getAllOrders.sql"))) {
+            try {
+                var resultSet = preparedStatement.executeQuery();
+                int index = 0;
+                while (resultSet.next()) {
+                    Order temp = null;
+                    if(OrderList.isEmpty()) {
+                        temp = new Order(resultSet.getInt(1),getClientbyID(resultSet.getInt(2))
+                                ,LocalDate.parse(resultSet.getString(3)),LocalDate.parse(resultSet.getString(4)));
+                        temp.addBookToOrder(getBookbyID(resultSet.getInt(5)));
+                        temp.setCompleted(itob(resultSet.getInt(6)));
+                        index ++;
+                        OrderList.add(temp);
+                    } else if(OrderList.get(index-1).getID() == resultSet.getInt(1)) {
+                        OrderList.get(index-1).addBookToOrder(getBookbyID(resultSet.getInt(5)));
+                    } else {
+                        temp = new Order(resultSet.getInt(1),getClientbyID(resultSet.getInt(2))
+                                ,LocalDate.parse(resultSet.getString(3)),LocalDate.parse(resultSet.getString(4)));
+                        temp.addBookToOrder(getBookbyID(resultSet.getInt(5)));
+                        temp.setCompleted(itob(resultSet.getInt(6)));
+                        index ++;
+                        OrderList.add(temp);
+                    }
+                }
+                close();
+                return OrderList;
+            } catch (SQLException throwables) {
+                logger.error("Error during getting Order list");
+                close();
+                throw new DownloadDataException();
+            }
+        } catch (SQLException throwables) {
+            logger.error("Error connected with Order SQL Script");
+            close();
+            throw new StatementReadException();
+        }
     }
 
-    public ArrayList<Order> getOrderbyclientID() {
-        return null;
+    public ArrayList<Order> getClientOrders(int ID) throws Exception {
+        connectToDataBase();
+        var OrderList = new ArrayList<Order>();
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/getclientOrders.sql"))) {
+            try {
+                preparedStatement.setInt(1, ID);
+                var resultSet = preparedStatement.executeQuery();
+                int index = 0;
+                while (resultSet.next()) {
+                    Order temp = null;
+                    if(OrderList.isEmpty()) {
+                        temp = new Order(resultSet.getInt(1),getClientbyID(resultSet.getInt(2))
+                                ,LocalDate.parse(resultSet.getString(3)),LocalDate.parse(resultSet.getString(4)));
+                        temp.addBookToOrder(getBookbyID(resultSet.getInt(5)));
+                        temp.setCompleted(itob(resultSet.getInt(6)));
+                        index ++;
+                        OrderList.add(temp);
+                    } else if(OrderList.get(index-1).getID() == resultSet.getInt(1)) {
+                        OrderList.get(index-1).addBookToOrder(getBookbyID(resultSet.getInt(5)));
+                    } else {
+                        temp = new Order(resultSet.getInt(1),getClientbyID(resultSet.getInt(2))
+                                ,LocalDate.parse(resultSet.getString(3)),LocalDate.parse(resultSet.getString(4)));
+                        temp.addBookToOrder(getBookbyID(resultSet.getInt(5)));
+                        temp.setCompleted(itob(resultSet.getInt(6)));
+                        index ++;
+                        OrderList.add(temp);
+                    }
+                }
+                close();
+                return OrderList;
+            } catch (SQLException throwables) {
+                logger.error("Error during getting Client Order list");
+                close();
+                throw new DownloadDataException();
+            }
+        } catch (SQLException throwables) {
+            logger.error("Error connected with Client Order SQL Script");
+            close();
+            throw new StatementReadException();
+        }
     }
 
     public void updateOrder() {
@@ -384,15 +456,32 @@ public class JDBCBookSystem implements AutoCloseable{
 
     @Override
     public void close() throws Exception {
-        logger.info("Disconnect");
         connection.close();
         statement.close();
     }
 
     private Author getAuthorByID(int ID) throws Exception {
-        for(int i = 0; i<getListofAuthors().size(); i++) {
+        for(int i = 0; i < getListofAuthors().size(); i++) {
             if(ID == getListofAuthors().get(i).getID()) {
                 return getListofAuthors().get(i);
+            }
+        }
+        return null;
+    }
+
+    private Client getClientbyID(int ID) throws Exception {
+        for(int i = 0; i < getListofClients().size(); i++) {
+            if(ID == getListofClients().get(i).getID()) {
+                return getListofClients().get(i);
+            }
+        }
+        return null;
+    }
+
+    private Book getBookbyID(int ID) throws Exception {
+        for(int i = 0; i < getListofBooks().size(); i++) {
+            if(ID == getListofBooks().get(i).getID()) {
+                return getListofBooks().get(i);
             }
         }
         return null;

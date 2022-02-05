@@ -3,10 +3,8 @@ package org.example;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import java.io.IOException;
+
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Locale;
 
 import static java.util.ResourceBundle.getBundle;
 
@@ -14,7 +12,6 @@ import org.example.dao.jdbcmodel.JDBCBookSystem;
 import org.example.model.Author;
 import org.example.model.Book;
 import org.example.model.Client.Client;
-import org.example.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +43,7 @@ public class App extends Application {
 //           order.addBookToOrder(book);
 //           order.addBookToOrder(book2);
 //           bookSystem.addOrder(order);
-           System.out.println(bookSystem.getClientOrders(1).size());
+           bookSystem.addBookToOrder(1,book2);
 
 
        }

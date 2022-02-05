@@ -448,8 +448,57 @@ public class JDBCBookSystem implements AutoCloseable{
         }
     }
 
-    public void updateOrder() {
+    public void deleteBookInOrder(int OrderID, int BookID) throws SQLException {
+        connectToDataBase();
+        logger.info("An attempt of update Order in the database");
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/updateOrderdelete.sql"))) {
 
+            connection.setAutoCommit(false);
+            preparedStatement.setInt(1, OrderID);
+            preparedStatement.setInt(2,BookID);
+            preparedStatement.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
+            logger.info("The Book from order has been deleted");
+            close();
+        } catch (SQLException throwables) {
+            connection.rollback();
+            logger.error("Something goes wrong during update");
+        } catch (Exception e) {
+            logger.error("Something goes wrong during update");
+            throw new StatementReadException();
+        }
+    }
+
+    public void addBookToOrder(int OrderID, Book book) throws SQLException {
+        connectToDataBase();
+        logger.info("An attempt of update Order in the database");
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/addOrder.sql"))) {
+
+            connection.setAutoCommit(false);
+            preparedStatement.setInt(1,OrderID);
+            preparedStatement.setInt(2,getOrderByID(OrderID).getClientID()); //error here
+            System.out.println("next step"); //too long connection
+            preparedStatement.setString(3, getOrderByID(OrderID).getStartReservationdate().toString());
+            preparedStatement.setString(4, getOrderByID(OrderID).getEndReservationDate().toString());
+            preparedStatement.setInt(5, book.getID());
+            preparedStatement.setInt(6, btoi(getOrderByID(OrderID).isCompleted()));
+
+            preparedStatement.executeUpdate();
+
+            connection.commit();
+            connection.setAutoCommit(true);
+            logger.info("The Book has been added");
+            close();
+        } catch (SQLException throwables) {
+            connection.rollback();
+            logger.error("Something goes wrong during update");
+        } catch (Exception e) {
+            logger.error("Something goes wrong during update");
+            throw new StatementReadException();
+        }
     }
 
 
@@ -464,6 +513,18 @@ public class JDBCBookSystem implements AutoCloseable{
         for(int i = 0; i < getListofAuthors().size(); i++) {
             if(ID == getListofAuthors().get(i).getID()) {
                 return getListofAuthors().get(i);
+            }
+        }
+        return null;
+    }
+
+    private Order getOrderByID(int ID) throws Exception {
+        System.out.println("petla");
+        for(int i = 0; i < getAllofOrders().size(); i++) {
+            System.out.println(i);
+            if(ID == getAllofOrders().get(i).getID()) {
+                System.out.println("find");
+                return getAllofOrders().get(i);
             }
         }
         return null;

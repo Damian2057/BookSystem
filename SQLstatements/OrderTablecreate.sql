@@ -4,7 +4,8 @@ CREATE TABLE Orders (
     startReservation VARCHAR (30) NOT NULL,
     endReservation VARCHAR (30) NOT NULL,
     bookID INTEGER NOT NULL,
-    PRIMARY KEY (id),
+    isCompleted INTEGER NOT NULL,
+    PRIMARY KEY (id, clientID, bookID),
     FOREIGN KEY (clientID) REFERENCES Clients(id),
     FOREIGN KEY (bookID) REFERENCES Books(id)
 )

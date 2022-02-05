@@ -4,6 +4,7 @@ import org.example.Exceptions.Dao.*;
 import org.example.model.Author;
 import org.example.model.Book;
 import org.example.model.Client.Client;
+import org.example.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
@@ -335,7 +336,49 @@ public class JDBCBookSystem implements AutoCloseable{
         }
     }
 
+    public void addOrder(Order order) throws SQLException {
+        connectToDataBase();
+        logger.info("An attempt to enter the Order in the database");
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/addOrder.sql"))) {
 
+            connection.setAutoCommit(false);
+            try {
+                for(int i = 0; i < order.getCountOfOrderedBooks(); i++) {
+                    preparedStatement.setInt(1,order.getID());
+                    preparedStatement.setInt(2,order.getClientID());
+                    preparedStatement.setString(3,order.getStartReservationdate().toString());
+                    preparedStatement.setString(4, order.getEndReservationDate().toString());
+                    preparedStatement.setInt(5, order.getListofBooks().get(i).getID());
+                    preparedStatement.setInt(6, btoi(order.isCompleted()));
+
+                    preparedStatement.executeUpdate();
+
+                }
+            } catch (SQLException throwables) {
+                throw new ReferenceException();
+            }
+            connection.commit();
+            connection.setAutoCommit(true);
+            logger.info("The Order has been saved in the database");
+        } catch (SQLException throwables) {
+            connection.rollback();
+            logger.error("Something goes wrong during saving Order");
+            throw new StatementReadException();
+        }
+    }
+
+    public ArrayList<Order> getAllofOrders() {
+        return null;
+    }
+
+    public ArrayList<Order> getOrderbyclientID() {
+        return null;
+    }
+
+    public void updateOrder() {
+
+    }
 
 
 

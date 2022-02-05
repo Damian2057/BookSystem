@@ -1,6 +1,7 @@
 package org.example.model;
 
 import org.example.Exceptions.Model.BookalreadyOrderedException;
+import org.example.Exceptions.Model.OrderComplitedException;
 import org.example.Exceptions.Model.OrderTimeException;
 import org.example.Exceptions.Model.IncorrectOrderDateException;
 import org.example.model.Client.Client;
@@ -20,6 +21,7 @@ public class Order {
     private LocalDate  startReservationdate;
     private LocalDate  endReservationDate;
     private LocalDate  realEndReservation;
+    private boolean isCompleted = false;
 
     public Order(int ID, Client client, LocalDate startReservationdate, LocalDate endReservationDate) {
 
@@ -34,6 +36,10 @@ public class Order {
         logger.info("Create Order ID:"+ID+", client ID: "+client.getID()+", SDate:"+startReservationdate+"" +
                 ", EDate:"+endReservationDate);
 
+    }
+
+    public ArrayList<Book> getListofBooks() {
+        return books;
     }
 
     public int getClientID() {
@@ -79,6 +85,14 @@ public class Order {
         }
     }
 
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
     public void removeBookFromOrder(int objID) {
         int period = Period.between(LocalDate.now(), startReservationdate).getDays();
         if(period >= 0) {
@@ -95,27 +109,32 @@ public class Order {
     }
 
     public double endOrder() {
-        client.addOrderCount();
-        double sum = 0;
-        int aheadTime  = Period.between(LocalDate.now(), endReservationDate).getDays();
-        if(aheadTime >= 0) {
-            int period = Period.between(startReservationdate, LocalDate.now()).getDays();
-            for (Book o : books) {
-                sum += o.getBasicOrderPrice()*period;
-                o.setOrdered(false);
+        if(!isCompleted()) {
+            setCompleted(true);
+            client.addOrderCount();
+            double sum = 0;
+            int aheadTime  = Period.between(LocalDate.now(), endReservationDate).getDays();
+            if(aheadTime >= 0) {
+                int period = Period.between(startReservationdate, LocalDate.now()).getDays();
+                for (Book o : books) {
+                    sum += o.getBasicOrderPrice()*period;
+                    o.setOrdered(false);
+                }
+            } else {
+                int extraDuration = Math.abs(aheadTime);
+                int normalDuration = Period.between(startReservationdate, endReservationDate).getDays();
+                for (Book o : books) {
+                    sum += o.getBasicOrderPrice()*normalDuration
+                            + (o.getBasicOrderPrice()+2)*extraDuration;
+                    o.setOrdered(false);
+                }
             }
+            logger.info("Order successfully removed, amount to pay: "+ sum*client.getReduction());
+            realEndReservation = LocalDate.now();
+            return sum*client.getReduction();
         } else {
-            int extraDuration = Math.abs(aheadTime);
-            int normalDuration = Period.between(startReservationdate, endReservationDate).getDays();
-            for (Book o : books) {
-                sum += o.getBasicOrderPrice()*normalDuration
-                        + (o.getBasicOrderPrice()+2)*extraDuration;
-                o.setOrdered(false);
-            }
+            throw new OrderComplitedException();
         }
-        logger.info("Order successfully removed, amount to pay: "+ sum*client.getReduction());
-        realEndReservation = LocalDate.now();
-        return sum*client.getReduction();
     }
 
     public int getID() {

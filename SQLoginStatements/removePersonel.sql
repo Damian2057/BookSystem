@@ -1,0 +1,1 @@
+DELETE FROM Personnel where id = (?)

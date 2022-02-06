@@ -3,15 +3,15 @@ package org.example;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-
 import java.time.LocalDate;
-
 import static java.util.ResourceBundle.getBundle;
-
 import org.example.dao.jdbcmodel.JDBCBookSystem;
+import org.example.dao.jdbcmodel.JDBCLoginSystem;
 import org.example.model.Author;
 import org.example.model.Book;
 import org.example.model.Client.Client;
+import org.example.model.users.Personnel;
+import org.example.model.users.Worker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,9 +46,14 @@ public class App extends Application {
          //  bookSystem.deleteBookInOrder(5,2);
 //           bookSystem.addBook(book2);
 //              bookSystem.addBookToOrder(5,book2);
-              bookSystem.UpdateOrderStatus(5,true);
+             // bookSystem.UpdateOrderStatus(5,false);
+       }
 
-
+       try(var loginSystem= new JDBCLoginSystem("jdbc:derby:LoginSystem;create=true")) {
+           //loginSystem.createDataBase();
+           Personnel personnel = new Worker("Roman", "admin",2,2);
+        //loginSystem.addPersonel(personnel);
+           loginSystem.updatePersonnel("Password",2,"coscos");
        }
 
         System.exit(0);

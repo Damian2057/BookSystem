@@ -18,11 +18,38 @@ public abstract class Personnel {
     private final int permLevel;
     private MainStorage mainStorage;
 
-    public Personnel(String nickName, String password, int ID, int permLevel, String URL) {
+    public Personnel(String nickName, String password, int ID, int permLevel) {
         this.nickName = nickName;
         this.password = password;
         this.ID = ID;
         this.permLevel = permLevel;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public int getPermLevel() {
+        return permLevel;
+    }
+
+    public void initAccess(String URL) {
         this.mainStorage = new MainStorage(URL);
     }
 

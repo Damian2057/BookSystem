@@ -28,7 +28,7 @@ public class App extends Application {
         Book book = new Book(1,"Titanic", new Author(1,"xyz", "zyx"
                 , LocalDate.parse("2001-10-15"))
                 ,LocalDate.parse("2015-10-16"),200,51.50);
-        Book book2 = new Book(2,"Titanic", new Author(1,"xyz", "zyx"
+        Book book2 = new Book(3,"Titanic", new Author(1,"xyz", "zyx"
                 , LocalDate.parse("2001-10-15"))
                 ,LocalDate.parse("2015-10-16"),200,51.50);
         Client client = new Client(2,"roman", "yzx"
@@ -43,7 +43,10 @@ public class App extends Application {
 //           order.addBookToOrder(book);
 //           order.addBookToOrder(book2);
 //           bookSystem.addOrder(order);
-           bookSystem.addBookToOrder(1,book2);
+         //  bookSystem.deleteBookInOrder(5,2);
+//           bookSystem.addBook(book2);
+//              bookSystem.addBookToOrder(5,book2);
+              bookSystem.UpdateOrderStatus(5,true);
 
 
        }

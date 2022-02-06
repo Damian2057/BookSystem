@@ -1,0 +1,1 @@
+update Orders set isCompleted = (?) where id = (?)

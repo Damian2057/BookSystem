@@ -11,6 +11,8 @@ public abstract class Storage<T> implements StorageInterface<T> {
         return elementCollection;
     }
 
+
+
     @Override
     public int getCountOfElements() {
         return elementCollection.size();

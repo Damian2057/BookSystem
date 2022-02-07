@@ -42,8 +42,8 @@ class OrderTest {
         order2.addBookToOrder(book);
         assertEquals(order2.getCountOfOrderedBooks(),1);
 
-        assertThrows(OrderException.class, ()->order2.addBookToOrder(book));
-        assertEquals(order2.getCountOfOrderedBooks(),1);
+        assertDoesNotThrow(()->order2.addBookToOrder(book));
+        assertEquals(order2.getCountOfOrderedBooks(),2);
     }
 
     @Test
@@ -80,8 +80,6 @@ class OrderTest {
         orderByPreviousOrder.removeBookFromOrder(1);
         assertEquals(orderByPreviousOrder.getCountOfOrderedBooks(),0);
 
-        orderByPreviousOrder.addBookToOrder(book2);
-        assertEquals(orderByPreviousOrder.getCountOfOrderedBooks(),1);
 
         Order orderActual = new Order(6,client, LocalDate.now().plusDays(2),LocalDate.now().plusDays(5));
         orderActual.addBookToOrder(book3);
@@ -91,10 +89,8 @@ class OrderTest {
         assertThrows(OrderTimeException.class,()->orderActual.removeBookFromOrder(1));
         assertEquals(orderActual.getCountOfOrderedBooks(),1);
 
-        assertThrows(BookalreadyOrderedException.class,()->orderActual.addBookToOrder(book3));
-        assertEquals(orderActual.getCountOfOrderedBooks(),1);
 
-        assertThrows(BookalreadyOrderedException.class,()->orderByPreviousOrder.addBookToOrder(book3));
+        assertDoesNotThrow(()->orderByPreviousOrder.addBookToOrder(book3));
         assertEquals(orderByPreviousOrder.getCountOfOrderedBooks(),1);
 
         orderActual.setStartReservationdate(LocalDate.now().plusDays(2));

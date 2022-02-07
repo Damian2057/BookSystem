@@ -1,1 +1,1 @@
-update Books set isOrdered = (?) where id = (?)
+update Books set isaccessible = (?) where id = (?)

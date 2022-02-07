@@ -1,5 +1,6 @@
 package org.example.dao.Storage;
 
+import org.example.dao.ClassFactory;
 import org.example.model.Author;
 import org.example.model.Book;
 import org.example.model.Client.Client;
@@ -8,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MainStorage {
 
@@ -19,12 +19,16 @@ public class MainStorage {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
-    public MainStorage(String URL) {
-        authorStorage = new AuthorStorage();
-        bookStorage = new BookStorage();
-        clientStorage = new ClientStorage();
-        orderStorage = new OrderStorage();
-        synchronizationWithBase();
+    public MainStorage(String URL) throws Exception {
+        authorStorage = new AuthorStorage(URL);
+        bookStorage = new BookStorage(URL);
+        clientStorage = new ClientStorage(URL);
+        orderStorage = new OrderStorage(URL);
+        try {
+            ClassFactory.getJDBCBookSystem(URL).createDataBase();
+        } catch (Exception e) {
+            logger.info("Data base exist");
+        }
     }
 
     public AuthorStorage getAuthorStorage() {
@@ -43,11 +47,11 @@ public class MainStorage {
         return orderStorage;
     }
 
-    public void addClient(String firstName, String lastName, String phoneNumber, String email, String address) {
+    public void addClient(String firstName, String lastName, String phoneNumber, String email, String address) throws Exception {
         clientStorage.addElement(new Client(clientStorage.getTopID()+1,firstName,lastName,phoneNumber,email,address));
     }
 
-    public void removeClient(int ID) {
+    public void removeClient(int ID) throws Exception {
         clientStorage.removeElement(ID);
     }
 
@@ -56,7 +60,7 @@ public class MainStorage {
     }
 
 
-    public void addAuthor(String firstName, String lastName, LocalDate  birthdate, LocalDate deathDate) {
+    public void addAuthor(String firstName, String lastName, LocalDate  birthdate, LocalDate deathDate) throws Exception {
         if(deathDate == null) {
             authorStorage.addElement(new Author(authorStorage.getTopID()+1,firstName,lastName,birthdate));
 
@@ -69,19 +73,19 @@ public class MainStorage {
         return authorStorage.getAuthor(ID);
     }
 
-    public void addBook(String title, Author author, LocalDate publishDate, int pagecount, double price) {
+    public void addBook(String title, Author author, LocalDate publishDate, int pagecount, double price) throws Exception {
         bookStorage.addElement(new Book(bookStorage.getTopID()+1, title, author, publishDate, pagecount, price));
     }
 
-    public void removeBook(int ID) {
-        bookStorage.removeElement(ID);
+    public void removeBook(int ID) throws Exception {
+        bookStorage.removeElementfromAccessible(ID);
     }
 
     public Book getBook(int ID) throws Exception {
         return bookStorage.getBook(ID);
     }
 
-    public void createOrder(Client client, LocalDate SDate, LocalDate EDate) {
+    public void createOrder(Client client, LocalDate SDate, LocalDate EDate) throws Exception {
         orderStorage.addElement(new Order(orderStorage.getTopID()+1,client, SDate, EDate));
     }
 
@@ -104,17 +108,5 @@ public class MainStorage {
     public double endOrderandGetSum(int ID) throws Exception {
         return orderStorage.getOrder(ID).endOrder();
     }
-
-    private void synchronizationWithBase() {
-        //AUTHORS
-
-        //CLIENTS
-
-        //BOOKS
-
-        //ORDERS
-    }
-
-
 
 }

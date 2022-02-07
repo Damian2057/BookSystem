@@ -2,6 +2,7 @@ package org.example.dao.Storage;
 
 import org.example.Exceptions.Model.EmptyOrderList;
 import org.example.Exceptions.Model.WrongOrderIDException;
+import org.example.dao.ClassFactory;
 import org.example.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +12,9 @@ import java.util.ArrayList;
 public class OrderStorage extends Storage<Order>{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    public OrderStorage() {
+    private String URL;
+    public OrderStorage(String URL) {
+        this.URL = URL;
     }
 
     public Order getOrder(int ID) throws Exception {
@@ -49,9 +51,10 @@ public class OrderStorage extends Storage<Order>{
     }
 
     @Override
-    public void addElement(Order obj) {
+    public void addElement(Order obj) throws Exception {
         getAllElementsFromStorage().add(obj);
         // synchronization with data BASE aDD
+        ClassFactory.getJDBCBookSystem(URL).addOrder(obj);
     }
 
 }

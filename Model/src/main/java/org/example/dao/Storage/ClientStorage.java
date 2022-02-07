@@ -1,6 +1,7 @@
 package org.example.dao.Storage;
 
 import org.example.Exceptions.Model.WrongBookIDException;
+import org.example.dao.ClassFactory;
 import org.example.model.Client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +9,9 @@ import org.slf4j.LoggerFactory;
 public class ClientStorage extends Storage<Client>{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    public ClientStorage() {
+    private String URL;
+    public ClientStorage(String URL) {
+        this.URL = URL;
     }
 
     public Client getClient(int ID) throws Exception {
@@ -22,13 +24,15 @@ public class ClientStorage extends Storage<Client>{
         throw new WrongBookIDException();
     }
 
-    public void removeElement(int ID) {
+    public void removeElement(int ID) throws Exception {
         for (int i = 0; i < getAllElementsFromStorage().size(); i++) {
             if (ID == getAllElementsFromStorage().get(i).getID()) {
                 //checking if there are any active orders or delete whole method
                 getAllElementsFromStorage().remove(i);
                 logger.info("Client ID:"+ID+" has been deleted");
                 // synchronization with data BASE remove
+                //CHECK CAN U REMOVE?
+                ClassFactory.getJDBCBookSystem(URL).deleteClient(ID);
                 return;
             }
         }
@@ -45,8 +49,9 @@ public class ClientStorage extends Storage<Client>{
     }
 
     @Override
-    public void addElement(Client obj) {
+    public void addElement(Client obj) throws Exception {
         getAllElementsFromStorage().add(obj);
         // synchronization with data BASE aDD
+        ClassFactory.getJDBCBookSystem(URL).addClient(obj);
     }
 }

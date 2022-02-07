@@ -1,15 +1,19 @@
 package org.example.dao.Storage;
 
 import org.example.Exceptions.Model.WrongBookIDException;
+import org.example.dao.ClassFactory;
 import org.example.model.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URL;
+
 public class BookStorage extends Storage<Book> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    public BookStorage() {
+    private String URL;
+    public BookStorage(String URL) {
+        this.URL = URL;
     }
 
     public Book getBook(int ID) throws Exception {
@@ -22,12 +26,13 @@ public class BookStorage extends Storage<Book> {
         throw new WrongBookIDException();
     }
 
-    public void removeElement(int ID) {
+    public void removeElementfromAccessible(int ID) throws Exception {
         for (int i = 0; i < getAllElementsFromStorage().size(); i++) {
             if (ID == getAllElementsFromStorage().get(i).getID()) {
                 getAllElementsFromStorage().remove(i);
                 logger.info("Book ID:"+ID+" has been deleted");
                 // synchronization with data BASE remove
+                ClassFactory.getJDBCBookSystem(URL).UpdateBook(ID,0,"status");
                 return;
             }
         }
@@ -44,8 +49,9 @@ public class BookStorage extends Storage<Book> {
     }
 
     @Override
-    public void addElement(Book obj) {
+    public void addElement(Book obj) throws Exception {
         getAllElementsFromStorage().add(obj);
         // synchronization with data BASE aDD
+        ClassFactory.getJDBCBookSystem(URL).addBook(obj);
     }
 }

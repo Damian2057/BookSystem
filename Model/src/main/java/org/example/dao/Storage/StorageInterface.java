@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface StorageInterface<T> {
 
-    void addElement(T obj);
+    void addElement(T obj) throws Exception;
     ArrayList<T> getAllElementsFromStorage();
     int getCountOfElements();
 

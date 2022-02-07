@@ -264,7 +264,7 @@ public class JDBCBookSystem implements AutoCloseable{
                 preparedStatement.setString(4, book.getPublishDate().toString());
                 preparedStatement.setInt(5, book.getPageCount());
                 preparedStatement.setDouble(6, book.getBasicOrderPrice());
-                preparedStatement.setInt(7, btoi(book.isOrdered()));
+                preparedStatement.setInt(7, btoi(book.isAccessible()));
 
                 preparedStatement.executeUpdate();
             } catch (SQLException throwables) {
@@ -291,7 +291,7 @@ public class JDBCBookSystem implements AutoCloseable{
                     Book temp;
                     temp = new Book(resultSet.getInt(1),resultSet.getString(2), getAuthorByID(resultSet.getInt(3))
                             ,LocalDate.parse(resultSet.getString(4)), resultSet.getInt(5),resultSet.getDouble(6));
-                    temp.setOrdered(itob(resultSet.getInt(7)));
+                    temp.setAccessible(itob(resultSet.getInt(7)));
                     BookList.add(temp);
                 }
                 close();

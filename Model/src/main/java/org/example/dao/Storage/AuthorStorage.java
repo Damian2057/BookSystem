@@ -1,6 +1,7 @@
 package org.example.dao.Storage;
 
 import org.example.Exceptions.Model.WrongAuthorExeption;
+import org.example.dao.ClassFactory;
 import org.example.model.Author;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +9,13 @@ import org.slf4j.LoggerFactory;
 public class AuthorStorage extends Storage<Author>{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    public AuthorStorage() {
+    private String URL;
+    public AuthorStorage(String URL) throws Exception {
+        this.URL = URL;
+        for (Author a :
+                ClassFactory.getJDBCBookSystem(URL).getListofAuthors()) {
+            getAllElementsFromStorage().add(a);
+        }
     }
 
     public Author getAuthor(int ID) throws Exception {
@@ -31,8 +37,9 @@ public class AuthorStorage extends Storage<Author>{
     }
 
     @Override
-    public void addElement(Author obj) {
+    public void addElement(Author obj) throws Exception {
         getAllElementsFromStorage().add(obj);
         // synchronization with data BASE aDD
+        ClassFactory.getJDBCBookSystem(URL).addAuthor(obj);
     }
 }

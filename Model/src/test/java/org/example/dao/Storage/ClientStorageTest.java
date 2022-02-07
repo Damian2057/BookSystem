@@ -9,7 +9,7 @@ class ClientStorageTest {
     @Test
     void getClient() {
 
-        ClientStorage clientStorage = new ClientStorage();
-        clientStorage.getAllElementsFromStorage();
+//        ClientStorage clientStorage = new ClientStorage();
+//        clientStorage.getAllElementsFromStorage();
     }
 }

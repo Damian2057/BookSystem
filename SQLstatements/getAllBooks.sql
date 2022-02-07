@@ -1,2 +1,2 @@
-SELECT id, title, AuthorID, publicationDate, pageCount, price, isOrdered
+SELECT id, title, AuthorID, publicationDate, pageCount, price, accessible
 FROM Books

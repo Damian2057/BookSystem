@@ -52,7 +52,7 @@ public abstract class Personnel {
         this.permLevel = permLevel;
     }
 
-    public void initAccess(String URL) {
+    public void initAccess(String URL) throws Exception {
         this.mainStorage = new MainStorage(URL);
     }
 
@@ -60,7 +60,7 @@ public abstract class Personnel {
         return mainStorage;
     }
 
-    public void addClient(String firstName, String lastName, String phoneNumber, String email, String address) {
+    public void addClient(String firstName, String lastName, String phoneNumber, String email, String address) throws Exception {
         mainStorage.addClient(firstName,lastName,phoneNumber,email,address);
     }
 
@@ -68,7 +68,7 @@ public abstract class Personnel {
         return mainStorage.getClient(ID);
     }
 
-    public void addAuthor(String firstName, String lastName, LocalDate  birthdate, LocalDate  deathDate) {
+    public void addAuthor(String firstName, String lastName, LocalDate  birthdate, LocalDate  deathDate) throws Exception {
         mainStorage.addAuthor(firstName, lastName, birthdate, deathDate);
     }
 
@@ -85,7 +85,7 @@ public abstract class Personnel {
         return mainStorage.getBook(ID);
     }
 
-    public void removeBook(int ID) {
+    public void removeBook(int ID) throws Exception {
         mainStorage.removeBook(ID);
     }
 

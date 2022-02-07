@@ -5,6 +5,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import java.time.LocalDate;
 import static java.util.ResourceBundle.getBundle;
+
+import org.example.dao.Storage.MainStorage;
 import org.example.dao.jdbcmodel.JDBCBookSystem;
 import org.example.dao.jdbcmodel.JDBCLoginSystem;
 import org.example.model.Author;
@@ -35,27 +37,12 @@ public class App extends Application {
         Client client = new Client(2,"roman", "yzx"
                 ,"795648631","yxz@gmail.com","city 954 nr. 54");
 
-       try (var bookSystem = new JDBCBookSystem("jdbc:derby:BookSystem;create=true")){
-           //bookSystem.createDataBase();
-//           bookSystem.addClient(client);
-//           bookSystem.addAuthor(author);
-         //  bookSystem.addBook(book);
-//           Order order = new Order(5,client, LocalDate.now().plusDays(1),LocalDate.now().plusDays(5));
-//           order.addBookToOrder(book);
-//           order.addBookToOrder(book2);
-//           bookSystem.addOrder(order);
-         //  bookSystem.deleteBookInOrder(5,2);
-//           bookSystem.addBook(book2);
-//              bookSystem.addBookToOrder(5,book2);
-             // bookSystem.UpdateOrderStatus(5,false);
-       }
+       try {
+           MainStorage mainStorage = new MainStorage("jdbc:derby:BookSystem;create=true");
+           mainStorage.addAuthor("KAte", "cos", LocalDate.parse("2020-01-08"),LocalDate.parse("2080-01-08"));
 
-       try(var loginSystem= new JDBCLoginSystem("jdbc:derby:LoginSystem", "admin", "admin")) {
-          // loginSystem.createDataBase();
-          // Personnel personnel = new Admin("antek", "antek",4);
-        //loginSystem.addPersonel(personnel);
-           //loginSystem.updatePersonnel("Password",2,"coscos");
-           System.out.println(loginSystem.loginPersonel("antek", "antek"));
+       } catch (Exception e) {
+           e.printStackTrace();
        }
 
         System.exit(0);

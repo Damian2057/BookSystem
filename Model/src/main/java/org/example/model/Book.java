@@ -1,7 +1,6 @@
 package org.example.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Book {
     private final int ID;
@@ -10,7 +9,7 @@ public class Book {
     private LocalDate publishDate;
     private int pageCount;
     private double basicOrderPricePerDay;
-    private boolean isOrdered = false;
+    private boolean accessible = true;
 
     public Book(int ID,String title, Author author, LocalDate publishDate, int pageCount, double basicOrderPrice) {
         this.ID = ID;
@@ -45,11 +44,11 @@ public class Book {
         return pageCount;
     }
 
-    public boolean isOrdered() {
-        return isOrdered;
+    public boolean isAccessible() {
+        return accessible;
     }
 
-    public void setOrdered(boolean ordered) {
-        isOrdered = ordered;
+    public void setAccessible(boolean accessible) {
+        this.accessible = accessible;
     }
 }

@@ -69,18 +69,17 @@ public class Order {
     }
 
     public void addBookToOrder(Book obj) {
-        if(!obj.isOrdered()) {
+        if(obj.isAccessible()) {
             int period = Period.between(LocalDate.now(),startReservationdate).getDays();
             if(period >= 0) {
                 logger.info("Book ID:"+ obj.getID()+" successfully added");
                 books.add(obj);
-                obj.setOrdered(true);
             } else {
                 logger.error("Book ID:"+ obj.getID()+" cannot be added");
                 throw new OrderTimeException();
             }
         } else {
-            logger.error("Book ID:"+ obj.getID()+" is already on loan");
+            logger.error("Book ID:"+ obj.getID()+" is not accessible");
             throw new BookalreadyOrderedException();
         }
     }
@@ -98,7 +97,6 @@ public class Order {
         if(period >= 0) {
             for (int i = 0; i < books.size(); i++) {
                 if(objID == books.get(i).getID()) {
-                    books.get(i).setOrdered(false);
                     logger.info("Book ID:"+ objID+" successfully removed");
                     books.remove(i);
                 }
@@ -118,7 +116,6 @@ public class Order {
                 int period = Period.between(startReservationdate, LocalDate.now()).getDays();
                 for (Book o : books) {
                     sum += o.getBasicOrderPrice()*period;
-                    o.setOrdered(false);
                 }
             } else {
                 int extraDuration = Math.abs(aheadTime);
@@ -126,7 +123,6 @@ public class Order {
                 for (Book o : books) {
                     sum += o.getBasicOrderPrice()*normalDuration
                             + (o.getBasicOrderPrice()+2)*extraDuration;
-                    o.setOrdered(false);
                 }
             }
             logger.info("Order successfully removed, amount to pay: "+ sum*client.getReduction());

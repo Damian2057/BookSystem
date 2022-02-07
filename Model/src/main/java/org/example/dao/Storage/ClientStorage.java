@@ -1,6 +1,8 @@
 package org.example.dao.Storage;
 
+import org.example.Exceptions.Dao.WrongdataChooseException;
 import org.example.Exceptions.Model.WrongBookIDException;
+import org.example.Exceptions.Model.WrongClientIDException;
 import org.example.dao.ClassFactory;
 import org.example.model.Author;
 import org.example.model.Client.Client;
@@ -46,11 +48,38 @@ public class ClientStorage extends Storage<Client>{
             }
         }
         logger.error("Cannot Find Client with ID: "+ ID);
-        throw new WrongBookIDException();
+        throw new WrongClientIDException();
     }
 
-    public void UpdateClient(int ID, String newData ,String partToUpdate){
-
+    public void UpdateClient(int ID, String newData ,String partToUpdate) throws Exception {
+        switch (partToUpdate) {
+            case "address":
+                getClient(ID).setAddress(newData);
+                ClassFactory.getJDBCBookSystem(URL).UpdateClient(ID,newData,partToUpdate);
+                break;
+            case "email":
+                getClient(ID).setEmailAddress(newData);
+                ClassFactory.getJDBCBookSystem(URL).UpdateClient(ID,newData,partToUpdate);
+                break;
+            case "lastname":
+                getClient(ID).setLastName(newData);
+                ClassFactory.getJDBCBookSystem(URL).UpdateClient(ID,newData,partToUpdate);
+                break;
+            case "name":
+                getClient(ID).setFirstName(newData);
+                ClassFactory.getJDBCBookSystem(URL).UpdateClient(ID,newData,partToUpdate);
+                break;
+            case "order":
+                getClient(ID).setOrderCount(Integer.parseInt(newData));
+                ClassFactory.getJDBCBookSystem(URL).UpdateClient(ID,newData,partToUpdate);
+                break;
+            case "phone":
+                getClient(ID).setPhoneNumber(newData);
+                ClassFactory.getJDBCBookSystem(URL).UpdateClient(ID,newData,partToUpdate);
+                break;
+            default:
+                throw new WrongdataChooseException();
+        }
     }
 
     public int getTopID() {

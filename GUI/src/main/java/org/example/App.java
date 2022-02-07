@@ -39,9 +39,8 @@ public class App extends Application {
 
        try {
            MainStorage mainStorage = new MainStorage("jdbc:derby:BookSystem;create=true");
-          // mainStorage.addAuthor("KAte", "cos", LocalDate.parse("2020-01-08"),LocalDate.parse("2080-01-08"));
-           // mainStorage.getAuthorStorage().updateAuthor(3,"name","name");
-           System.out.println(mainStorage.getAuthorStorage().getCountOfElements());
+
+           mainStorage.getClientStorage().UpdateClient(2,"zmiana","name");
        } catch (Exception e) {
            e.printStackTrace();
        }

@@ -2,7 +2,7 @@
 <Configuration status="INFO">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%highlight{[%-5level]}{FATAL=red, ERROR=red, WARN=yellow, INFO=black, DEBUG=green, TRACE=blue} %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+            <PatternLayout pattern="%highlight{[%-5level]}{FATAL=red, ERROR=red, WARN=yellow, INFO=black, DEBUG=green, TRACE=blue} %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n" />
         </Console>
         <RollingFile name="RollingFile" fileName="logs/log-${date:yyyy-MM-dd}.log" filePattern="logs/app-%d{MM-dd-yyyy}.log.gz"
                      ignoreExceptions="false">

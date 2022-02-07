@@ -26,21 +26,10 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.debug("Starting Application...");
-
-        Author author = new Author(1,"xyz", "zyx", LocalDate.parse("2020-01-08"));
-        Book book = new Book(1,"Titanic", new Author(1,"xyz", "zyx"
-                , LocalDate.parse("2001-10-15"))
-                ,LocalDate.parse("2015-10-16"),200,51.50);
-        Book book2 = new Book(3,"Titanic", new Author(1,"xyz", "zyx"
-                , LocalDate.parse("2001-10-15"))
-                ,LocalDate.parse("2015-10-16"),200,51.50);
-        Client client = new Client(2,"roman", "yzx"
-                ,"795648631","yxz@gmail.com","city 954 nr. 54");
-
        try {
            MainStorage mainStorage = new MainStorage("jdbc:derby:BookSystem;create=true");
 
-           mainStorage.getClientStorage().UpdateClient(2,"zmiana","name");
+           mainStorage.addBook("xyz",3,LocalDate.parse("2015-10-16"),200,51.50);
        } catch (Exception e) {
            e.printStackTrace();
        }

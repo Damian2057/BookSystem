@@ -78,7 +78,7 @@ public abstract class Personnel {
 
     public void addBook(String title, int AuthorID, LocalDate publishDate
             , int pagecount, double price) throws Exception {
-        mainStorage.addBook(title, mainStorage.getAuthorStorage().getAuthor(AuthorID),publishDate,pagecount,price);
+        mainStorage.addBook(title, AuthorID,publishDate,pagecount,price);
     }
 
     public Book getBook(int ID) throws Exception {

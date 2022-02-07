@@ -20,15 +20,15 @@ public class MainStorage {
 
 
     public MainStorage(String URL) throws Exception {
-        authorStorage = new AuthorStorage(URL);
-        bookStorage = new BookStorage(URL);
-        clientStorage = new ClientStorage(URL);
-        orderStorage = new OrderStorage(URL);
         try {
             ClassFactory.getJDBCBookSystem(URL).createDataBase();
         } catch (Exception e) {
             logger.info("Data base exist");
         }
+        authorStorage = new AuthorStorage(URL);
+        bookStorage = new BookStorage(URL);
+        clientStorage = new ClientStorage(URL);
+        orderStorage = new OrderStorage(URL);
     }
 
     public AuthorStorage getAuthorStorage() {
@@ -73,8 +73,8 @@ public class MainStorage {
         return authorStorage.getAuthor(ID);
     }
 
-    public void addBook(String title, Author author, LocalDate publishDate, int pagecount, double price) throws Exception {
-        bookStorage.addElement(new Book(bookStorage.getTopID()+1, title, author, publishDate, pagecount, price));
+    public void addBook(String title, int authorID, LocalDate publishDate, int pagecount, double price) throws Exception {
+        bookStorage.addElement(new Book(bookStorage.getTopID()+1, title, getAuthorStorage().getAuthor(authorID), publishDate, pagecount, price));
     }
 
     public void removeBook(int ID) throws Exception {

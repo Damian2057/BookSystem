@@ -1,5 +1,6 @@
 package org.example.dao.Storage;
 
+import org.example.Exceptions.Dao.ObjectsDependentException;
 import org.example.Exceptions.Dao.WrongdataChooseException;
 import org.example.Exceptions.Model.WrongBookIDException;
 import org.example.Exceptions.Model.WrongClientIDException;
@@ -43,7 +44,8 @@ public class ClientStorage extends Storage<Client>{
                     ClassFactory.getJDBCBookSystem(URL).deleteClient(ID);
                     return;
                 } else {
-                    logger.error("Cannot delete Client due to Orders");
+                    logger.error("cannot delete a customer because he is bound by orders");
+                    throw new ObjectsDependentException();
                 }
             }
         }

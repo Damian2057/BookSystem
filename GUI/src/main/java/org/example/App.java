@@ -10,6 +10,7 @@ import org.example.dao.jdbcmodel.JDBCLoginSystem;
 import org.example.model.Author;
 import org.example.model.Book;
 import org.example.model.Client.Client;
+import org.example.model.users.Admin;
 import org.example.model.users.Personnel;
 import org.example.model.users.Worker;
 import org.slf4j.Logger;
@@ -49,11 +50,12 @@ public class App extends Application {
              // bookSystem.UpdateOrderStatus(5,false);
        }
 
-       try(var loginSystem= new JDBCLoginSystem("jdbc:derby:LoginSystem;create=true")) {
-           //loginSystem.createDataBase();
-           Personnel personnel = new Worker("Roman", "admin",2,2);
+       try(var loginSystem= new JDBCLoginSystem("jdbc:derby:LoginSystem", "admin", "admin")) {
+          // loginSystem.createDataBase();
+          // Personnel personnel = new Admin("antek", "antek",4);
         //loginSystem.addPersonel(personnel);
-           loginSystem.updatePersonnel("Password",2,"coscos");
+           //loginSystem.updatePersonnel("Password",2,"coscos");
+           System.out.println(loginSystem.loginPersonel("antek", "antek"));
        }
 
         System.exit(0);

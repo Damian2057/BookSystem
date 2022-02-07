@@ -11,8 +11,8 @@ public class ClassFactory {
         return new JDBCBookSystem(URL);
     }
 
-    public static JDBCLoginSystem getJDBCLoginSystem(String URL) throws Exception {
-        return new JDBCLoginSystem(URL);
+    public static JDBCLoginSystem getJDBCLoginSystem(String URL, String user, String password) throws Exception {
+        return new JDBCLoginSystem(URL, user, password);
     }
 
 

@@ -15,14 +15,13 @@ public abstract class Personnel {
     private String nickName;
     private String password;
     private final int ID;
-    private final int permLevel;
+    private int permLevel;
     private MainStorage mainStorage;
 
-    public Personnel(String nickName, String password, int ID, int permLevel) {
+    public Personnel(String nickName, String password, int ID) {
         this.nickName = nickName;
         this.password = password;
         this.ID = ID;
-        this.permLevel = permLevel;
     }
 
     public void setNickName(String nickName) {
@@ -47,6 +46,10 @@ public abstract class Personnel {
 
     public int getPermLevel() {
         return permLevel;
+    }
+
+    public void setPermLevel(int permLevel) {
+        this.permLevel = permLevel;
     }
 
     public void initAccess(String URL) {

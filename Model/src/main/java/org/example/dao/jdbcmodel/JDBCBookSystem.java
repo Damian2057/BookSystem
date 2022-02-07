@@ -562,7 +562,7 @@ public class JDBCBookSystem implements AutoCloseable{
         return null;
     }
 
-    private Order getOrderByID(int ID) throws Exception {
+    public Order getOrderByID(int ID) throws Exception {
         for(int i = 0; i < getAllofOrders().size(); i++) {
             if(ID == getAllofOrders().get(i).getID()) {
                 return getAllofOrders().get(i);

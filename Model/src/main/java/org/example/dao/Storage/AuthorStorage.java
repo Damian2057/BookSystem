@@ -6,6 +6,9 @@ import org.example.model.Author;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
+import java.util.Objects;
+
 public class AuthorStorage extends Storage<Author>{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -26,6 +29,19 @@ public class AuthorStorage extends Storage<Author>{
         }
         logger.error("Cannot Find Author with ID: "+ ID);
         throw new WrongAuthorExeption();
+    }
+
+    public void updateAuthor(int ID, String newData ,String partToUpdate) throws Exception {
+        if(Objects.equals(partToUpdate, "deathdate")) {
+            getAuthor(ID).setDeathDate(LocalDate.parse(newData));
+            ClassFactory.getJDBCBookSystem(URL).updateAuthor(ID,newData,partToUpdate);
+        } else if(Objects.equals(partToUpdate, "lastname")){
+            getAuthor(ID).setLastName(newData);
+            ClassFactory.getJDBCBookSystem(URL).updateAuthor(ID,newData,partToUpdate);
+        } else if(Objects.equals(partToUpdate, "name")) {
+            getAuthor(ID).setFirstName(newData);
+            ClassFactory.getJDBCBookSystem(URL).updateAuthor(ID,newData,partToUpdate);
+        }
     }
 
     public int getTopID() {

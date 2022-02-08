@@ -88,8 +88,8 @@ public abstract class Personnel {
         mainStorage.removeElementfromAccessible(ID);
     }
 
-    public void createOrder(int clientID, LocalDate SDate, LocalDate EDate) throws Exception {
-        mainStorage.createOrder(mainStorage.getClientStorage().getClient(clientID),SDate,EDate);
+    public void createOrder(int clientID, int bookID, LocalDate SDate, LocalDate EDate) throws Exception {
+        mainStorage.createOrder(clientID,bookID,SDate,EDate);
     }
 
     public Order getOrder(int ID) throws Exception {

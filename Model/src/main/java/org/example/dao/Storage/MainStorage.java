@@ -61,12 +61,13 @@ public class MainStorage {
 
 
     public void addAuthor(String firstName, String lastName, LocalDate  birthdate, LocalDate deathDate) throws Exception {
-        if(deathDate == null) {
-            authorStorage.addElement(new Author(authorStorage.getTopID()+1,firstName,lastName,birthdate));
+            authorStorage.addElement(new Author(authorStorage.getTopID()+1
+                    ,firstName,lastName,birthdate,deathDate));
+    }
 
-        } else {
-            authorStorage.addElement(new Author(authorStorage.getTopID()+1,firstName,lastName,birthdate,deathDate));
-        }
+    public void addAuthor(String firstName, String lastName, LocalDate  birthdate) throws Exception {
+        authorStorage.addElement(new Author(authorStorage.getTopID()+1
+                ,firstName,lastName,birthdate));
     }
 
     public Author getAuthor(int ID) throws Exception {
@@ -93,16 +94,18 @@ public class MainStorage {
         return bookStorage.getBook(ID);
     }
 
-    public void createOrder(Client client, LocalDate SDate, LocalDate EDate) throws Exception {
-        orderStorage.addElement(new Order(orderStorage.getTopID()+1,client, SDate, EDate));
+    public void createOrder(int clientID,int bookID, LocalDate SDate, LocalDate EDate) throws Exception {
+        Order temp = new Order(orderStorage.getTopID()+1,clientStorage.getClient(clientID), SDate, EDate);
+        temp.addBookToOrder(bookStorage.getBook(bookID));
+        orderStorage.addElement(temp);
     }
 
     public void addBookToOrder(int OrderID, int bookID) throws Exception {
-        orderStorage.getOrder(OrderID).addBookToOrder(bookStorage.getBook(bookID));
+        orderStorage.addBookToOrder(OrderID,bookStorage.getBook(bookID));
     }
 
     public void removeBookFromOrder(int OrderID, int bookID) throws Exception {
-        orderStorage.getOrder(OrderID).removeBookFromOrder(bookID);
+        orderStorage.removeBookFromOrder(OrderID,bookID);
     }
 
     public Order getOrder(int ID) throws Exception {

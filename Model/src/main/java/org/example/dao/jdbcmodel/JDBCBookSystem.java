@@ -523,7 +523,6 @@ public class JDBCBookSystem implements AutoCloseable{
         logger.info("An attempt of update Order in the database");
         try(PreparedStatement preparedStatement = connection
                 .prepareStatement(readstatement("@../../SQLStatements/addOrder.sql"))) {
-
             connection.setAutoCommit(false);
             preparedStatement.setInt(1,OrderID);
             preparedStatement.setInt(2,temp.getClientID());

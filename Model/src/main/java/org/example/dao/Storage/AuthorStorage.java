@@ -1,6 +1,7 @@
 package org.example.dao.Storage;
 
 import org.example.Exceptions.Model.WrongAuthorExeption;
+import org.example.Exceptions.data.InvalidformatException;
 import org.example.dao.ClassFactory;
 import org.example.model.Author;
 import org.slf4j.Logger;
@@ -33,8 +34,13 @@ public class AuthorStorage extends Storage<Author>{
 
     public void updateAuthor(int ID, String newData ,String partToUpdate) throws Exception {
         if(Objects.equals(partToUpdate, "deathdate")) {
-            getAuthor(ID).setDeathDate(LocalDate.parse(newData));
-            ClassFactory.getJDBCBookSystem(URL).updateAuthor(ID,newData,partToUpdate);
+            try {
+                getAuthor(ID).setDeathDate(LocalDate.parse(newData));
+                ClassFactory.getJDBCBookSystem(URL).updateAuthor(ID,newData,partToUpdate);
+            } catch (Exception e) {
+                logger.error("Attempt to enter a date with wrong format ");
+                throw new InvalidformatException();
+            }
         } else if(Objects.equals(partToUpdate, "lastname")){
             getAuthor(ID).setLastName(newData);
             ClassFactory.getJDBCBookSystem(URL).updateAuthor(ID,newData,partToUpdate);

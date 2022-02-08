@@ -18,7 +18,7 @@ public class OrderStorage extends Storage<Order>{
     public OrderStorage(String URL) throws Exception {
         this.URL = URL;
         for (Order a :
-                ClassFactory.getJDBCBookSystem(URL).getAllofOrders()) {
+                ClassFactory.getJDBCBookSystem(URL).getAllofOrdersINIT()) {
             getAllElementsFromStorage().add(a);
         }
     }
@@ -64,6 +64,24 @@ public class OrderStorage extends Storage<Order>{
     public void removeBookFromOrder(int OrderID, int bookID) throws Exception {
         getOrder(OrderID).removeBookFromOrder(bookID);
         ClassFactory.getJDBCBookSystem(URL).deleteBookInOrder(OrderID, bookID);
+    }
+
+    public double endOrder(int OrderID) throws Exception {
+        double sum = 0;
+        boolean flag = false;
+        for (int i = 0; i < getAllElementsFromStorage().size(); i++) {
+            if(OrderID == getAllElementsFromStorage().get(i).getID()){
+                sum = getOrder(OrderID).endOrder();
+                ClassFactory.getJDBCBookSystem(URL).addClientOrderCount(getOrder(OrderID).getClientID());
+                getAllElementsFromStorage().remove(i);
+                ClassFactory.getJDBCBookSystem(URL).removeOrder(OrderID);
+                flag = true;
+            }
+        }
+        if(!flag) {
+            throw new WrongOrderIDException();
+        }
+            return sum;
     }
 
     @Override

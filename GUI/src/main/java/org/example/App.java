@@ -28,10 +28,12 @@ public class App extends Application {
         logger.debug("Starting Application...");
        try {
            MainStorage mainStorage = new MainStorage("jdbc:derby:BookSystem;create=true");
-            mainStorage.createOrder(2,1,LocalDate.parse("2022-02-09"),LocalDate.parse("2022-02-12"));
+          //  mainStorage.createOrder(2,1,LocalDate.parse("2022-02-09"),LocalDate.parse("2022-02-12"));
           //  mainStorage.addBookToOrder(1,2);
          //   mainStorage.addBookToOrder(1,3);
         //   mainStorage.addBookToOrder(1,5);
+          // mainStorage.addBookToOrder(2,2);
+           System.out.println(mainStorage.endOrderandGetSum(3));
        } catch (Exception e) {
            e.printStackTrace();
        }

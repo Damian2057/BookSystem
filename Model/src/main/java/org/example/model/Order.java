@@ -26,6 +26,7 @@ public class Order {
     public Order(int ID, Client client, LocalDate startReservationdate, LocalDate endReservationDate) {
 
         if(Period.between(startReservationdate,endReservationDate).getDays() < 0) {
+            logger.error("Attempting to create an order with an incorrect date ");
             throw new IncorrectOrderDateException();
         }
 
@@ -66,6 +67,10 @@ public class Order {
     public void setEndReservationDate(LocalDate endReservationDate) {
         logger.info("Order EDate change to: " + endReservationDate);
         this.endReservationDate = endReservationDate;
+    }
+
+    public void onlyForInit(Book obj) {
+        books.add(obj);
     }
 
     public void addBookToOrder(Book obj) {
@@ -112,12 +117,18 @@ public class Order {
             client.addOrderCount();
             double sum = 0;
             int aheadTime  = Period.between(LocalDate.now(), endReservationDate).getDays();
-            if(aheadTime >= 0) {
+            if(aheadTime >= 0) { //ending before / on time
+                logger.info("Order ID: {} delivered on time ", ID);
                 int period = Period.between(startReservationdate, LocalDate.now()).getDays();
+                if(period <= 0) {
+                    logger.info("Order ID: {} canceled and removed  ", ID);
+                    return 0;
+                }
                 for (Book o : books) {
                     sum += o.getBasicOrderPrice()*period;
                 }
-            } else {
+            } else { //time extension
+                logger.info("Order ID: {} not delivered on time ", ID);
                 int extraDuration = Math.abs(aheadTime);
                 int normalDuration = Period.between(startReservationdate, endReservationDate).getDays();
                 for (Book o : books) {

@@ -146,4 +146,14 @@ class OrderTest {
         order6.addBookToOrder(book4);
         assertEquals(order6.getCountOfOrderedBooks(),1);
     }
+
+    @Test
+    void endOrderbefore() {
+        Book book3 = new Book(1,"Titanic", new Author(1,"xyz", "zyx"
+                , LocalDate.parse("2001-10-15"))
+                ,LocalDate.parse("2015-10-16"),200,5);
+        Order order = new Order(8,client, LocalDate.now().plusDays(2),LocalDate.now().plusDays(3));
+        order.addBookToOrder(book3);
+        assertEquals(order.endOrder(),0);
+    }
 }

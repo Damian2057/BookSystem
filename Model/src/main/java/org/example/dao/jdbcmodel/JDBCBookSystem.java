@@ -57,7 +57,7 @@ public class JDBCBookSystem implements AutoCloseable{
     public void createDataBase() {
         try {
             connectToDataBase();
-            logger.info("DataBase creation attempt");
+            logger.debug("DataBase creation attempt");
             statement.execute(readstatement("@../../SQLStatements/AuthorTablecreate.sql"));
             statement.execute(readstatement("@../../SQLStatements/BookTablecreate.sql"));
             statement.execute(readstatement("@../../SQLStatements/ClientTablecreate.sql"));
@@ -236,6 +236,30 @@ public class JDBCBookSystem implements AutoCloseable{
             connection.setAutoCommit(false);
             preparedStatement.setString(1, newData);
             preparedStatement.setString(2,String.valueOf(ID));
+            preparedStatement.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
+            logger.info("The Client has been Updated");
+            close();
+        } catch (SQLException throwables) {
+            connection.rollback();
+            logger.error("Something goes wrong during update");
+        } catch (Exception e) {
+            logger.error("Something goes wrong during update");
+            throw new StatementReadException();
+        }
+    }
+
+    public void addClientOrderCount(int ClientID) throws Exception {
+        int sum = getClientbyID(ClientID).getOrderCount();
+        connectToDataBase();
+        logger.info("An attempt of add Order Client count in the database");
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/updateClientorder.sql"))) {
+
+            connection.setAutoCommit(false);
+            preparedStatement.setInt(1, sum+1);
+            preparedStatement.setInt(2,ClientID);
             preparedStatement.executeUpdate();
             connection.commit();
             connection.setAutoCommit(true);
@@ -432,6 +456,48 @@ public class JDBCBookSystem implements AutoCloseable{
                         temp = new Order(resultSet.getInt(1),getClientbyID(resultSet.getInt(2))
                                 ,LocalDate.parse(resultSet.getString(3)),LocalDate.parse(resultSet.getString(4)));
                         temp.addBookToOrder(getBookbyID(resultSet.getInt(5)));
+                        temp.setCompleted(itob(resultSet.getInt(6)));
+                        index ++;
+                        OrderList.add(temp);
+                    }
+                }
+                close();
+                return OrderList;
+            } catch (SQLException throwables) {
+                logger.error("Error during getting Order list");
+                close();
+                throw new DownloadDataException();
+            }
+        } catch (SQLException throwables) {
+            logger.error("Error connected with Order SQL Script");
+            close();
+            throw new StatementReadException();
+        }
+    }
+
+    public ArrayList<Order> getAllofOrdersINIT() throws Exception {
+        connectToDataBase();
+        var OrderList = new ArrayList<Order>();
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/getAllOrders.sql"))) {
+            try {
+                var resultSet = preparedStatement.executeQuery();
+                int index = 0;
+                while (resultSet.next()) {
+                    Order temp = null;
+                    if(OrderList.isEmpty()) {
+                        temp = new Order(resultSet.getInt(1),getClientbyID(resultSet.getInt(2))
+                                ,LocalDate.parse(resultSet.getString(3)),LocalDate.parse(resultSet.getString(4)));
+                        temp.onlyForInit(getBookbyID(resultSet.getInt(5)));
+                        temp.setCompleted(itob(resultSet.getInt(6)));
+                        index ++;
+                        OrderList.add(temp);
+                    } else if(OrderList.get(index-1).getID() == resultSet.getInt(1)) {
+                        OrderList.get(index-1).onlyForInit(getBookbyID(resultSet.getInt(5)));
+                    } else {
+                        temp = new Order(resultSet.getInt(1),getClientbyID(resultSet.getInt(2))
+                                ,LocalDate.parse(resultSet.getString(3)),LocalDate.parse(resultSet.getString(4)));
+                        temp.onlyForInit(getBookbyID(resultSet.getInt(5)));
                         temp.setCompleted(itob(resultSet.getInt(6)));
                         index ++;
                         OrderList.add(temp);

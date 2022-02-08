@@ -25,10 +25,12 @@ public class MainStorage {
         } catch (Exception e) {
             logger.info("Data base exist");
         }
+        logger.debug("Initializing of Storage");
         authorStorage = new AuthorStorage(URL);
         bookStorage = new BookStorage(URL);
         clientStorage = new ClientStorage(URL);
         orderStorage = new OrderStorage(URL);
+        logger.info("Initializing of Storage status: complete");
     }
 
     public AuthorStorage getAuthorStorage() {
@@ -95,12 +97,15 @@ public class MainStorage {
     }
 
     public void createOrder(int clientID,int bookID, LocalDate SDate, LocalDate EDate) throws Exception {
+        //checking if the book is available on that date
+
         Order temp = new Order(orderStorage.getTopID()+1,clientStorage.getClient(clientID), SDate, EDate);
         temp.addBookToOrder(bookStorage.getBook(bookID));
         orderStorage.addElement(temp);
     }
 
     public void addBookToOrder(int OrderID, int bookID) throws Exception {
+        //checking if the book is available on that date
         orderStorage.addBookToOrder(OrderID,bookStorage.getBook(bookID));
     }
 
@@ -117,7 +122,7 @@ public class MainStorage {
     }
 
     public double endOrderandGetSum(int ID) throws Exception {
-        return orderStorage.getOrder(ID).endOrder();
+        return orderStorage.endOrder(ID);
     }
 
 }

@@ -8,7 +8,6 @@ import org.example.model.Order;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public abstract class Personnel {
 
@@ -86,7 +85,7 @@ public abstract class Personnel {
     }
 
     public void removeBook(int ID) throws Exception {
-        mainStorage.removeBook(ID);
+        mainStorage.removeElementfromAccessible(ID);
     }
 
     public void createOrder(int clientID, LocalDate SDate, LocalDate EDate) throws Exception {

@@ -331,6 +331,52 @@ public class JDBCBookSystem implements AutoCloseable{
         }
     }
 
+    public void UpdateBook(int ID, double newData ,String partToUpdate) throws SQLException {
+        connectToDataBase();
+        logger.info("An attempt of update Book in the database");
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/updateBook"+ partToUpdate +".sql"))) {
+
+            connection.setAutoCommit(false);
+            preparedStatement.setDouble(1, newData);
+            preparedStatement.setString(2,String.valueOf(ID));
+            preparedStatement.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
+            logger.info("The Book has been Updated");
+            close();
+        } catch (SQLException throwables) {
+            connection.rollback();
+            logger.error("Something goes wrong during update");
+        } catch (Exception e) {
+            logger.error("Something goes wrong during update");
+            throw new StatementReadException();
+        }
+    }
+
+    public void UpdateBook(int ID, String newData , String partToUpdate) throws SQLException {
+        connectToDataBase();
+        logger.info("An attempt of update Book in the database");
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement(readstatement("@../../SQLStatements/updateBook"+ partToUpdate +".sql"))) {
+
+            connection.setAutoCommit(false);
+            preparedStatement.setString(1, newData);
+            preparedStatement.setString(2,String.valueOf(ID));
+            preparedStatement.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
+            logger.info("The Book has been Updated");
+            close();
+        } catch (SQLException throwables) {
+            connection.rollback();
+            logger.error("Something goes wrong during update");
+        } catch (Exception e) {
+            logger.error("Something goes wrong during update");
+            throw new StatementReadException();
+        }
+    }
+
     public void addOrder(Order order) throws SQLException {
         connectToDataBase();
         logger.info("An attempt to enter the Order in the database");

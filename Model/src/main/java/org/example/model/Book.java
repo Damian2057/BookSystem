@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Book {
     private final int ID;
-    private final String title;
+    private String title;
     private Author author;
     private LocalDate publishDate;
     private int pageCount;
@@ -34,6 +34,22 @@ public class Book {
 
     public Author getAuthor() {
         return author;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPublishDate(LocalDate publishDate) {
+        this.publishDate = publishDate;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    public void setBasicOrderPricePerDay(double basicOrderPricePerDay) {
+        this.basicOrderPricePerDay = basicOrderPricePerDay;
     }
 
     public LocalDate getPublishDate() {

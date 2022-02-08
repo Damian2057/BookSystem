@@ -77,8 +77,16 @@ public class MainStorage {
         bookStorage.addElement(new Book(bookStorage.getTopID()+1, title, getAuthorStorage().getAuthor(authorID), publishDate, pagecount, price));
     }
 
-    public void removeBook(int ID) throws Exception {
+    public void removeElementfromAccessible(int ID) throws Exception {
         bookStorage.removeElementfromAccessible(ID);
+    }
+
+    public void updateBook(int ID, String newData ,String partToUpdate) throws Exception {
+        bookStorage.UpdateBook(ID,newData,partToUpdate);
+    }
+
+    public void addElementToAccessible(int ID) throws Exception {
+        bookStorage.addElementToAccessible(ID);
     }
 
     public Book getBook(int ID) throws Exception {

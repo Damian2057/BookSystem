@@ -1,0 +1,1 @@
+update Books set price = (?) where id = (?)

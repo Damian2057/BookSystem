@@ -2,6 +2,8 @@ package org.example.dao.Storage;
 
 import org.example.Exceptions.Dao.WrongdataChooseException;
 import org.example.Exceptions.Model.WrongBookIDException;
+import org.example.Exceptions.data.InvalidcharacterException;
+import org.example.Exceptions.data.InvalidformatException;
 import org.example.dao.ClassFactory;
 import org.example.model.Book;
 import org.slf4j.Logger;
@@ -88,12 +90,22 @@ public class BookStorage extends Storage<Book> {
                 getBook(ID).setTitle(newData);
             }
             case "publicationDate" -> {
-                ClassFactory.getJDBCBookSystem(URL).UpdateBook(ID, newData, partToUpdate);
-                getBook(ID).setPublishDate(LocalDate.parse(newData));
+                try {
+                    ClassFactory.getJDBCBookSystem(URL).UpdateBook(ID, newData, partToUpdate);
+                    getBook(ID).setPublishDate(LocalDate.parse(newData));
+                } catch (Exception e) {
+                    logger.error("Attempt to enter a date with wrong format ");
+                    throw new InvalidformatException();
+                }
             }
             case "price" -> {
-                ClassFactory.getJDBCBookSystem(URL).UpdateBook(ID, Double.parseDouble(newData), partToUpdate);
-                getBook(ID).setBasicOrderPricePerDay(Double.parseDouble(newData));
+                try {
+                    ClassFactory.getJDBCBookSystem(URL).UpdateBook(ID, Double.parseDouble(newData), partToUpdate);
+                    getBook(ID).setBasicOrderPricePerDay(Double.parseDouble(newData));
+                } catch (Exception e) {
+                    logger.error("Attempting to enter a price with incorrect symbols ");
+                    throw new InvalidcharacterException();
+                }
             }
             default -> throw new WrongdataChooseException();
         }

@@ -30,7 +30,7 @@ public class App extends Application {
            MainStorage mainStorage = new MainStorage("jdbc:derby:BookSystem;create=true");
 
            //mainStorage.addBook("xyz",2,LocalDate.parse("2015-10-16"),200,51.50);
-           mainStorage.updateBook(3,"2005-12-15","publicationDate");
+           mainStorage.updateBook(3,"xd","price");
        } catch (Exception e) {
            e.printStackTrace();
        }

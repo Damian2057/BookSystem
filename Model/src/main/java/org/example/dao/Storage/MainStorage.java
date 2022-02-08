@@ -1,5 +1,6 @@
 package org.example.dao.Storage;
 
+import org.example.Exceptions.data.DataConflictException;
 import org.example.dao.ClassFactory;
 import org.example.model.Author;
 import org.example.model.Book;
@@ -8,6 +9,7 @@ import org.example.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 
 public class MainStorage {
@@ -17,9 +19,11 @@ public class MainStorage {
     private ClientStorage clientStorage;
     private OrderStorage orderStorage;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private String URL;
 
 
     public MainStorage(String URL) throws Exception {
+        this.URL = URL;
         try {
             ClassFactory.getJDBCBookSystem(URL).createDataBase();
         } catch (Exception e) {
@@ -98,6 +102,21 @@ public class MainStorage {
 
     public void createOrder(int clientID,int bookID, LocalDate SDate, LocalDate EDate) throws Exception {
         //checking if the book is available on that date
+        var listBook = ClassFactory.getJDBCBookSystem(URL).getOrderBybookID(bookID);
+        for(int i = 0; i < listBook.size(); i++) {
+            if(SDate.isAfter(listBook.get(i).getStartReservationdate()) && SDate.isBefore(listBook.get(i).getEndReservationDate())) {
+                throw new DataConflictException();
+            }
+            if(EDate.isAfter(listBook.get(i).getStartReservationdate()) && EDate.isBefore(listBook.get(i).getEndReservationDate())) {
+                throw new DataConflictException();
+            }
+            if(SDate.equals(listBook.get(i).getStartReservationdate()) || SDate.equals(listBook.get(i).getEndReservationDate())) {
+                throw new DataConflictException();
+            }
+            if(EDate.equals(listBook.get(i).getStartReservationdate()) || EDate.equals(listBook.get(i).getEndReservationDate())) {
+                throw new DataConflictException();
+            }
+        }
 
         Order temp = new Order(orderStorage.getTopID()+1,clientStorage.getClient(clientID), SDate, EDate);
         temp.addBookToOrder(bookStorage.getBook(bookID));
@@ -106,6 +125,25 @@ public class MainStorage {
 
     public void addBookToOrder(int OrderID, int bookID) throws Exception {
         //checking if the book is available on that date
+        var listBook = ClassFactory.getJDBCBookSystem(URL).getOrderBybookID(bookID);
+        for(int i = 0; i < listBook.size(); i++) {
+            if(getOrder(OrderID).getStartReservationdate().isAfter(listBook.get(i).getStartReservationdate())
+                    && getOrder(OrderID).getStartReservationdate().isBefore(listBook.get(i).getEndReservationDate())) {
+                throw new DataConflictException();
+            }
+            if(getOrder(OrderID).getEndReservationDate().isAfter(listBook.get(i).getStartReservationdate())
+                    && getOrder(OrderID).getEndReservationDate().isBefore(listBook.get(i).getEndReservationDate())) {
+                throw new DataConflictException();
+            }
+            if(getOrder(OrderID).getStartReservationdate().equals(listBook.get(i).getStartReservationdate())
+                    || getOrder(OrderID).getStartReservationdate().equals(listBook.get(i).getEndReservationDate())) {
+                throw new DataConflictException();
+            }
+            if(getOrder(OrderID).getEndReservationDate().equals(listBook.get(i).getStartReservationdate())
+                    || getOrder(OrderID).getEndReservationDate().equals(listBook.get(i).getEndReservationDate())) {
+                throw new DataConflictException();
+            }
+        }
         orderStorage.addBookToOrder(OrderID,bookStorage.getBook(bookID));
     }
 

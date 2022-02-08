@@ -682,6 +682,18 @@ public class JDBCBookSystem implements AutoCloseable{
         return null;
     }
 
+    public ArrayList<Order> getOrderBybookID(int bookID) throws Exception {
+        var OrderListBook = new ArrayList<Order>();
+        for(int i = 0; i < getAllofOrders().size(); i++) {
+            for (int j = 0; j < getAllofOrders().get(i).getListofBooks().size(); j++) {
+                if(getAllofOrders().get(i).getListofBooks().get(j).getID() == bookID){
+                    OrderListBook.add(getAllofOrders().get(i));
+                }
+            }
+        }
+        return OrderListBook;
+    }
+
     private Client getClientbyID(int ID) throws Exception {
         for(int i = 0; i < getListofClients().size(); i++) {
             if(ID == getListofClients().get(i).getID()) {

@@ -4,6 +4,8 @@ package org.example;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import java.time.LocalDate;
+import java.time.Period;
+
 import static java.util.ResourceBundle.getBundle;
 
 import org.example.dao.Storage.MainStorage;
@@ -33,7 +35,9 @@ public class App extends Application {
          //   mainStorage.addBookToOrder(1,3);
         //   mainStorage.addBookToOrder(1,5);
           // mainStorage.addBookToOrder(2,2);
-           System.out.println(mainStorage.endOrderandGetSum(3));
+       //    System.out.println(mainStorage.endOrderandGetSum(3));
+        mainStorage.createOrder(2,3,LocalDate.parse("2022-02-10"),LocalDate.parse("2022-02-11"));
+          // mainStorage.addBookToOrder(1,3);
        } catch (Exception e) {
            e.printStackTrace();
        }

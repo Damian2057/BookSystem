@@ -6,9 +6,10 @@ public class Admin extends Personnel {
 
     private String PermUrl ="jdbc:derby:LoginSystem";
     private String user ="admin";
-    private String password="admin";
+    private String password= ClassFactory.getFileSaverSystem("@../../Config/configuration")
+            .read().getAppGeneralPassword();
 
-    public Admin(String nickName, String password, int ID) {
+    public Admin(String nickName, String password, int ID) throws Exception {
         super(nickName, password, ID);
         setPermLevel(1);
     }
@@ -17,7 +18,7 @@ public class Admin extends Personnel {
         getMainStorage().getClientStorage().removeElement(ID);
     }
 
-    public void addWorker(String nickName, String password, int ID) throws Exception {
+    public void addWorker(String nickName, String password) throws Exception {
         ClassFactory.getJDBCLoginSystem(PermUrl,user,password).addPersonel(new Worker(nickName
                 ,password,ClassFactory.getJDBCLoginSystem(PermUrl,user,password).getListofworkers().get(
                         ClassFactory.getJDBCLoginSystem(PermUrl,user,password).getListofworkers().size()-1).getID()+1));

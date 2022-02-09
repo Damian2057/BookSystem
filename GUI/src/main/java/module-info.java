@@ -9,4 +9,7 @@ module org.example {
     requires org.apache.logging.log4j;
 
     opens org.example;
+    exports org.example.initProgram;
+    opens org.example.initProgram;
+    exports org.example;
 }

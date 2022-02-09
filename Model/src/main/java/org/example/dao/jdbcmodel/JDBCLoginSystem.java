@@ -193,7 +193,6 @@ public class JDBCLoginSystem implements AutoCloseable {
     }
 
 
-
     @Override
     public void close() throws Exception {
         connection.close();

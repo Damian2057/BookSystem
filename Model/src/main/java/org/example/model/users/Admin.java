@@ -5,7 +5,7 @@ import org.example.dao.ClassFactory;
 public class Admin extends Personnel {
 
     private String PermUrl ="jdbc:derby:LoginSystem";
-    private String user ="admin";
+    private String user ="adminnn";
     private String password= ClassFactory.getFileSaverSystem("@../../Config/configuration")
             .read().getAppGeneralPassword();
 

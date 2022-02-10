@@ -42,6 +42,9 @@ public class InitializeApp implements Initializable {
     }
 
     public void GoNext(ActionEvent actionEvent) throws IOException {
+        if(App.config.getLocale() == null) {
+            App.config.setBundleENG();
+        }
         Stage stage = (Stage) goNext.getScene().getWindow();
         stage.close();
         CreateAdminUser createAdminUser = new CreateAdminUser();

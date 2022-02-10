@@ -14,6 +14,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.App;
 import org.example.AppConfiguration.Config;
+import org.example.dao.ClassFactory;
+import org.example.dao.jdbcmodel.JDBCLoginSystem;
+import org.example.model.users.Admin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +39,7 @@ public class CreateAdminUser implements Initializable {
     public TextField adminnick;
     public AnchorPane isok3;
     private Stage stage;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public CreateAdminUser() {
     }
@@ -70,14 +76,24 @@ public class CreateAdminUser implements Initializable {
         if(Objects.equals(pass1.getText(), pass2.getText())) {
             isok.getStyleClass().remove("isnotok");
             isok.getStyleClass().add("isok");
-            App.config.setAppGeneralPassword(pass1.getText());
         } else {
             isok.getStyleClass().remove("isok");
             isok.getStyleClass().add("isnotok");
         }
     }
 
-    public void confirmation(ActionEvent actionEvent) {
+    public void confirmation(ActionEvent actionEvent) throws Exception {
+        if(Objects.equals(pass1.getText(), pass2.getText())
+                && Objects.equals(pass3.getText(), pass4.getText())
+                && !adminnick.getText().isEmpty() && adminnick.getText().length() > 4) {
+            logger.info("Initializing the user and user base");
+            try(var system = ClassFactory.getFileSaverSystem("@../../Config/configuration")) {
+                    system.write(App.config);
+            }
+            try(var loginSystem = ClassFactory.getJDBCLoginSystem("jdbc:derby:LoginSystem", "adminnn", "adminnn")) {
+                loginSystem.addPersonel(new Admin(adminnick.getText(), pass4.getText(),1));
+            }
+        }
     }
 
     public void passwprovieAdminn(KeyEvent keyEvent) {

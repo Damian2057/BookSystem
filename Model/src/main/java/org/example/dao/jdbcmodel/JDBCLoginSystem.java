@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Properties;
 
 public class JDBCLoginSystem implements AutoCloseable {
 
@@ -32,6 +33,11 @@ public class JDBCLoginSystem implements AutoCloseable {
         JDBCLoginSystem.user = user;
         JDBCLoginSystem.password = password;
         connectToDataBase();
+        try {
+            createDataBase();
+        } catch (Exception except) {
+            logger.info("Database exist");
+        }
         close();
     }
 
@@ -41,7 +47,6 @@ public class JDBCLoginSystem implements AutoCloseable {
             statement = connection.createStatement();
         } catch (SQLException throwables) {
             logger.error("Error occurred during dataBase connection");
-            throwables.printStackTrace();
         }
     }
 
@@ -91,7 +96,7 @@ public class JDBCLoginSystem implements AutoCloseable {
             logger.info("The Personel has been saved in the database");
         } catch (SQLException throwables) {
             connection.rollback();
-            logger.error("Something goes wrong during saving Author");
+            logger.error("Something goes wrong during saving Personnel");
         }
         close();
     }
@@ -195,7 +200,10 @@ public class JDBCLoginSystem implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        connection.close();
-        statement.close();
+        if(connection != null && statement != null) {
+            connection.close();
+            statement.close();
+        }
+
     }
 }

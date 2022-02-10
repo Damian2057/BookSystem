@@ -1,0 +1,9 @@
+.isnotok{
+    -fx-background-image: url(isnotok.png);
+    -fx-background-size: cover;
+}
+
+.isok{
+    -fx-background-image: url(okicon.jpg);
+    -fx-background-size: cover;
+}

@@ -1,4 +1,115 @@
 package org.example.initProgram;
 
-public class CreateAdminUser {
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import org.example.App;
+import org.example.AppConfiguration.Config;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
+import static java.util.ResourceBundle.getBundle;
+
+public class CreateAdminUser implements Initializable {
+    public PasswordField pass1;
+    public PasswordField pass2;
+    public AnchorPane isok;
+    public Button conf;
+    public PasswordField pass4;
+    public AnchorPane isok2;
+    public PasswordField pass3;
+    public TextField adminnick;
+    public AnchorPane isok3;
+    private Stage stage;
+
+    public CreateAdminUser() {
+    }
+
+    public void show() throws IOException {
+        stage = new Stage();
+        FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("createAdminUser.fxml"));
+        fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+        Scene scene = new Scene(fxmlLoader2.load());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        pass2.setDisable(true);
+        pass4.setDisable(true);
+    }
+
+    public void passwprovied(KeyEvent keyEvent) {
+        if(!pass1.getText().isEmpty() && pass1.getText().length() > 3) {
+            pass2.setDisable(false);
+            if(Objects.equals(pass1.getText(), pass2.getText())) {
+                isok.getStyleClass().remove("isnotok");
+                isok.getStyleClass().add("isok");
+            } else {
+                isok.getStyleClass().remove("isok");
+                isok.getStyleClass().add("isnotok");
+            }
+        }
+    }
+
+    public void passwproviedd(KeyEvent keyEvent) {
+        if(Objects.equals(pass1.getText(), pass2.getText())) {
+            isok.getStyleClass().remove("isnotok");
+            isok.getStyleClass().add("isok");
+            App.config.setAppGeneralPassword(pass1.getText());
+        } else {
+            isok.getStyleClass().remove("isok");
+            isok.getStyleClass().add("isnotok");
+        }
+    }
+
+    public void confirmation(ActionEvent actionEvent) {
+    }
+
+    public void passwprovieAdminn(KeyEvent keyEvent) {
+        if(Objects.equals(pass3.getText(), pass4.getText())) {
+            isok3.getStyleClass().remove("isnotok");
+            isok3.getStyleClass().add("isok");
+        } else {
+            isok3.getStyleClass().remove("isok");
+            isok3.getStyleClass().add("isnotok");
+        }
+    }
+
+    public void passwprovieAdmin(KeyEvent keyEvent) {
+        if(!pass3.getText().isEmpty() && pass3.getText().length() > 5) {
+            pass4.setDisable(false);
+            if(Objects.equals(pass3.getText(), pass4.getText())) {
+                isok3.getStyleClass().remove("isnotok");
+                isok3.getStyleClass().add("isok");
+            } else {
+                isok3.getStyleClass().remove("isok");
+                isok3.getStyleClass().add("isnotok");
+            }
+        }
+    }
+
+    public void nicknameadmin(KeyEvent keyEvent) {
+        if (!adminnick.getText().isEmpty() && adminnick.getText().length() > 4) {
+            isok2.getStyleClass().remove("isnotok");
+            isok2.getStyleClass().add("isok");
+        } else {
+            isok3.getStyleClass().remove("isok");
+            isok3.getStyleClass().add("isnotok");
+        }
+    }
 }

@@ -8,12 +8,12 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.initProgram.InitializeApp">
    <children>
-      <Text layoutX="142.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%chooseLang" textAlignment="CENTER" wrappingWidth="115.7581787109375">
+      <Text fx:id="textchoose" layoutX="142.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%chooseLang" textAlignment="CENTER" wrappingWidth="115.7581787109375">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
       </Text>
-      <Button fx:id="goNext" layoutX="152.0" layoutY="312.0" mnemonicParsing="false" onAction="#goNext" prefHeight="43.0" prefWidth="96.0" text="%next" />
-      <ComboBox fx:id="languageBox" layoutX="125.0" layoutY="131.0" onAction="#chooselang" prefWidth="150.0" />
+      <Button fx:id="goNext" layoutX="152.0" layoutY="312.0" mnemonicParsing="false" onAction="#GoNext" prefHeight="43.0" prefWidth="96.0" text="%next" />
+      <ComboBox fx:id="languageBox" layoutX="98.0" layoutY="187.0" onAction="#chooselang" prefHeight="26.0" prefWidth="203.0" promptText="%defaultselect" />
    </children>
 </AnchorPane>

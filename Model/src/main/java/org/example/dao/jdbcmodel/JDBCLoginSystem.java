@@ -70,7 +70,6 @@ public class JDBCLoginSystem implements AutoCloseable {
     public void createDataBase() {
         try {
             connectToDataBase();
-            logger.info("DataBase creation attempt");
             statement.execute(readstatement("@../../SQLoginStatements/LoginTable.sql"));
             close();
         } catch (Exception throwables) {

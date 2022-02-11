@@ -19,7 +19,6 @@ public class FilesaverSystem<T> implements Dao<T> {
 
     @Override
     public T read() throws IOException, ClassNotFoundException {
-        logger.debug("Loading options");
         Config config;
         try (FileInputStream inputFileStream = new FileInputStream(fileName);
              ObjectInputStream in = new ObjectInputStream(inputFileStream)) {

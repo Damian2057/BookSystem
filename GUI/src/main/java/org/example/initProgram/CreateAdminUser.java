@@ -63,6 +63,7 @@ public class CreateAdminUser implements Initializable {
         FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("allgood.fxml"));
         fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
         Scene scene = new Scene(fxmlLoader2.load());
+        stage.setAlwaysOnTop(true);
         stage.setScene(scene);
         stage.show();
     }
@@ -105,11 +106,18 @@ public class CreateAdminUser implements Initializable {
             wrongsdatas.setText(getBundle("bundle").getString("correctdatas"));
             logger.info("Initializing the user and user base");
             try(var system = ClassFactory.getFileSaverSystem("@../../Config/configuration")) {
-                    system.write(App.config);
+                App.config.setAppGeneralPassword(pass2.getText());
+                system.write(App.config);
             }
             try(var loginSystem = ClassFactory.getJDBCLoginSystem("jdbc:derby:LoginSystem", "adminnn", "adminnn")) {
                 loginSystem.addPersonel(new Admin(adminnick.getText(), pass4.getText(),1));
             }
+                conf.setDisable(true);
+                pass3.setDisable(true);
+                pass4.setDisable(true);
+                pass2.setDisable(true);
+                pass1.setDisable(true);
+                adminnick.setDisable(true);
                 showGood();
         } else {
             wrongsdatas.setText(getBundle("bundle").getString("wrongsdatas"));

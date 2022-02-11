@@ -31,8 +31,8 @@ module org.example.model {
     exports org.example.Exceptions.Model;
     opens org.example.Exceptions.Model;
 
-//    exports org.example.Exceptions.Dao;
-//    opens org.example.Exceptions.Dao;
+    exports org.example.Exceptions.Dao;
+    opens org.example.Exceptions.Dao;
 
     exports org.example.SecurityLayer;
     opens org.example.SecurityLayer;

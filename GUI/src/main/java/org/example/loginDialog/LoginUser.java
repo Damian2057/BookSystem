@@ -85,6 +85,7 @@ public class LoginUser implements Initializable {
             if(personnel.getPermLevel() == 1) {
                 Admin admin = (Admin) personnel;
                 AdminOptionWindow adminOptionWindow = new AdminOptionWindow();
+                adminOptionWindow.show();
 
             } else {
                 Worker worker = (Worker) personnel;
@@ -98,6 +99,7 @@ public class LoginUser implements Initializable {
             pass.setText("");
 
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error("error occurred");
         }
     }

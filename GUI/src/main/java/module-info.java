@@ -14,4 +14,6 @@ module org.example {
     exports org.example;
     opens org.example.loginDialog;
     exports org.example.loginDialog;
+    opens org.example.systemDialog;
+    exports org.example.systemDialog;
 }

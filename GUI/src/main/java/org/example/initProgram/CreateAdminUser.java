@@ -1,5 +1,6 @@
 package org.example.initProgram;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,20 +28,21 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import static java.util.ResourceBundle.getBundle;
 
 public class CreateAdminUser implements Initializable {
-    public PasswordField pass1;
-    public PasswordField pass2;
+    public PasswordField pass1 = new PasswordField();
+    public PasswordField pass2 = new PasswordField();
     public AnchorPane isok;
     public Button conf;
-    public PasswordField pass4;
+    public PasswordField pass4 = new PasswordField();
     public AnchorPane isok2;
-    public PasswordField pass3;
+    public PasswordField pass3 = new PasswordField();
     public TextField adminnick;
     public AnchorPane isok3;
-    public Text wrongsdatas;
+    public Text wrongsdatas = new Text();
     private Stage stage;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -50,6 +52,15 @@ public class CreateAdminUser implements Initializable {
     public void show() throws IOException {
         stage = new Stage();
         FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("createAdminUser.fxml"));
+        fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+        Scene scene = new Scene(fxmlLoader2.load());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void showGood() throws IOException, InterruptedException {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("allgood.fxml"));
         fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
         Scene scene = new Scene(fxmlLoader2.load());
         stage.setScene(scene);
@@ -99,6 +110,7 @@ public class CreateAdminUser implements Initializable {
             try(var loginSystem = ClassFactory.getJDBCLoginSystem("jdbc:derby:LoginSystem", "adminnn", "adminnn")) {
                 loginSystem.addPersonel(new Admin(adminnick.getText(), pass4.getText(),1));
             }
+                showGood();
         } else {
             wrongsdatas.setText(getBundle("bundle").getString("wrongsdatas"));
         }
@@ -135,5 +147,9 @@ public class CreateAdminUser implements Initializable {
             isok3.getStyleClass().remove("isok");
             isok3.getStyleClass().add("isnotok");
         }
+    }
+
+    public void closeapp(ActionEvent actionEvent) {
+        Platform.exit();
     }
 }

@@ -12,4 +12,6 @@ module org.example {
     exports org.example.initProgram;
     opens org.example.initProgram;
     exports org.example;
+    opens org.example.loginDialog;
+    exports org.example.loginDialog;
 }

@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loginDialog.LoginUser">
+<AnchorPane prefHeight="200.0" prefWidth="300.0" styleClass="smallBackGround" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loginDialog.LoginUser">
    <children>
       <PasswordField fx:id="pinpass" layoutX="76.0" layoutY="100.0" onKeyReleased="#onpinType" />
       <Text layoutX="44.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%entryPIN" textAlignment="CENTER" wrappingWidth="213.5999999999999">

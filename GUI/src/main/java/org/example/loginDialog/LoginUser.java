@@ -13,6 +13,9 @@ import org.example.Exceptions.Dao.WrongLoginDataException;
 import org.example.dao.ClassFactory;
 import org.example.model.users.Admin;
 import org.example.model.users.Personnel;
+import org.example.model.users.Worker;
+import org.example.systemDialog.AdminOptionWindow;
+import org.example.systemDialog.WorkerOptionWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,8 +84,11 @@ public class LoginUser implements Initializable {
             logger.info("Login to the System ID:{} nickname:,{}", personnel.getID(),personnel.getNickName());
             if(personnel.getPermLevel() == 1) {
                 Admin admin = (Admin) personnel;
-                admin.addWorker("John","haslo");
+                AdminOptionWindow adminOptionWindow = new AdminOptionWindow();
+
             } else {
+                Worker worker = (Worker) personnel;
+                WorkerOptionWindow workerOptionWindow = new WorkerOptionWindow();
 
             }
         } catch (WrongLoginDataException e) {

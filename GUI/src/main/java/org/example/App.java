@@ -44,6 +44,7 @@ public class App extends Application {
                 .getFileSaverSystem("@../../Config/configuration")) {
             logger.debug("Loading options");
             system.read().LoadOption();
+            logger.debug("Done");
             //to auth and login scene
             LoginUser loginUser = new LoginUser();
             loginUser.entryPin();

@@ -11,3 +11,13 @@
 .badpin {
     -fx-control-inner-background: #ea4646;
 }
+
+.bigBackGround{
+    -fx-background-image: url(backGround.jpg);
+    -fx-background-size: cover;
+}
+
+.smallBackGround {
+    -fx-background-image: url(background2.jpg);
+    -fx-background-size: cover;
+}

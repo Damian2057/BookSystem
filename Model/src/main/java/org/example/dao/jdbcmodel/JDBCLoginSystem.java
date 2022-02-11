@@ -36,7 +36,7 @@ public class JDBCLoginSystem implements AutoCloseable {
         try {
             createDataBase();
         } catch (Exception except) {
-            logger.info("Database exist");
+            logger.info("Personel Database exist");
         }
         close();
     }

@@ -24,6 +24,11 @@ public class JDBCBookSystem implements AutoCloseable{
     public JDBCBookSystem(String URL) throws Exception {
         JDBCBookSystem.URL = URL;
         connectToDataBase();
+        try {
+            createDataBase();
+        } catch (Exception except) {
+            logger.info("BookSystem Database exist");
+        }
         close();
     }
 

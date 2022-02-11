@@ -26,9 +26,16 @@ public class App extends Application {
         }
     }
 
+    public void initBookSystemBase() throws Exception {
+        try(var BookSystem= ClassFactory.getJDBCBookSystem("jdbc:derby:BookSystem;create=true")) {
+
+        }
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         initLoginBase();
+        initBookSystemBase();
         Locale.setDefault(new Locale("eng","ENG"));
         Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.debug("Starting Application...");

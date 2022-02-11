@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.App;
 import org.example.AppConfiguration.Config;
@@ -38,6 +40,7 @@ public class CreateAdminUser implements Initializable {
     public PasswordField pass3;
     public TextField adminnick;
     public AnchorPane isok3;
+    public Text wrongsdatas;
     private Stage stage;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -57,6 +60,7 @@ public class CreateAdminUser implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         pass2.setDisable(true);
         pass4.setDisable(true);
+        wrongsdatas.setText("");
     }
 
     public void passwprovied(KeyEvent keyEvent) {
@@ -86,6 +90,8 @@ public class CreateAdminUser implements Initializable {
         if(Objects.equals(pass1.getText(), pass2.getText())
                 && Objects.equals(pass3.getText(), pass4.getText())
                 && !adminnick.getText().isEmpty() && adminnick.getText().length() > 4) {
+            wrongsdatas.setFill(Color.GREEN);
+            wrongsdatas.setText(getBundle("bundle").getString("correctdatas"));
             logger.info("Initializing the user and user base");
             try(var system = ClassFactory.getFileSaverSystem("@../../Config/configuration")) {
                     system.write(App.config);
@@ -93,6 +99,8 @@ public class CreateAdminUser implements Initializable {
             try(var loginSystem = ClassFactory.getJDBCLoginSystem("jdbc:derby:LoginSystem", "adminnn", "adminnn")) {
                 loginSystem.addPersonel(new Admin(adminnick.getText(), pass4.getText(),1));
             }
+        } else {
+            wrongsdatas.setText(getBundle("bundle").getString("wrongsdatas"));
         }
     }
 

@@ -43,5 +43,10 @@
       <AnchorPane fx:id="isok" layoutX="187.0" layoutY="161.0" prefHeight="40.0" prefWidth="39.0" styleClass="isnotok" stylesheets="@../../../img/style.css" />
       <AnchorPane fx:id="isok2" layoutX="509.0" layoutY="125.0" prefHeight="40.0" prefWidth="39.0" styleClass="isnotok" stylesheets="@../../../img/style.css" />
       <AnchorPane fx:id="isok3" layoutX="509.0" layoutY="216.0" prefHeight="40.0" prefWidth="39.0" styleClass="isnotok" stylesheets="@../../../img/style.css" />
+      <Text fx:id="wrongsdatas" fill="RED" layoutX="187.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="223.99996337890616">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

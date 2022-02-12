@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -34,6 +35,7 @@ public class LoginUser implements Initializable {
     public Text logininform = new Text();
     public TextField nickname = new TextField();
     public PasswordField pass = new PasswordField();
+    public Button loginbutton;
     private String password;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -81,7 +83,9 @@ public class LoginUser implements Initializable {
     public void login(ActionEvent actionEvent) {
         try(var loginSystem= ClassFactory.getJDBCLoginSystem("jdbc:derby:LoginSystem", "adminnn", "adminnn")) {
             Personnel personnel = loginSystem.loginPersonel(nickname.getText(),pass.getText());
-            logger.info("Login to the System ID:{} nickname:,{}", personnel.getID(),personnel.getNickName());
+            logger.info("Login to the System ID:{} ,nickname:{}", personnel.getID(),personnel.getNickName());
+            Stage stage = (Stage) loginbutton.getScene().getWindow();
+            stage.close();
             if(personnel.getPermLevel() == 1) {
                 Admin admin = (Admin) personnel;
                 AdminOptionWindow adminOptionWindow = new AdminOptionWindow();

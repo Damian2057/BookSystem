@@ -1,8 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.AdminOptionWindow">
-
+<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1550.0" styleClass="bigBackGround" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.AdminOptionWindow">
+   <children>
+      <VBox prefHeight="800.0" prefWidth="271.0" styleClass="choice" stylesheets="@../../../img/style.css">
+         <children>
+            <Pane prefHeight="188.0" prefWidth="263.0" styleClass="logo" stylesheets="@../../../img/style.css" />
+            <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#clientsget" prefHeight="58.0" prefWidth="291.0" styleClass="choiceoption" text="%clients">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#booksget" prefHeight="59.0" prefWidth="280.0" styleClass="choiceoption" text="%books">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#ordersget" prefHeight="56.0" prefWidth="283.0" styleClass="choiceoption" text="%orders">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#workersget" prefHeight="56.0" prefWidth="273.0" styleClass="choiceoption" text="%workers">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Pane prefHeight="308.0" prefWidth="263.0" />
+            <Button mnemonicParsing="false" prefHeight="67.0" prefWidth="67.0" styleClass="choiceoption">
+               <graphic>
+                  <ImageView fitHeight="53.0" fitWidth="53.0" onDragDetected="#logout" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+      <AnchorPane fx:id="changepane" layoutX="286.0" layoutY="11.0" prefHeight="777.0" prefWidth="1250.0" />
+   </children>
 </AnchorPane>

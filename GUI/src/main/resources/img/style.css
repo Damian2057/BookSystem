@@ -18,6 +18,52 @@
 }
 
 .smallBackGround {
-    -fx-background-image: url(background2.jpg);
+    -fx-background-image: url(backGround.jpg);
     -fx-background-size: cover;
+}
+
+.button {
+    -fx-fill: #9355ff;
+    -fx-arc-height: 50;
+    -fx-arc-width: 50;
+}
+
+.addbook {
+    -fx-background-image: url(addbook.png);
+    -fx-background-size: cover;
+    -fx-effect: dropshadow(three-pass-box, rgb(89, 85, 85), 10, 0, 0, 0);
+}
+
+.onEnter {
+    -fx-opacity: 0.7;
+}
+
+.onExit {
+    -fx-opacity: 0.5;
+
+}
+
+.choice {
+    -fx-color:black;
+    -fx-padding:4px;
+    -fx-background-color: #7e00c4;
+}
+
+.choiceoption {
+    -fx-color:black;
+    -fx-padding:4px;
+    -fx-background-color: #6700a2;
+}
+
+.choiceoption:hover {
+    -fx-color:black;
+    -fx-padding:4px;
+    -fx-background-color: #9a00f6;
+}
+
+.logo {
+    -fx-background-image: url(logo.png);
+    -fx-background-repeat: stretch;
+    -fx-background-size: 200 200;
+    -fx-background-position: center center;
 }

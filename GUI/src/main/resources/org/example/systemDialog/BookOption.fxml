@@ -7,13 +7,17 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="777.0" prefWidth="1250.0" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.nomalOptions.BookOptions">
    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9355ff" height="777.0" layoutX="228.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
       <Group>
          <children>
             <Rectangle fx:id="addbutton" arcHeight="5.0" arcWidth="5.0" fill="#9355ff" height="200.0" layoutX="18.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
@@ -63,16 +67,61 @@
          </children>
       </Group>
       <TextField layoutX="328.0" layoutY="57.0" prefHeight="44.0" prefWidth="554.0" />
-      <Button layoutX="882.0" layoutY="57.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="57.0" styleClass="choice" stylesheets="@../../../img/style.css" text="Button" />
+      <Button layoutX="882.0" layoutY="57.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="73.0" styleClass="choice" stylesheets="@../../../img/style.css" text="%search">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
       <TableView fx:id="table" layoutX="328.0" layoutY="101.0" prefHeight="434.0" prefWidth="554.0">
         <columns>
           <TableColumn prefWidth="38.0" text="ID" />
-          <TableColumn prefWidth="105.0" text="TITLE" />
-            <TableColumn prefWidth="82.0" text="AUTHOR" />
-            <TableColumn prefWidth="130.0" text="PUBLICATION_DATE" />
-            <TableColumn prefWidth="93.0" text="PAGE_COUNT" />
-            <TableColumn prefWidth="105.0" text="BASIC_PRICE" />
+          <TableColumn prefWidth="105.0" text="%title" />
+            <TableColumn prefWidth="82.0" text="%author" />
+            <TableColumn prefWidth="130.0" text="%PUBLICATION_DATE" />
+            <TableColumn prefWidth="93.0" text="%pagecount" />
+            <TableColumn prefWidth="105.0" text="%BASIC_PRICE" />
         </columns>
       </TableView>
+      <Group layoutX="882.0" layoutY="179.0">
+         <children>
+            <Pane prefHeight="305.0" prefWidth="354.0">
+               <children>
+                  <GridPane prefHeight="305.0" prefWidth="354.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+               </children>
+            </Pane>
+         </children>
+      </Group>
+      <Text fill="WHITE" layoutX="933.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%calendar" textAlignment="CENTER" wrappingWidth="235.13671875">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Text>
+      <TextField layoutX="353.0" layoutY="535.0" prefHeight="33.0" prefWidth="102.0" />
+      <TextField layoutX="455.0" layoutY="535.0" prefHeight="33.0" prefWidth="102.0" />
+      <TextField layoutX="557.0" layoutY="535.0" prefHeight="33.0" prefWidth="102.0" />
+      <TextField layoutX="659.0" layoutY="535.0" prefHeight="33.0" prefWidth="102.0" />
+      <TextField layoutX="761.0" layoutY="535.0" prefHeight="33.0" prefWidth="102.0" />
+      <Button layoutX="863.0" layoutY="535.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="83.0" styleClass="choice" stylesheets="@../../../img/style.css" text="%add" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

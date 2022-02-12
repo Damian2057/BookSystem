@@ -16,4 +16,6 @@ module org.example {
     exports org.example.loginDialog;
     opens org.example.systemDialog;
     exports org.example.systemDialog;
+    opens org.example.systemDialog.nomalOptions;
+    exports org.example.systemDialog.nomalOptions;
 }

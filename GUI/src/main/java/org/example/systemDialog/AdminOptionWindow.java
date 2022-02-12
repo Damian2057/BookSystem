@@ -15,7 +15,7 @@ import java.util.Locale;
 import static java.util.ResourceBundle.getBundle;
 
 public class AdminOptionWindow {
-    public Rectangle addbutton;
+
     public AnchorPane changepane;
 
     public void show() throws IOException {
@@ -44,15 +44,5 @@ public class AdminOptionWindow {
     }
 
     public void logout(MouseEvent mouseEvent) {
-    }
-
-    public void hoverin(MouseEvent mouseEvent) {
-        addbutton.getStyleClass().remove("onExit");
-        addbutton.getStyleClass().add("onEnter");
-    }
-
-    public void hoverout(MouseEvent mouseEvent) {
-        addbutton.getStyleClass().remove("onEnter");
-        addbutton.getStyleClass().add("onExit");
     }
 }

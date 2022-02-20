@@ -17,7 +17,6 @@
 
 <AnchorPane prefHeight="777.0" prefWidth="1250.0" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.nomalOptions.BookOptions">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9355ff" height="777.0" layoutX="228.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
       <Group>
          <children>
             <Rectangle fx:id="addbutton" arcHeight="5.0" arcWidth="5.0" fill="#9355ff" height="200.0" layoutX="18.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" width="200.0">

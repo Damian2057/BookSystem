@@ -18,7 +18,7 @@ public class Config implements Serializable {
                 Locale.setDefault(new Locale("pl", "PL"));
             }
             else {
-                Locale.setDefault(new Locale("en", "ENG"));
+                Locale.setDefault(new Locale("eng", "ENG"));
             }
         } catch (Exception e) {
             logger.error("Error connected with language");

@@ -13,7 +13,7 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Text>
-      <Button fx:id="goNext" layoutX="152.0" layoutY="312.0" mnemonicParsing="false" onAction="#GoNext" prefHeight="43.0" prefWidth="96.0" text="%next" />
-      <ComboBox fx:id="languageBox" layoutX="98.0" layoutY="187.0" onAction="#chooselang" prefHeight="26.0" prefWidth="203.0" promptText="%defaultselect" />
+      <Button fx:id="goNext" layoutX="152.0" layoutY="312.0" mnemonicParsing="false" onAction="#GoNext" prefHeight="43.0" prefWidth="96.0" styleClass="choiceoption" stylesheets="@../../../img/style.css" text="%next" />
+      <ComboBox fx:id="languageBox" layoutX="98.0" layoutY="187.0" onAction="#chooselang" prefHeight="26.0" prefWidth="203.0" promptText="%defaultselect" styleClass="choice" stylesheets="@../../../img/style.css" />
    </children>
 </AnchorPane>

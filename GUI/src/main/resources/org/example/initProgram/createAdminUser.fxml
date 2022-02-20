@@ -9,14 +9,14 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="smallBackGround" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.initProgram.CreateAdminUser">
    <children>
-      <PasswordField fx:id="pass1" layoutX="33.0" layoutY="155.0" onKeyReleased="#passwprovied" />
+      <PasswordField fx:id="pass1" layoutX="33.0" layoutY="155.0" onKeyReleased="#passwprovied" styleClass="textfield-background" />
       <Text layoutX="140.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%configText" textAlignment="CENTER" wrappingWidth="318.13671875">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Text>
-      <PasswordField fx:id="pass3" layoutX="346.0" layoutY="210.0" onKeyReleased="#passwprovieAdmin" />
-      <TextField fx:id="adminnick" layoutX="346.0" layoutY="132.0" onKeyReleased="#nicknameadmin" />
+      <PasswordField fx:id="pass3" layoutX="346.0" layoutY="210.0" onKeyReleased="#passwprovieAdmin" styleClass="textfield-background" stylesheets="@../../../img/style.css" />
+      <TextField fx:id="adminnick" layoutX="346.0" layoutY="132.0" onKeyReleased="#nicknameadmin" styleClass="textfield-background" stylesheets="@../../../img/style.css" />
       <Text layoutX="28.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%entryPIN" wrappingWidth="158.93670654296875">
          <font>
             <Font name="System Bold" size="23.0" />
@@ -37,9 +37,9 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <Button fx:id="conf" layoutX="220.0" layoutY="328.0" mnemonicParsing="false" onAction="#confirmation" prefHeight="40.0" prefWidth="159.0" text="%confirm" />
-      <PasswordField fx:id="pass2" layoutX="33.0" layoutY="188.0" onKeyReleased="#passwproviedd" />
-      <PasswordField fx:id="pass4" layoutX="347.0" layoutY="245.0" onKeyReleased="#passwprovieAdminn" />
+      <Button fx:id="conf" layoutX="220.0" layoutY="328.0" mnemonicParsing="false" onAction="#confirmation" prefHeight="40.0" prefWidth="159.0" styleClass="choiceoption" text="%confirm" />
+      <PasswordField fx:id="pass2" layoutX="33.0" layoutY="188.0" onKeyReleased="#passwproviedd" styleClass="textfield-background" stylesheets="@../../../img/style.css" />
+      <PasswordField fx:id="pass4" layoutX="347.0" layoutY="245.0" onKeyReleased="#passwprovieAdminn" styleClass="textfield-background" stylesheets="@../../../img/style.css" />
       <AnchorPane fx:id="isok" layoutX="187.0" layoutY="161.0" prefHeight="40.0" prefWidth="39.0" styleClass="isnotok" stylesheets="@../../../img/style.css" />
       <AnchorPane fx:id="isok2" layoutX="509.0" layoutY="125.0" prefHeight="40.0" prefWidth="39.0" styleClass="isnotok" stylesheets="@../../../img/style.css" />
       <AnchorPane fx:id="isok3" layoutX="509.0" layoutY="216.0" prefHeight="40.0" prefWidth="39.0" styleClass="isnotok" stylesheets="@../../../img/style.css" />

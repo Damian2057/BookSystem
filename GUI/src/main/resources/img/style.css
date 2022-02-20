@@ -4,7 +4,7 @@
 }
 
 .isok{
-    -fx-background-image: url(okicon.jpg);
+    -fx-background-image: url(okicon.png);
     -fx-background-size: cover;
 }
 

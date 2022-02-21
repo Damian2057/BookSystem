@@ -65,20 +65,20 @@
             <Pane layoutX="55.0" layoutY="32.0" onMouseEntered="#hoverinnn" onMouseExited="#hoverouttt" prefHeight="127.0" prefWidth="127.0" styleClass="addbook" stylesheets="@../../../img/style.css" />
          </children>
       </Group>
-      <TextField layoutX="328.0" layoutY="57.0" prefHeight="44.0" prefWidth="554.0" />
-      <Button layoutX="882.0" layoutY="57.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="73.0" styleClass="choice" stylesheets="@../../../img/style.css" text="%search">
+      <TextField layoutX="248.0" layoutY="57.0" prefHeight="44.0" prefWidth="554.0" />
+      <Button layoutX="802.0" layoutY="57.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="81.0" styleClass="choice" stylesheets="@../../../img/style.css" text="%search">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <TableView fx:id="table" layoutX="328.0" layoutY="101.0" prefHeight="434.0" prefWidth="554.0">
+      <TableView fx:id="table" layoutX="248.0" layoutY="101.0" prefHeight="609.0" prefWidth="634.0">
         <columns>
-          <TableColumn prefWidth="38.0" text="ID" />
-          <TableColumn prefWidth="105.0" text="%title" />
-            <TableColumn prefWidth="82.0" text="%author" />
-            <TableColumn prefWidth="130.0" text="%PUBLICATION_DATE" />
-            <TableColumn prefWidth="93.0" text="%pagecount" />
-            <TableColumn prefWidth="105.0" text="%BASIC_PRICE" />
+          <TableColumn fx:id="idtable" editable="false" prefWidth="38.0" text="ID" />
+          <TableColumn fx:id="titletable" editable="false" prefWidth="105.0" text="%title" />
+            <TableColumn fx:id="authortable" editable="false" prefWidth="130.0" text="%author" />
+            <TableColumn fx:id="datetable" editable="false" prefWidth="149.0" text="%PUBLICATION_DATE" />
+            <TableColumn fx:id="pagetable" editable="false" prefWidth="106.0" text="%pagecount" />
+            <TableColumn fx:id="pricetable" editable="false" prefWidth="105.0" text="%BASIC_PRICE" />
         </columns>
       </TableView>
       <Group layoutX="882.0" layoutY="179.0">
@@ -112,15 +112,5 @@
             <Font name="System Bold" size="25.0" />
          </font>
       </Text>
-      <TextField layoutX="353.0" layoutY="535.0" prefHeight="33.0" prefWidth="102.0" />
-      <TextField layoutX="455.0" layoutY="535.0" prefHeight="33.0" prefWidth="102.0" />
-      <TextField layoutX="557.0" layoutY="535.0" prefHeight="33.0" prefWidth="102.0" />
-      <TextField layoutX="659.0" layoutY="535.0" prefHeight="33.0" prefWidth="102.0" />
-      <TextField layoutX="761.0" layoutY="535.0" prefHeight="33.0" prefWidth="102.0" />
-      <Button layoutX="863.0" layoutY="535.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="83.0" styleClass="choice" stylesheets="@../../../img/style.css" text="%add" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>

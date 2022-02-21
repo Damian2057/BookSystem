@@ -71,3 +71,17 @@
 .textfield-background {
     -fx-background-color:  #757575;
 }
+
+.textformat {
+    -fx-effect: Shadow;
+}
+
+.settings {
+    -fx-background-image: url(settings.png);
+    -fx-background-size: cover;
+}
+
+.logout {
+    -fx-background-image: url(logout.png);
+    -fx-background-size: cover;
+}

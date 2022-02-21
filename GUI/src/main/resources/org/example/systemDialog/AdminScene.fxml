@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -46,11 +48,29 @@
                </font>
             </Button>
             <Pane prefHeight="308.0" prefWidth="263.0" />
-            <Button mnemonicParsing="false" prefHeight="67.0" prefWidth="67.0" styleClass="choiceoption">
-               <graphic>
-                  <ImageView fitHeight="53.0" fitWidth="53.0" onDragDetected="#logout" pickOnBounds="true" preserveRatio="true" />
-               </graphic>
-            </Button>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#settings" prefHeight="67.0" prefWidth="67.0" textAlignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="53.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" styleClass="settings" />
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="choiceoption" />
+                        <String fx:value="settings" />
+                     </styleClass>
+                  </Button>
+                  <Pane prefHeight="96.0" prefWidth="125.0" />
+                  <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#logout" prefHeight="67.0" prefWidth="67.0" textAlignment="CENTER">
+                     <styleClass>
+                        <String fx:value="choiceoption" />
+                        <String fx:value="logout" />
+                     </styleClass>
+                     <graphic>
+                        <ImageView fitHeight="53.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" styleClass="logout" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </VBox>
       <AnchorPane fx:id="changepane" layoutX="286.0" layoutY="11.0" prefHeight="777.0" prefWidth="1250.0" />

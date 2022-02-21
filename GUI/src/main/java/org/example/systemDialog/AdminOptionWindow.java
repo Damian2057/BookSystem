@@ -43,6 +43,9 @@ public class AdminOptionWindow {
     public void workersget(ActionEvent actionEvent) {
     }
 
-    public void logout(MouseEvent mouseEvent) {
+    public void logout(ActionEvent actionEvent) {
+    }
+
+    public void settings(ActionEvent actionEvent) {
     }
 }

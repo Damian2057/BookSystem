@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.Exceptions.Dao.WrongLoginDataException;
@@ -36,24 +37,19 @@ public class LoginUser implements Initializable {
     public TextField nickname = new TextField();
     public PasswordField pass = new PasswordField();
     public Button loginbutton;
+    public AnchorPane loginpane;
     private String password;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public PasswordField pinpass;
 
     public void show() throws IOException {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("loginScene.fxml"));
-        fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
-        Scene scene = new Scene(fxmlLoader2.load());
-        stage.setScene(scene);
-        stage.show();
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("loginScene.fxml"),getBundle("bundle", Locale.getDefault()));
+        loginpane.getChildren().setAll(pane);
     }
 
     public void onpinType(KeyEvent keyEvent) throws Exception {
         if(Objects.equals(pinpass.getText(), password)) {
-            Stage stage = (Stage) pinpass.getScene().getWindow();
-            stage.close();
             show();
         }
     }
@@ -65,6 +61,7 @@ public class LoginUser implements Initializable {
         Scene scene = new Scene(fxmlLoader2.load());
         stage.setScene(scene);
         stage.setAlwaysOnTop(true);
+        stage.setResizable(false);
         stage.show();
     }
 

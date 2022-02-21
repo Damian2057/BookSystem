@@ -49,6 +49,17 @@
     -fx-background-color: #7e00c4;
 }
 
+.choicebutton {
+    -fx-color:black;
+    -fx-padding:4px;
+    -fx-background-color: #7e00c4;
+}
+
+.choicebutton:hover {
+    -fx-padding:4px;
+    -fx-background-color: #9a00f6;
+}
+
 .choiceoption {
     -fx-color:black;
     -fx-padding:4px;

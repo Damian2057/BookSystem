@@ -94,6 +94,18 @@ public class BookOptions implements Initializable {
         table.setItems(list);
     }
 
+    public void addbook(MouseEvent event) {
+        System.out.println("1");
+    }
+
+    public void modifyBook(MouseEvent event) {
+        System.out.println("1");
+    }
+
+    public void removeBook(MouseEvent event) {
+        System.out.println("1");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateTable();

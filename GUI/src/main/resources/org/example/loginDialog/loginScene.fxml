@@ -27,7 +27,7 @@
          </font></Text>
       <TextField fx:id="nickname" layoutX="225.0" layoutY="122.0" styleClass="textfield-background" />
       <PasswordField fx:id="pass" layoutX="226.0" layoutY="200.0" styleClass="textfield-background" />
-      <Text fx:id="date" fill="WHITE" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="191.20000000000005">
+      <Text fx:id="date" fill="WHITE" layoutX="14.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="161.20000000000005">
          <font>
             <Font name="System Bold" size="29.0" />
          </font></Text>

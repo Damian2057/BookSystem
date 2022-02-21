@@ -125,15 +125,15 @@ public class Order {
                     return 0;
                 }
                 for (Book o : books) {
-                    sum += o.getBasicOrderPrice()*period;
+                    sum += o.getPrice()*period;
                 }
             } else { //time extension
                 logger.info("Order ID: {} not delivered on time ", ID);
                 int extraDuration = Math.abs(aheadTime);
                 int normalDuration = Period.between(startReservationdate, endReservationDate).getDays();
                 for (Book o : books) {
-                    sum += o.getBasicOrderPrice()*normalDuration
-                            + (o.getBasicOrderPrice()+2)*extraDuration;
+                    sum += o.getPrice()*normalDuration
+                            + (o.getPrice()+2)*extraDuration;
                 }
             }
             logger.info("Order successfully removed, amount to pay: "+ sum*client.getReduction());

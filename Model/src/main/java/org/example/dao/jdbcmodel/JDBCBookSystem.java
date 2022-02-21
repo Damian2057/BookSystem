@@ -292,7 +292,7 @@ public class JDBCBookSystem implements AutoCloseable{
                 preparedStatement.setInt(3,book.getAuthor().getID());
                 preparedStatement.setString(4, book.getPublishDate().toString());
                 preparedStatement.setInt(5, book.getPageCount());
-                preparedStatement.setDouble(6, book.getBasicOrderPrice());
+                preparedStatement.setDouble(6, book.getPrice());
                 preparedStatement.setInt(7, btoi(book.isAccessible()));
 
                 preparedStatement.executeUpdate();

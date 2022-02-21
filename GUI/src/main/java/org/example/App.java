@@ -17,16 +17,20 @@ import org.slf4j.LoggerFactory;
 public class App extends Application {
 
     public static Config config;
+    public static String BookURL = "jdbc:derby:BookSystem;create=true";
+    public static String LoginURL = "jdbc:derby:LoginSystem;create=true";
+    public static String user = "admin";
+    public static String password = "admin123";
 
     public void initLoginBase() throws Exception {
         try(var loginSystem= ClassFactory
-                .getJDBCLoginSystem("jdbc:derby:LoginSystem;create=true"
-                        , "adminnn", "adminnn")) {
+                .getJDBCLoginSystem(LoginURL
+                        , user, password)) {
         }
     }
 
     public void initBookSystemBase() throws Exception {
-        try(var BookSystem= ClassFactory.getJDBCBookSystem("jdbc:derby:BookSystem;create=true")) {
+        try(var BookSystem= ClassFactory.getJDBCBookSystem(BookURL)) {
 
         }
     }

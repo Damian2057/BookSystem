@@ -23,6 +23,14 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
+            <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#authorsget" prefHeight="58.0" prefWidth="291.0" styleClass="choiceoption" text="%authors">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
             <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#booksget" prefHeight="59.0" prefWidth="280.0" styleClass="choiceoption" text="%books">
                <padding>
                   <Insets left="10.0" />

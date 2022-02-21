@@ -100,6 +100,10 @@ public class MainStorage {
         return bookStorage.getBook(ID);
     }
 
+    public ArrayList<Book> getAllBooks() {
+        return bookStorage.getAllElementsFromStorage();
+    }
+
     public void createOrder(int clientID,int bookID, LocalDate SDate, LocalDate EDate) throws Exception {
         //checking if the book is available on that date
         var listBook = ClassFactory.getJDBCBookSystem(URL).getOrderBybookID(bookID);

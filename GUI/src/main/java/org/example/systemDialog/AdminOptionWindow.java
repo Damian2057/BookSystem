@@ -29,7 +29,8 @@ public class AdminOptionWindow {
     }
 
     public void clientsget(ActionEvent actionEvent) throws IOException {
-
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("ClientOption.fxml"),getBundle("bundle", Locale.getDefault()));
+        changepane.getChildren().setAll(pane);
     }
 
     public void booksget(ActionEvent actionEvent) throws IOException {
@@ -47,5 +48,8 @@ public class AdminOptionWindow {
     }
 
     public void settings(ActionEvent actionEvent) {
+    }
+
+    public void authorsget(ActionEvent actionEvent) {
     }
 }

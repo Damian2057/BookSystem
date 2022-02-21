@@ -8,7 +8,7 @@ public class Book {
     private Author author;
     private LocalDate publishDate;
     private int pageCount;
-    private double basicOrderPricePerDay;
+    private double price;
     private boolean accessible = true;
 
     public Book(int ID,String title, Author author, LocalDate publishDate, int pageCount, double basicOrderPrice) {
@@ -17,15 +17,15 @@ public class Book {
         this.author = author;
         this.publishDate = publishDate;
         this.pageCount = pageCount;
-        this.basicOrderPricePerDay = basicOrderPrice;
+        this.price = basicOrderPrice;
     }
 
     public int getID() {
         return ID;
     }
 
-    public double getBasicOrderPrice() {
-        return basicOrderPricePerDay;
+    public double getPrice() {
+        return price;
     }
 
     public String getTitle() {
@@ -48,8 +48,8 @@ public class Book {
         this.pageCount = pageCount;
     }
 
-    public void setBasicOrderPricePerDay(double basicOrderPricePerDay) {
-        this.basicOrderPricePerDay = basicOrderPricePerDay;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public LocalDate getPublishDate() {
@@ -67,4 +67,9 @@ public class Book {
     public void setAccessible(boolean accessible) {
         this.accessible = accessible;
     }
+
+    public String getFullName() {
+        return author.fullName();
+    }
+
 }

@@ -101,7 +101,7 @@ public class BookStorage extends Storage<Book> {
             case "price" -> {
                 try {
                     ClassFactory.getJDBCBookSystem(URL).UpdateBook(ID, Double.parseDouble(newData), partToUpdate);
-                    getBook(ID).setBasicOrderPricePerDay(Double.parseDouble(newData));
+                    getBook(ID).setPrice(Double.parseDouble(newData));
                 } catch (Exception e) {
                     logger.error("Attempting to enter a price with incorrect symbols ");
                     throw new InvalidcharacterException();

@@ -2,6 +2,7 @@ package org.example.systemDialog.nomalOptions;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -9,8 +10,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import org.example.App;
+import org.example.dao.Storage.MainStorage;
 import org.example.model.Author;
 import org.example.model.Book;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -21,6 +26,8 @@ public class BookOptions implements Initializable {
     public Rectangle addbutton;
     public Rectangle addbutton1;
     public Rectangle addbutton11;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private MainStorage mainStorage = new MainStorage(App.BookURL);
 
     @FXML
     private TableColumn<Book, String> authortable;
@@ -42,6 +49,9 @@ public class BookOptions implements Initializable {
 
     @FXML
     private TableColumn<Book, String> titletable;
+
+    public BookOptions() throws Exception {
+    }
 
     public void hoverin(MouseEvent mouseEvent) {
         addbutton.getStyleClass().remove("onExit");
@@ -73,18 +83,23 @@ public class BookOptions implements Initializable {
         addbutton11.getStyleClass().add("onExit");
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<Book> list = FXCollections.observableArrayList(
-                new Book(1,"Titanic", new Author(1,"xyz", "zyx"
-                        , LocalDate.parse("2001-10-15"))
-                        ,LocalDate.parse("2015-10-16"),200,51.50)
-        );
+    public void updateTable() {
+        ObservableList<Book> list = FXCollections.observableArrayList(mainStorage.getAllBooks());
         idtable.setCellValueFactory(new PropertyValueFactory<Book,Integer>("ID"));
         titletable.setCellValueFactory(new PropertyValueFactory<Book,String>("title"));
-
+        authortable.setCellValueFactory(new PropertyValueFactory<Book,String>("FullName"));
+        datetable.setCellValueFactory(new PropertyValueFactory<Book,LocalDate>("publishDate"));
+        pagetable.setCellValueFactory(new PropertyValueFactory<Book, Integer>("pageCount"));
+        pricetable.setCellValueFactory(new PropertyValueFactory<Book,Double>("Price"));
         table.setItems(list);
-
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        updateTable();
+    }
+
+    public void onsearch(ActionEvent actionEvent) throws Exception {
+        //mainStorage.addBook("Titanic",1,LocalDate.parse("2001-10-15"),200,5.5);
+    }
 }

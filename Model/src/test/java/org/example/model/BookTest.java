@@ -3,7 +3,6 @@ package org.example.model;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +18,7 @@ class BookTest {
 
     @Test
     void getBasicOrderPrice() {
-        assertEquals(book.getBasicOrderPrice(),51.50);
+        assertEquals(book.getPrice(),51.50);
     }
 
     @Test

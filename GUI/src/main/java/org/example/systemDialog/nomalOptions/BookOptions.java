@@ -4,21 +4,30 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.example.App;
 import org.example.dao.Storage.MainStorage;
 import org.example.model.Author;
 import org.example.model.Book;
+import org.example.systemDialog.AdminOptionWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.ResourceBundle;
+
+import static java.util.ResourceBundle.getBundle;
 
 public class BookOptions implements Initializable {
 
@@ -41,25 +50,25 @@ public class BookOptions implements Initializable {
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
     @FXML
-    private TableColumn<Book, String> authortable;
+    private TableColumn<Book, String> authortable = new TableColumn<>();
 
     @FXML
-    private TableColumn<Book, LocalDate> datetable;
+    private TableColumn<Book, LocalDate> datetable = new TableColumn<>();
 
     @FXML
-    private TableColumn<Book, Integer> idtable;
+    private TableColumn<Book, Integer> idtable = new TableColumn<>();
 
     @FXML
-    private TableColumn<Book, Integer> pagetable;
+    private TableColumn<Book, Integer> pagetable = new TableColumn<>();
 
     @FXML
-    private TableColumn<Book, Double> pricetable;
+    private TableColumn<Book, Double> pricetable = new TableColumn<>();
 
     @FXML
-    private TableView<Book> table;
+    private TableView<Book> table = new TableView<>();
 
     @FXML
-    private TableColumn<Book, String> titletable;
+    private TableColumn<Book, String> titletable = new TableColumn<>();
 
     public BookOptions() throws Exception {
     }
@@ -105,16 +114,27 @@ public class BookOptions implements Initializable {
         table.setItems(list);
     }
 
-    public void addbook(MouseEvent event) {
-        System.out.println("1");
+
+
+    public void addbook(MouseEvent event) throws IOException {
+        if(AdminOptionWindow.addStage == null) {
+            AdminOptionWindow.addStage = new Stage();
+            AdminOptionWindow.addStage.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.addStage.setAlwaysOnTop(true);
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("addBookOption.fxml"));
+            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+            Scene scene = new Scene(fxmlLoader2.load());
+            AdminOptionWindow.addStage.setScene(scene);
+            AdminOptionWindow.addStage.show();
+        }
     }
 
     public void modifyBook(MouseEvent event) {
-        System.out.println("1");
+
     }
 
     public void removeBook(MouseEvent event) {
-        System.out.println("1");
+
     }
 
     @Override
@@ -130,8 +150,12 @@ public class BookOptions implements Initializable {
     }
 
     public void oncancel(ActionEvent actionEvent) {
+        AdminOptionWindow.addStage.close();
+        AdminOptionWindow.addStage = null;
     }
 
     public void onexit(ActionEvent actionEvent) {
+        AdminOptionWindow.addStage.close();
+        AdminOptionWindow.addStage = null;
     }
 }

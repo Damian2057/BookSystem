@@ -18,6 +18,10 @@ public class AdminOptionWindow {
 
     public AnchorPane changepane;
 
+    public static Stage addStage;
+    public static Stage modifyStage;
+    public static Stage removeStage;
+
     public void show() throws IOException {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("AdminScene.fxml"));

@@ -9,12 +9,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="bigBackGround" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.nomalOptions.BookOptions">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="bigBackGround" stylesheets="@../../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.nomalOptions.BookOptions">
    <children>
       <Button fx:id="addoption" layoutX="371.0" layoutY="335.0" mnemonicParsing="false" onAction="#onadd" prefHeight="65.0" prefWidth="229.0" styleClass="choiceoption" text="%add" />
       <Button fx:id="canceloption" layoutY="335.0" mnemonicParsing="false" onAction="#oncancel" prefHeight="65.0" prefWidth="229.0" styleClass="choiceoption" text="%cancel" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7b00c2e8" height="35.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
-      <Button fx:id="exitoption" layoutX="525.0" mnemonicParsing="false" onAction="#onexit" prefHeight="30.0" prefWidth="75.0" styleClass="choicebutton" stylesheets="@../../../img/style.css" text="X" textFill="WHITE">
+      <Button fx:id="exitoption" layoutX="525.0" mnemonicParsing="false" onAction="#onexit" prefHeight="30.0" prefWidth="75.0" styleClass="choicebutton" stylesheets="@../../../../img/style.css" text="X" textFill="WHITE">
          <font>
             <Font name="Verdana Italic" size="14.0" />
          </font>
@@ -25,7 +25,7 @@
          </font>
       </Text>
       <TextField fx:id="titlefield" layoutX="209.0" layoutY="59.0" prefHeight="25.0" prefWidth="182.0" styleClass="textfield-background" />
-      <ComboBox fx:id="authorbox" layoutX="209.0" layoutY="106.0" prefHeight="25.0" prefWidth="182.0" styleClass="choice" stylesheets="@../../../img/style.css" />
+      <ComboBox fx:id="authorbox" layoutX="209.0" layoutY="106.0" prefHeight="25.0" prefWidth="182.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
       <Text fill="WHITE" layoutX="244.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%author" textAlignment="CENTER" wrappingWidth="112.0">
          <font>
             <Font name="System Bold" size="17.0" />
@@ -48,9 +48,9 @@
          </font>
       </Text>
       <TextField fx:id="pricefield" layoutX="209.0" layoutY="278.0" prefHeight="25.0" prefWidth="182.0" styleClass="textfield-background" />
-      <ChoiceBox fx:id="monthbox" layoutX="264.0" layoutY="174.0" prefHeight="25.0" prefWidth="75.0" styleClass="choice" stylesheets="@../../../img/style.css" />
-      <ChoiceBox fx:id="yearbox" layoutX="369.0" layoutY="174.0" prefHeight="23.0" prefWidth="75.0" styleClass="choice" stylesheets="@../../../img/style.css" />
-      <ChoiceBox fx:id="daybox" layoutX="158.0" layoutY="174.0" prefHeight="25.0" prefWidth="75.0" styleClass="choice" stylesheets="@../../../img/style.css" />
+      <ChoiceBox fx:id="monthbox" layoutX="264.0" layoutY="174.0" prefHeight="25.0" prefWidth="75.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
+      <ChoiceBox fx:id="yearbox" layoutX="369.0" layoutY="174.0" prefHeight="23.0" prefWidth="75.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
+      <ChoiceBox fx:id="daybox" layoutX="158.0" layoutY="174.0" prefHeight="25.0" prefWidth="75.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
       <Text fill="WHITE" layoutX="238.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" wrappingWidth="24.89453125">
          <font>
             <Font name="System Bold" size="22.0" />

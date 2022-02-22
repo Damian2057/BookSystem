@@ -120,10 +120,6 @@ public class BookOptions implements Initializable {
     public void addbook(MouseEvent event) throws IOException {
         if(AdminOptionWindow.addStage == null) {
             AdminOptionWindow.addStage = new Stage();
-            AdminOptionWindow.addStage.setOnHidden(windowEvent -> {
-                System.out.println("closee");
-                updateTable();
-            });
             AdminOptionWindow.addStage.initStyle(StageStyle.UNDECORATED);
             AdminOptionWindow.addStage.setAlwaysOnTop(true);
             FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("addBookOption.fxml"));
@@ -217,4 +213,5 @@ public class BookOptions implements Initializable {
         AdminOptionWindow.addStage.close();
         AdminOptionWindow.addStage = null;
     }
+
 }

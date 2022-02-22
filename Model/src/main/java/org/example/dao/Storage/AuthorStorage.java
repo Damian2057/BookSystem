@@ -22,6 +22,16 @@ public class AuthorStorage extends Storage<Author>{
         }
     }
 
+    public int getAuthorIDbydata(String fulldata) throws Exception {
+        for (Author a :
+                ClassFactory.getJDBCBookSystem(URL).getListofAuthors()) {
+            if(Objects.equals(a.fullName(), fulldata)) {
+                return a.getID();
+            }
+        }
+        throw new WrongAuthorExeption();
+    }
+
     public Author getAuthor(int ID) throws Exception {
         for (int i = 0; i < getAllElementsFromStorage().size(); i++) {
             if (ID == getAllElementsFromStorage().get(i).getID()) {

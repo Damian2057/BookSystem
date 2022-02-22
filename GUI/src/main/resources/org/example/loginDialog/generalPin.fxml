@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -8,7 +9,10 @@
 
 <AnchorPane fx:id="loginpane" prefHeight="400.0" prefWidth="600.0" styleClass="smallBackGround" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loginDialog.LoginUser">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9a00f6" height="264.0" layoutX="132.0" layoutY="68.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="338.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9a00f6" height="264.0" layoutX="132.0" layoutY="68.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="338.0">
+         <effect>
+            <DropShadow />
+         </effect></Rectangle>
       <PasswordField fx:id="pinpass" layoutX="226.0" layoutY="175.0" onKeyReleased="#onpinType" styleClass="textfield-background" />
       <Text fill="WHITE" layoutX="194.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%entryPIN" textAlignment="CENTER" wrappingWidth="213.5999999999999">
          <font>

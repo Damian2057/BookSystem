@@ -5,8 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
@@ -26,6 +25,18 @@ public class BookOptions implements Initializable {
     public Rectangle addbutton;
     public Rectangle addbutton1;
     public Rectangle addbutton11;
+
+    public Button addoption;
+    public Button canceloption;
+    public Button exitoption;
+    public TextField titlefield;
+    public ComboBox authorbox;
+    public TextField pagefield;
+    public TextField pricefield;
+    public ChoiceBox monthbox;
+    public ChoiceBox yearbox;
+    public ChoiceBox daybox;
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
@@ -113,5 +124,14 @@ public class BookOptions implements Initializable {
 
     public void onsearch(ActionEvent actionEvent) throws Exception {
         //mainStorage.addBook("Titanic",1,LocalDate.parse("2001-10-15"),200,5.5);
+    }
+
+    public void onadd(ActionEvent actionEvent) {
+    }
+
+    public void oncancel(ActionEvent actionEvent) {
+    }
+
+    public void onexit(ActionEvent actionEvent) {
     }
 }

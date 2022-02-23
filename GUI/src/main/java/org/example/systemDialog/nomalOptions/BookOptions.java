@@ -211,7 +211,6 @@ public class BookOptions implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         monthtext.setText(LocalDate.now().getMonth().toString());
-
         authorbox.setVisibleRowCount(7);
         daybox.setVisibleRowCount(7);
         monthbox.setVisibleRowCount(7);

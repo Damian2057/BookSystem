@@ -101,3 +101,11 @@
     -fx-background-image: url(logout.png);
     -fx-background-size: cover;
 }
+
+.okdate {
+    -fx-control-inner-background: #01c401;
+}
+
+.nodate {
+    -fx-control-inner-background: #de0000;
+}

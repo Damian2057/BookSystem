@@ -1,16 +1,22 @@
 package org.example.systemDialog.nomalOptions;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.example.App;
@@ -55,6 +61,8 @@ public class BookOptions implements Initializable {
     public TextField pricefieldM;
     public ComboBox idBox = new ComboBox();
     public ComboBox avalibox = new ComboBox();
+    public GridPane calendar;
+    public Text monthtext;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
@@ -64,6 +72,9 @@ public class BookOptions implements Initializable {
 
     @FXML
     private TableColumn<Book, LocalDate> datetable = new TableColumn<>();
+
+    @FXML
+    private TableColumn<Book,String> Avatable = new TableColumn();
 
     @FXML
     private TableColumn<Book, Integer> idtable = new TableColumn<>();
@@ -103,16 +114,6 @@ public class BookOptions implements Initializable {
         addbutton1.getStyleClass().add("onExit");
     }
 
-    public void hoverinnn(MouseEvent mouseEvent) {
-        addbutton11.getStyleClass().remove("onExit");
-        addbutton11.getStyleClass().add("onEnter");
-    }
-
-    public void hoverouttt(MouseEvent mouseEvent) {
-        addbutton11.getStyleClass().remove("onEnter");
-        addbutton11.getStyleClass().add("onExit");
-    }
-
     public void updateTable() {
         ObservableList<Book> list = FXCollections.observableArrayList(mainStorage.getAllBooks());
         idtable.setCellValueFactory(new PropertyValueFactory<Book,Integer>("ID"));
@@ -121,7 +122,42 @@ public class BookOptions implements Initializable {
         datetable.setCellValueFactory(new PropertyValueFactory<Book,LocalDate>("publishDate"));
         pagetable.setCellValueFactory(new PropertyValueFactory<Book, Integer>("pageCount"));
         pricetable.setCellValueFactory(new PropertyValueFactory<Book,Double>("Price"));
+        Avatable.setCellValueFactory(new PropertyValueFactory<Book,String>("Accessible"));
         table.setItems(list);
+        table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Book>() {
+            @Override
+            public void changed(ObservableValue<? extends Book> observableValue, Book book, Book t1) {
+                calendar.getChildren().clear();
+                int index = 1;
+                String ok = "yes";
+                String no = "no";
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 7; j++) {
+                        TextField text = null;
+                        if(observableValue.getValue().isAccessible()) {
+                            text = new TextField(String.valueOf(index)+"\n"+ok);
+                            text.getStyleClass().add("okdate");
+                        } else {
+                            text = new TextField(String.valueOf(index)+"\n"+no);
+                            text.getStyleClass().add("nodate");
+                        }
+
+                        text.setMaxSize(500,500);
+                        text.setAlignment(Pos.CENTER);
+                        text.setEditable(false);
+                        calendar.add(text,j,i);
+
+                        index++;
+                        if(index == LocalDate.now().getMonth().length(true)){
+                            break;
+                        }
+                    }
+                    if(index == LocalDate.now().getMonth().length(true)){
+                        break;
+                    }
+                }
+            }
+        });
     }
 
 
@@ -159,6 +195,9 @@ public class BookOptions implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        monthtext.setText(LocalDate.now().getMonth().toString());
+
         authorbox.setVisibleRowCount(7);
         daybox.setVisibleRowCount(7);
         monthbox.setVisibleRowCount(7);
@@ -225,7 +264,6 @@ public class BookOptions implements Initializable {
                     ,createDate()
                     ,Integer.parseInt(pagefield.getText())
                     ,Double.parseDouble(pricefield.getText()));
-
             AdminOptionWindow.addStage.close();
             AdminOptionWindow.addStage = null;
         } catch (Exception e) {

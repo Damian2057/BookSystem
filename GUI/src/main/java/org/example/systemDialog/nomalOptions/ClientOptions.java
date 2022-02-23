@@ -94,6 +94,8 @@ public class ClientOptions implements Initializable {
         addbutton2.getStyleClass().add("onExit");
     }
 
+
+
     @FXML
     void modifyClient(MouseEvent event) {
 

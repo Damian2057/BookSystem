@@ -150,7 +150,12 @@ public class MainStorage {
                 temp = String.valueOf(Day);
             }
             boolean tempboolean = true;
-            LocalDate localDate = LocalDate.parse(LocalDate.now().getYear()+"-0"+LocalDate.now().getMonthValue()+"-"+temp);
+            LocalDate localDate = null;
+            if(LocalDate.now().getMonthValue() < 10) {
+                 localDate = LocalDate.parse(LocalDate.now().getYear()+"-0"+LocalDate.now().getMonthValue()+"-"+temp);
+            } else {
+                 localDate = LocalDate.parse(LocalDate.now().getYear()+"-0"+LocalDate.now().getMonthValue()+"-"+temp);
+            }
             for (int i = 0; i < list.size(); i++) {
                 if(localDate.isBefore(list.get(i).getStartReservationdate()) && localDate.isBefore(list.get(i).getEndReservationDate())) {
                     tempboolean = true;

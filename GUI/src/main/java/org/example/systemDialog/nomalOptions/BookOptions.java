@@ -203,9 +203,6 @@ public class BookOptions implements Initializable {
 
     }
 
-    public void removeBook(MouseEvent event) {
-
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

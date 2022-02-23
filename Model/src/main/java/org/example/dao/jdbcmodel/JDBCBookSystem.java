@@ -27,7 +27,6 @@ public class JDBCBookSystem implements AutoCloseable{
         try {
             createDataBase();
         } catch (Exception except) {
-            logger.info("BookSystem Database exist");
         }
         close();
     }
@@ -62,7 +61,6 @@ public class JDBCBookSystem implements AutoCloseable{
     public void createDataBase() {
         try {
             connectToDataBase();
-            logger.debug("DataBase creation attempt");
             statement.execute(readstatement("@../../SQLStatements/AuthorTablecreate.sql"));
             statement.execute(readstatement("@../../SQLStatements/BookTablecreate.sql"));
             statement.execute(readstatement("@../../SQLStatements/ClientTablecreate.sql"));
@@ -689,10 +687,11 @@ public class JDBCBookSystem implements AutoCloseable{
 
     public ArrayList<Order> getOrderBybookID(int bookID) throws Exception {
         var OrderListBook = new ArrayList<Order>();
-        for(int i = 0; i < getAllofOrders().size(); i++) {
-            for (int j = 0; j < getAllofOrders().get(i).getListofBooks().size(); j++) {
-                if(getAllofOrders().get(i).getListofBooks().get(j).getID() == bookID){
-                    OrderListBook.add(getAllofOrders().get(i));
+        var allOrders = getAllofOrdersINIT();
+        for(int i = 0; i < allOrders.size(); i++) {
+            for (int j = 0; j < allOrders.get(i).getListofBooks().size(); j++) {
+                if(allOrders.get(i).getListofBooks().get(j).getID() == bookID){
+                    OrderListBook.add(allOrders.get(i));
                 }
             }
         }

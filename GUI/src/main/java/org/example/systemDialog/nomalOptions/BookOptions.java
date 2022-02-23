@@ -20,9 +20,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.example.App;
+import org.example.dao.ClassFactory;
 import org.example.dao.Storage.MainStorage;
 import org.example.model.Author;
 import org.example.model.Book;
+import org.example.model.Order;
 import org.example.systemDialog.AdminOptionWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -62,7 +65,7 @@ public class BookOptions implements Initializable {
     public ComboBox idBox = new ComboBox();
     public ComboBox avalibox = new ComboBox();
     public GridPane calendar;
-    public Text monthtext;
+    public Text monthtext = new Text();
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
@@ -128,18 +131,29 @@ public class BookOptions implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Book> observableValue, Book book, Book t1) {
                 calendar.getChildren().clear();
+                ArrayList<Order> ordertemp = new ArrayList<>();
+                try {
+                    ordertemp = ClassFactory.getJDBCBookSystem(App.BookURL).getOrderBybookID(observableValue.getValue().getID());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    logger.error("error occured during getting a list of orders");
+                }
                 int index = 1;
                 String ok = "yes";
                 String no = "no";
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 7; j++) {
-                        TextField text = null;
-                        if(observableValue.getValue().isAccessible()) {
-                            text = new TextField(String.valueOf(index)+"\n"+ok);
-                            text.getStyleClass().add("okdate");
-                        } else {
-                            text = new TextField(String.valueOf(index)+"\n"+no);
-                            text.getStyleClass().add("nodate");
+                        TextField text = new TextField();
+                        try {
+                            if(mainStorage.checkAvailabilityInDay(ordertemp,observableValue.getValue().getID(),index)) {
+                                text = new TextField(String.valueOf(index)+" "+ok);
+                                text.getStyleClass().add("okdate");
+                            } else {
+                                text = new TextField(String.valueOf(index)+" "+no);
+                                text.getStyleClass().add("nodate");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
 
                         text.setMaxSize(500,500);
@@ -231,7 +245,7 @@ public class BookOptions implements Initializable {
     }
 
     public void onsearch(ActionEvent actionEvent) throws Exception {
-        //mainStorage.addBook("Titanic",1,LocalDate.parse("2001-10-15"),200,5.5);
+        //mainStorage.createOrder(1,1,LocalDate.parse("2022-02-24"),LocalDate.parse("2022-02-24"));
     }
 
     private LocalDate createDate() {

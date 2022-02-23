@@ -139,6 +139,31 @@ public class MainStorage {
         orderStorage.addElement(temp);
     }
 
+    public boolean checkAvailabilityInDay(ArrayList<Order> list,int bookID, int Day) throws Exception {
+        if(list.isEmpty()){
+            return true;
+        } else {
+            String temp = "";
+            if(Day < 10) {
+                temp = "0" + Day;
+            } else {
+                temp = String.valueOf(Day);
+            }
+            boolean tempboolean = true;
+            LocalDate localDate = LocalDate.parse(LocalDate.now().getYear()+"-0"+LocalDate.now().getMonthValue()+"-"+temp);
+            for (int i = 0; i < list.size(); i++) {
+                if(localDate.isBefore(list.get(i).getStartReservationdate()) && localDate.isBefore(list.get(i).getEndReservationDate())) {
+                    tempboolean = true;
+                } else if(localDate.isAfter(list.get(i).getEndReservationDate()) && localDate.isAfter(list.get(i).getStartReservationdate())) {
+                    tempboolean = true;
+                } else {
+                    return false;
+                }
+            }
+            return tempboolean;
+        }
+    }
+
     public void addBookToOrder(int OrderID, int bookID) throws Exception {
         //checking if the book is available on that date
         var listBook = ClassFactory.getJDBCBookSystem(URL).getOrderBybookID(bookID);

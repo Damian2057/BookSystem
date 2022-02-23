@@ -49,6 +49,7 @@ public class AdminOptionWindow {
     }
 
     public void logout(ActionEvent actionEvent) {
+        System.exit(0);
     }
 
     public void settings(ActionEvent actionEvent) {

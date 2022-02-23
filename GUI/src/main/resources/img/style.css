@@ -34,6 +34,30 @@
     -fx-effect: dropshadow(three-pass-box, rgb(89, 85, 85), 10, 0, 0, 0);
 }
 
+.mofidybook {
+    -fx-background-image: url(modifybook.png);
+    -fx-background-size: cover;
+    -fx-effect: dropshadow(three-pass-box, rgb(89, 85, 85), 10, 0, 0, 0);
+}
+
+.addclient {
+    -fx-background-image: url(addclient.png);
+    -fx-background-size: cover;
+    -fx-effect: dropshadow(three-pass-box, rgb(89, 85, 85), 10, 0, 0, 0);
+}
+
+.modifyclient {
+    -fx-background-image: url(modifyclient.png);
+    -fx-background-size: cover;
+    -fx-effect: dropshadow(three-pass-box, rgb(89, 85, 85), 10, 0, 0, 0);
+}
+
+.removeclient {
+    -fx-background-image: url(removeclient.png);
+    -fx-background-size: cover;
+    -fx-effect: dropshadow(three-pass-box, rgb(89, 85, 85), 10, 0, 0, 0);
+}
+
 .onEnter {
     -fx-opacity: 0.7;
 }

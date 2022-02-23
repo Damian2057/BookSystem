@@ -47,7 +47,7 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Text>
-                <Pane layoutX="55.0" layoutY="32.0" onMouseClicked="#modifyBook" onMouseEntered="#hoverinn" onMouseExited="#hoveroutt" prefHeight="127.0" prefWidth="127.0" styleClass="addbook" stylesheets="@../../../img/style.css" />
+                <Pane layoutX="55.0" layoutY="32.0" onMouseClicked="#modifyBook" onMouseEntered="#hoverinn" onMouseExited="#hoveroutt" prefHeight="127.0" prefWidth="127.0" styleClass="mofidybook" stylesheets="@../../../img/style.css" />
             </children>
         </Group>
         <TextField fx:id="searchfield" layoutX="216.0" layoutY="57.0" prefHeight="44.0" prefWidth="554.0" />

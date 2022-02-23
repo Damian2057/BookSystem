@@ -66,6 +66,7 @@ public class BookOptions implements Initializable {
     public ComboBox avalibox = new ComboBox();
     public GridPane calendar;
     public Text monthtext = new Text();
+    public TextField searchfield;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
@@ -117,8 +118,7 @@ public class BookOptions implements Initializable {
         addbutton1.getStyleClass().add("onExit");
     }
 
-    public void updateTable() {
-        ObservableList<Book> list = FXCollections.observableArrayList(mainStorage.getAllBooks());
+    public void updateTable(ObservableList<Book> list) {
         idtable.setCellValueFactory(new PropertyValueFactory<Book,Integer>("ID"));
         titletable.setCellValueFactory(new PropertyValueFactory<Book,String>("title"));
         authortable.setCellValueFactory(new PropertyValueFactory<Book,String>("FullName"));
@@ -135,8 +135,7 @@ public class BookOptions implements Initializable {
                 try {
                     ordertemp = ClassFactory.getJDBCBookSystem(App.BookURL).getOrderBybookID(observableValue.getValue().getID());
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    logger.error("error occured during getting a list of orders");
+                    calendar.getChildren().clear();
                 }
                 int index = 1;
                 String ok = "yes";
@@ -152,16 +151,14 @@ public class BookOptions implements Initializable {
                                 text = new TextField(String.valueOf(index)+" "+no);
                                 text.getStyleClass().add("nodate");
                             }
+                            text.setMaxSize(500,500);
+                            text.setAlignment(Pos.CENTER);
+                            text.setEditable(false);
+                            calendar.add(text,j,i);
+                            index++;
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            calendar.getChildren().clear();
                         }
-
-                        text.setMaxSize(500,500);
-                        text.setAlignment(Pos.CENTER);
-                        text.setEditable(false);
-                        calendar.add(text,j,i);
-
-                        index++;
                         if(index == LocalDate.now().getMonth().length(true)){
                             break;
                         }
@@ -173,8 +170,6 @@ public class BookOptions implements Initializable {
             }
         });
     }
-
-
 
     public void addbook(MouseEvent event) throws IOException {
         if(AdminOptionWindow.addStage == null) {
@@ -202,7 +197,6 @@ public class BookOptions implements Initializable {
         }
 
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -237,11 +231,22 @@ public class BookOptions implements Initializable {
         }
         avalibox.getItems().add(getBundle("bundle").getString("yes"));
         avalibox.getItems().add(getBundle("bundle").getString("no"));
-        updateTable();
+        ObservableList<Book> listOfBooks = FXCollections.observableArrayList(mainStorage.getAllBooks());
+        updateTable(listOfBooks);
     }
 
     public void onsearch(ActionEvent actionEvent) throws Exception {
-        //mainStorage.createOrder(1,1,LocalDate.parse("2022-02-24"),LocalDate.parse("2022-02-24"));
+        ArrayList<Book> allbook = mainStorage.getAllBooks();
+        ArrayList<Book> booklist = new ArrayList<>();
+        for (Book book :
+                allbook) {
+            if (book.getTitle().contains(searchfield.getText())
+                    || book.getFullName().contains(searchfield.getText())) {
+                booklist.add(book);
+            }
+        }
+        ObservableList<Book> listOfBooks = FXCollections.observableArrayList(booklist);
+        updateTable(listOfBooks);
     }
 
     private LocalDate createDate() {

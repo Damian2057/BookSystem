@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static java.util.ResourceBundle.getBundle;
@@ -46,6 +47,14 @@ public class BookOptions implements Initializable {
     public ComboBox monthbox = new ComboBox();
     public ComboBox yearbox = new ComboBox();
     public ComboBox daybox = new ComboBox();
+
+    public Button updateOption;
+    public Button canceloptionM;
+    public Button exitoptionM;
+    public TextField titlefieldM;
+    public TextField pricefieldM;
+    public ComboBox idBox = new ComboBox();
+    public ComboBox avalibox = new ComboBox();
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
@@ -130,7 +139,17 @@ public class BookOptions implements Initializable {
         }
     }
 
-    public void modifyBook(MouseEvent event) {
+    public void modifyBook(MouseEvent event) throws IOException {
+        if(AdminOptionWindow.modifyStage == null) {
+            AdminOptionWindow.modifyStage = new Stage();
+            AdminOptionWindow.modifyStage.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.modifyStage.setAlwaysOnTop(true);
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("modifyBookOption.fxml"));
+            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+            Scene scene = new Scene(fxmlLoader2.load());
+            AdminOptionWindow.modifyStage.setScene(scene);
+            AdminOptionWindow.modifyStage.show();
+        }
 
     }
 
@@ -144,6 +163,7 @@ public class BookOptions implements Initializable {
         daybox.setVisibleRowCount(7);
         monthbox.setVisibleRowCount(7);
         yearbox.setVisibleRowCount(7);
+        idBox.setVisibleRowCount(7);
 
         for (int i = 1; i < 32; i++) {
             daybox.getItems().add(i);
@@ -161,6 +181,13 @@ public class BookOptions implements Initializable {
         for (int i = 0; i < list.size(); i++) {
             authorbox.getItems().add(list.get(i).fullName());
         }
+
+        var listBook = mainStorage.getAllBooks();
+        for (int i = 0; i < listBook.size(); i++) {
+            idBox.getItems().add(listBook.get(i).getID());
+        }
+        avalibox.getItems().add(getBundle("bundle").getString("yes"));
+        avalibox.getItems().add(getBundle("bundle").getString("no"));
         updateTable();
     }
 
@@ -168,7 +195,7 @@ public class BookOptions implements Initializable {
         //mainStorage.addBook("Titanic",1,LocalDate.parse("2001-10-15"),200,5.5);
     }
 
-    public void onadd(ActionEvent actionEvent) {
+    private LocalDate createDate() {
         String year;
         String month;
         String day;
@@ -187,12 +214,15 @@ public class BookOptions implements Initializable {
         } else {
             day = daybox.getItems().get(daybox.getSelectionModel().getSelectedIndex()).toString();
         }
+        return LocalDate.parse(year+"-"+month+"-"+day);
+    }
 
+    public void onadd(ActionEvent actionEvent) {
         try {
 
             mainStorage.addBook(titlefield.getText()
                     , mainStorage.getAuthorStorage().getAuthorIDbydata(authorbox.getSelectionModel().getSelectedItem().toString())
-                    ,LocalDate.parse(year+"-"+month+"-"+day)
+                    ,createDate()
                     ,Integer.parseInt(pagefield.getText())
                     ,Double.parseDouble(pricefield.getText()));
 
@@ -214,4 +244,47 @@ public class BookOptions implements Initializable {
         AdminOptionWindow.addStage = null;
     }
 
+    public void onUpdate(ActionEvent actionEvent) throws Exception {
+        mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
+                titlefieldM.getText(),"title");
+        mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
+                pricefieldM.getText(),"price");
+        String status;
+        if(Objects.equals(avalibox.getSelectionModel().getSelectedItem().toString(), getBundle("bundle").getString("yes"))) {
+            status = "true";
+        } else {
+            status = "false";
+        }
+        mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
+                status,"status");
+        mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
+                createDate().toString(),"publicationDate");
+
+        AdminOptionWindow.modifyStage.close();
+        AdminOptionWindow.modifyStage = null;
+    }
+
+    public void oncancelM(ActionEvent actionEvent) {
+        AdminOptionWindow.modifyStage.close();
+        AdminOptionWindow.modifyStage = null;
+    }
+
+    public void onexitM(ActionEvent actionEvent) {
+        AdminOptionWindow.modifyStage.close();
+        AdminOptionWindow.modifyStage = null;
+    }
+
+    public void onIDSelected(ActionEvent actionEvent) throws Exception {
+        Book temp = mainStorage.getBook(Integer.parseInt(idBox.getValue().toString()));
+        titlefieldM.setText(temp.getTitle());
+        pricefieldM.setText(String.valueOf(temp.getPrice()));
+        daybox.setValue(temp.getPublishDate().getDayOfMonth());
+        monthbox.setValue(temp.getPublishDate().getMonthValue());
+        yearbox.setValue(temp.getPublishDate().getYear());
+        if(temp.isAccessible()) {
+            avalibox.getSelectionModel().selectFirst();
+        } else {
+            avalibox.getSelectionModel().selectLast();
+        }
+    }
 }

@@ -1,14 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.systemDialog.nomalOptions.ClientOptions"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="bigBackGround" stylesheets="@../../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.nomalOptions.ClientOptions">
+    <children>
+        <Button fx:id="updateOption" layoutX="371.0" layoutY="335.0" mnemonicParsing="false" onAction="#onUpdate" prefHeight="65.0" prefWidth="229.0" styleClass="choiceoption" text="%update" />
+        <Button fx:id="canceloptionM" layoutY="335.0" mnemonicParsing="false" onAction="#oncancelM" prefHeight="65.0" prefWidth="229.0" styleClass="choiceoption" text="%cancel" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7b00c2e8" height="35.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
+        <Button fx:id="exitoptionM" layoutX="525.0" mnemonicParsing="false" onAction="#onexitM" prefHeight="30.0" prefWidth="75.0" styleClass="choicebutton" stylesheets="@../../../../img/style.css" text="X" textFill="WHITE">
+            <font>
+                <Font name="Verdana Italic" size="14.0" />
+            </font>
+        </Button>
+        <Text fill="WHITE" layoutX="157.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%Selectclientkid" textAlignment="CENTER" wrappingWidth="292.0">
+            <font>
+                <Font name="System Bold" size="17.0" />
+            </font>
+        </Text>
+        <ComboBox fx:id="idBox" layoutX="263.0" layoutY="69.0" onAction="#onIDSelected" prefHeight="25.0" prefWidth="75.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
+        <Text fill="WHITE" layoutX="217.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" textAlignment="CENTER" wrappingWidth="36.0">
+            <font>
+                <Font name="System Bold" size="17.0" />
+            </font>
+        </Text>
+      <Text fill="WHITE" layoutX="40.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%firstname" textAlignment="CENTER" wrappingWidth="112.0">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="firstfield" layoutX="14.0" layoutY="140.0" prefHeight="25.0" prefWidth="163.0" styleClass="textfield-background" />
+      <Text fill="WHITE" layoutX="203.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%lastname" textAlignment="CENTER" wrappingWidth="112.0">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%phone" textAlignment="CENTER" wrappingWidth="193.0">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="191.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%Email" textAlignment="CENTER" wrappingWidth="136.0">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="lastfield" layoutX="183.0" layoutY="140.0" prefHeight="25.0" prefWidth="151.0" styleClass="textfield-background" />
+      <TextField fx:id="phonefield" layoutX="15.0" layoutY="211.0" prefHeight="25.0" prefWidth="151.0" styleClass="textfield-background" />
+      <TextField fx:id="emailfield" layoutX="178.0" layoutY="211.0" prefHeight="25.0" prefWidth="163.0" styleClass="textfield-background" />
+      <Text fill="WHITE" layoutX="28.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%address" textAlignment="CENTER" wrappingWidth="136.0">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="addressfield" layoutX="15.0" layoutY="285.0" prefHeight="25.0" prefWidth="187.0" styleClass="textfield-background" />
+      <TextField fx:id="orderscount" layoutX="474.0" layoutY="219.0" prefHeight="35.0" prefWidth="36.0" styleClass="textfield-background" />
+      <Text fill="WHITE" layoutX="436.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%orderscount" textAlignment="CENTER" wrappingWidth="112.0">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+    </children>
 </AnchorPane>

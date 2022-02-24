@@ -170,7 +170,7 @@ public class BookOptions implements Initializable {
     }
 
     public void addbook(MouseEvent event) throws IOException {
-        if(AdminOptionWindow.addStageB == null) {
+        if(AdminOptionWindow.addStageB == null && AdminOptionWindow.modifyStageB == null) {
             AdminOptionWindow.addStageB = new Stage();
             AdminOptionWindow.addStageB.initStyle(StageStyle.UNDECORATED);
             AdminOptionWindow.addStageB.setAlwaysOnTop(true);
@@ -183,7 +183,7 @@ public class BookOptions implements Initializable {
     }
 
     public void modifyBook(MouseEvent event) throws IOException {
-        if(AdminOptionWindow.modifyStageB == null) {
+        if(AdminOptionWindow.modifyStageB == null && AdminOptionWindow.addStageB == null) {
             AdminOptionWindow.modifyStageB = new Stage();
             AdminOptionWindow.modifyStageB.initStyle(StageStyle.UNDECORATED);
             AdminOptionWindow.modifyStageB.setAlwaysOnTop(true);

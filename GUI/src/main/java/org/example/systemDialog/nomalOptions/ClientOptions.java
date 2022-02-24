@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
@@ -42,6 +39,8 @@ public class ClientOptions implements Initializable {
     public TextField phonefield;
     public TextField emailfield;
     public TextField addressfield;
+    public ComboBox idBox = new ComboBox();
+    public TextField orderscount;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
@@ -121,7 +120,7 @@ public class ClientOptions implements Initializable {
 
     @FXML
     void modifyClient(MouseEvent event) throws IOException {
-        if(AdminOptionWindow.modifyStageC == null) {
+        if(AdminOptionWindow.modifyStageC == null && AdminOptionWindow.addStageC == null) {
             AdminOptionWindow.modifyStageC = new Stage();
             AdminOptionWindow.modifyStageC.initStyle(StageStyle.UNDECORATED);
             AdminOptionWindow.modifyStageC.setAlwaysOnTop(true);
@@ -135,7 +134,7 @@ public class ClientOptions implements Initializable {
 
     @FXML
     void addClient(MouseEvent event) throws IOException {
-        if(AdminOptionWindow.addStageC == null) {
+        if(AdminOptionWindow.addStageC == null && AdminOptionWindow.modifyStageC == null) {
             AdminOptionWindow.addStageC = new Stage();
             AdminOptionWindow.addStageC.initStyle(StageStyle.UNDECORATED);
             AdminOptionWindow.addStageC.setAlwaysOnTop(true);
@@ -171,6 +170,12 @@ public class ClientOptions implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Client> listOfClients = FXCollections.observableArrayList(mainStorage.getAllClients());
         updateTable(listOfClients);
+
+        idBox.setVisibleRowCount(7);
+        var listClients = mainStorage.getAllClients();
+        for (int i = 0; i < listClients.size(); i++) {
+            idBox.getItems().add(listClients.get(i).getID());
+        }
     }
 
     public void onadd(ActionEvent actionEvent) {
@@ -193,5 +198,42 @@ public class ClientOptions implements Initializable {
     public void onexit(ActionEvent actionEvent) {
         AdminOptionWindow.addStageC.close();
         AdminOptionWindow.addStageC = null;
+    }
+
+    public void onUpdate(ActionEvent actionEvent) throws Exception {
+        mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
+                ,firstfield.getText(),"name");
+        mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
+                ,lastfield.getText(),"lastname");
+        mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
+                ,phonefield.getText(),"phone");
+        mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
+                ,emailfield.getText(),"email");
+        mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
+                ,addressfield.getText(),"address");
+        mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
+                ,orderscount.getText(),"order");
+        AdminOptionWindow.modifyStageC.close();
+        AdminOptionWindow.modifyStageC = null;
+    }
+
+    public void oncancelM(ActionEvent actionEvent) {
+        AdminOptionWindow.modifyStageC.close();
+        AdminOptionWindow.modifyStageC = null;
+    }
+
+    public void onexitM(ActionEvent actionEvent) {
+        AdminOptionWindow.modifyStageC.close();
+        AdminOptionWindow.modifyStageC = null;
+    }
+
+    public void onIDSelected(ActionEvent actionEvent) throws Exception {
+        Client temp = mainStorage.getClient(Integer.parseInt(idBox.getValue().toString()));
+        firstfield.setText(temp.getFirstName());
+        lastfield.setText(temp.getLastName());
+        phonefield.setText(temp.getPhoneNumber());
+        emailfield.setText(temp.getEmailAddress());
+        addressfield.setText(temp.getAddress());
+        orderscount.setText(String.valueOf(temp.getOrderCount()));
     }
 }

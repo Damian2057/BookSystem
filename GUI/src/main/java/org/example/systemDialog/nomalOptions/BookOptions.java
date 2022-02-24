@@ -135,17 +135,15 @@ public class BookOptions implements Initializable {
                     calendar.getChildren().clear();
                 }
                 int index = 1;
-                String ok = "yes";
-                String no = "no";
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 7; j++) {
                         TextField text = new TextField();
                         try {
                             if(mainStorage.checkAvailabilityInDay(ordertemp,observableValue.getValue().getID(),index)) {
-                                text = new TextField(String.valueOf(index)+" "+ok);
+                                text = new TextField(String.valueOf(index));
                                 text.getStyleClass().add("okdate");
                             } else {
-                                text = new TextField(String.valueOf(index)+" "+no);
+                                text = new TextField(String.valueOf(index));
                                 text.getStyleClass().add("nodate");
                             }
                             text.setMaxSize(500,500);

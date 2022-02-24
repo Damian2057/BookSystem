@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="bigBackGround" stylesheets="@../../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.nomalOptions.AuthorOptions">
+    <children>
+        <Button fx:id="addoption" layoutX="371.0" layoutY="335.0" mnemonicParsing="false" onAction="#onadd" prefHeight="65.0" prefWidth="229.0" styleClass="choiceoption" text="%add" />
+        <Button fx:id="canceloption" layoutY="335.0" mnemonicParsing="false" onAction="#oncancel" prefHeight="65.0" prefWidth="229.0" styleClass="choiceoption" text="%cancel" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7b00c2e8" height="35.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
+        <Button fx:id="exitoption" layoutX="525.0" mnemonicParsing="false" onAction="#onexit" prefHeight="30.0" prefWidth="75.0" styleClass="choicebutton" stylesheets="@../../../../img/style.css" text="X" textFill="WHITE">
+            <font>
+                <Font name="Verdana Italic" size="14.0" />
+            </font>
+        </Button>
+        <Text fill="WHITE" layoutX="106.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%firstname" textAlignment="CENTER" wrappingWidth="112.0">
+            <font>
+                <Font name="System Bold" size="17.0" />
+            </font>
+        </Text>
+        <TextField fx:id="firstfield" layoutX="71.0" layoutY="85.0" prefHeight="25.0" prefWidth="182.0" styleClass="textfield-background" />
+        <Text fill="WHITE" layoutX="187.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%birthday" textAlignment="CENTER" wrappingWidth="211.0">
+            <font>
+                <Font name="System Bold" size="17.0" />
+            </font>
+        </Text>
+        <ComboBox fx:id="monthbox" layoutX="224.0" layoutY="142.0" prefHeight="34.0" prefWidth="136.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
+        <ComboBox fx:id="yearbox" layoutX="382.0" layoutY="143.0" prefHeight="34.0" prefWidth="94.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
+        <ComboBox fx:id="daybox" layoutX="125.0" layoutY="143.0" prefHeight="25.0" prefWidth="75.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
+        <Text fill="WHITE" layoutX="200.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" wrappingWidth="24.89453125">
+            <font>
+                <Font name="System Bold" size="22.0" />
+            </font>
+        </Text>
+        <Text fill="WHITE" layoutX="359.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" wrappingWidth="24.89453125">
+            <font>
+                <Font name="System Bold" size="22.0" />
+            </font>
+        </Text>
+      <Text fill="WHITE" layoutX="368.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%lastname" textAlignment="CENTER" wrappingWidth="112.0">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="lastfield" layoutX="333.0" layoutY="86.0" prefHeight="25.0" prefWidth="182.0" styleClass="textfield-background" />
+      <Text fill="WHITE" layoutX="187.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%death" textAlignment="CENTER" wrappingWidth="211.0">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="monthbox1" layoutX="224.0" layoutY="230.0" prefHeight="34.0" prefWidth="136.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
+      <ComboBox fx:id="yearbox1" layoutX="382.0" layoutY="230.0" prefHeight="34.0" prefWidth="94.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
+      <ComboBox fx:id="daybox1" layoutX="125.0" layoutY="232.0" prefHeight="25.0" prefWidth="75.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
+      <Text fill="WHITE" layoutX="200.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" wrappingWidth="24.89453125">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="359.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" wrappingWidth="24.89453125">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Text>
+    </children>
+</AnchorPane>

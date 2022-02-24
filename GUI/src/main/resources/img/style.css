@@ -133,3 +133,14 @@
 .nodate {
     -fx-control-inner-background: #de0000;
 }
+.addAuthor {
+    -fx-background-image: url(addauthor.png);
+    -fx-background-size: cover;
+    -fx-effect: dropshadow(three-pass-box, rgb(89, 85, 85), 10, 0, 0, 0);
+}
+
+.modifyAuthor {
+    -fx-background-image: url(modifyauthor.png);
+    -fx-background-size: cover;
+    -fx-effect: dropshadow(three-pass-box, rgb(89, 85, 85), 10, 0, 0, 0);
+}

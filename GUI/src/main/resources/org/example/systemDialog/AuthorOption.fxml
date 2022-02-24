@@ -1,14 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.systemDialog.nomalOptions.AuthorOptions"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="777.0" prefWidth="1250.0" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.nomalOptions.AuthorOptions">
+    <children>
+        <Group layoutX="25.0" layoutY="164.0">
+            <children>
+                <Rectangle fx:id="addbutton" arcHeight="5.0" arcWidth="5.0" fill="#9355ff" height="200.0" layoutX="18.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
+                    <styleClass>
+                        <String fx:value="button" />
+                        <String fx:value="onExit" />
+                    </styleClass>
+                </Rectangle>
+                <Text fill="WHITE" layoutX="41.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%addbooktext" textAlignment="CENTER" wrappingWidth="153.13671875">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Text>
+                <Pane layoutX="55.0" layoutY="32.0" onMouseClicked="#addAuthor" onMouseEntered="#hoverin" onMouseExited="#hoverout" prefHeight="127.0" prefWidth="127.0" styleClass="addAuthor" stylesheets="@../../../img/style.css" />
+            </children>
+        </Group>
+        <Group layoutX="25.0" layoutY="377.0">
+            <children>
+                <Rectangle fx:id="addbutton1" arcHeight="5.0" arcWidth="5.0" fill="#9355ff" height="200.0" layoutX="18.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
+                    <styleClass>
+                        <String fx:value="button" />
+                        <String fx:value="onExit" />
+                    </styleClass>
+                </Rectangle>
+                <Text fill="WHITE" layoutX="41.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%modify" textAlignment="CENTER" wrappingWidth="153.13671875">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Text>
+                <Pane layoutX="55.0" layoutY="32.0" onMouseClicked="#modifyAuthor" onMouseEntered="#hoverinn" onMouseExited="#hoveroutt" prefHeight="127.0" prefWidth="127.0" styleClass="modifyAuthor" stylesheets="@../../../img/style.css" />
+            </children>
+        </Group>
+        <TextField fx:id="searchfield" layoutX="297.0" layoutY="56.0" prefHeight="44.0" prefWidth="624.0" />
+        <Button layoutX="923.0" layoutY="56.0" mnemonicParsing="false" onAction="#onsearch" prefHeight="44.0" prefWidth="81.0" styleClass="choicebutton" stylesheets="@../../../img/style.css" text="%search">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Button>
+        <TableView fx:id="table" layoutX="297.0" layoutY="100.0" prefHeight="609.0" prefWidth="709.0">
+            <columns>
+                <TableColumn fx:id="idtable" editable="false" prefWidth="38.0" text="ID" />
+                <TableColumn fx:id="firsttable" editable="false" prefWidth="154.0" text="%firstname" />
+                <TableColumn fx:id="lasttable" editable="false" prefWidth="199.0" text="%lastname" />
+                <TableColumn fx:id="birthdaytable" editable="false" prefWidth="158.0" text="%birthday" />
+                <TableColumn fx:id="deathdate" editable="false" prefWidth="159.0" text="%death" />
+            </columns>
+        </TableView>
+        <Group layoutX="882.0" layoutY="179.0" />
+    </children>
 </AnchorPane>

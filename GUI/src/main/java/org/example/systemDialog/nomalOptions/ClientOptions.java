@@ -25,10 +25,9 @@ import org.example.model.Client.Client;
 import org.example.systemDialog.AdminOptionWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -173,7 +172,20 @@ public class ClientOptions implements Initializable {
 
     @FXML
     void onsearch(ActionEvent event) {
-
+        ArrayList<Client> allclients = mainStorage.getAllClients();
+        ArrayList<Client> clientlist = new ArrayList<>();
+        for (Client client :
+                allclients) {
+            if (client.getFirstName().contains(searchfield.getText())
+                    || client.getLastName().contains(searchfield.getText())
+                    || client.getPhoneNumber().contains(searchfield.getText())
+                    || client.getEmailAddress().contains(searchfield.getText())
+                    || client.getAddress().contains(searchfield.getText())) {
+                clientlist.add(client);
+            }
+        }
+        ObservableList<Client> listOfClients = FXCollections.observableArrayList(clientlist);
+        updateTable(listOfClients);
     }
 
     public void updateTable(ObservableList<Client> list) {

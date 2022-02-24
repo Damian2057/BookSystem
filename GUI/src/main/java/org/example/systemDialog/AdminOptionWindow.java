@@ -58,6 +58,8 @@ public class AdminOptionWindow {
     public void settings(ActionEvent actionEvent) {
     }
 
-    public void authorsget(ActionEvent actionEvent) {
+    public void authorsget(ActionEvent actionEvent) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("AuthorOption.fxml"),getBundle("bundle", Locale.getDefault()));
+        changepane.getChildren().setAll(pane);
     }
 }

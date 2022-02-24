@@ -2,7 +2,10 @@ package org.example.systemDialog.nomalOptions;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,9 +14,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.example.App;
+import org.example.Exceptions.Dao.ObjectsDependentException;
 import org.example.dao.Storage.MainStorage;
 import org.example.model.Book;
 import org.example.model.Client.Client;
@@ -41,6 +46,11 @@ public class ClientOptions implements Initializable {
     public TextField addressfield;
     public ComboBox idBox = new ComboBox();
     public TextField orderscount;
+    public TextField firstfieldR;
+    public TextField lastfieldR;
+    public Text clienterror = new Text();
+    public Text clientsucce = new Text();
+    public Button removeOption;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
@@ -117,7 +127,6 @@ public class ClientOptions implements Initializable {
     }
 
 
-
     @FXML
     void modifyClient(MouseEvent event) throws IOException {
         if(AdminOptionWindow.modifyStageC == null && AdminOptionWindow.addStageC == null) {
@@ -134,7 +143,8 @@ public class ClientOptions implements Initializable {
 
     @FXML
     void addClient(MouseEvent event) throws IOException {
-        if(AdminOptionWindow.addStageC == null && AdminOptionWindow.modifyStageC == null) {
+        if(AdminOptionWindow.addStageC == null && AdminOptionWindow.modifyStageC == null
+                && AdminOptionWindow.removeStageC == null) {
             AdminOptionWindow.addStageC = new Stage();
             AdminOptionWindow.addStageC.initStyle(StageStyle.UNDECORATED);
             AdminOptionWindow.addStageC.setAlwaysOnTop(true);
@@ -147,8 +157,18 @@ public class ClientOptions implements Initializable {
     }
 
     @FXML
-    void removeClient(MouseEvent event) {
-
+    void removeClient(MouseEvent event) throws IOException {
+        if(AdminOptionWindow.addStageC == null && AdminOptionWindow.modifyStageC == null
+                && AdminOptionWindow.removeStageC == null) {
+            AdminOptionWindow.removeStageC = new Stage();
+            AdminOptionWindow.removeStageC.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.removeStageC.setAlwaysOnTop(true);
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("removeclient.fxml"));
+            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+            Scene scene = new Scene(fxmlLoader2.load());
+            AdminOptionWindow.removeStageC.setScene(scene);
+            AdminOptionWindow.removeStageC.show();
+        }
     }
 
     @FXML
@@ -168,7 +188,8 @@ public class ClientOptions implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<Client> listOfClients = FXCollections.observableArrayList(mainStorage.getAllClients());
+        ObservableList<Client> listOfClients
+                = FXCollections.observableArrayList(mainStorage.getAllClients());
         updateTable(listOfClients);
 
         idBox.setVisibleRowCount(7);
@@ -176,6 +197,8 @@ public class ClientOptions implements Initializable {
         for (int i = 0; i < listClients.size(); i++) {
             idBox.getItems().add(listClients.get(i).getID());
         }
+        clienterror.setVisible(false);
+        clientsucce.setVisible(false);
     }
 
     public void onadd(ActionEvent actionEvent) {
@@ -186,6 +209,7 @@ public class ClientOptions implements Initializable {
             AdminOptionWindow.addStageC.close();
             AdminOptionWindow.addStageC = null;
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error("Error during Client addition");
         }
     }
@@ -228,6 +252,7 @@ public class ClientOptions implements Initializable {
     }
 
     public void onIDSelected(ActionEvent actionEvent) throws Exception {
+        clienterror.setVisible(false);
         Client temp = mainStorage.getClient(Integer.parseInt(idBox.getValue().toString()));
         firstfield.setText(temp.getFirstName());
         lastfield.setText(temp.getLastName());
@@ -235,5 +260,52 @@ public class ClientOptions implements Initializable {
         emailfield.setText(temp.getEmailAddress());
         addressfield.setText(temp.getAddress());
         orderscount.setText(String.valueOf(temp.getOrderCount()));
+    }
+
+    public void ondelete(ActionEvent actionEvent) throws Exception {
+        try {
+            removeOption.setDisable(true);
+            mainStorage.removeClient(Integer.parseInt(idBox.getValue().toString()));
+            clientsucce.setVisible(true);
+            Task<Void> sleeper = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    try {
+                        Thread.sleep(2500);
+                    } catch (InterruptedException e) {
+                    }
+                    return null;
+                }
+            };
+            sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                @Override
+                public void handle(WorkerStateEvent event) {
+                    AdminOptionWindow.removeStageC.close();
+                    AdminOptionWindow.removeStageC = null;
+                }
+            });
+            new Thread(sleeper).start();
+
+        } catch (ObjectsDependentException e) {
+            removeOption.setDisable(false);
+            clientsucce.setVisible(false);
+            clienterror.setVisible(true);
+        }
+    }
+
+    public void oncancelR(ActionEvent actionEvent) {
+        AdminOptionWindow.removeStageC.close();
+        AdminOptionWindow.removeStageC = null;
+    }
+
+    public void onexitR(ActionEvent actionEvent) {
+        AdminOptionWindow.removeStageC.close();
+        AdminOptionWindow.removeStageC = null;
+    }
+
+    public void onIDSelectedR(ActionEvent actionEvent) throws Exception {
+        Client temp = mainStorage.getClient(Integer.parseInt(idBox.getValue().toString()));
+        firstfieldR.setText(temp.getFirstName());
+        lastfieldR.setText(temp.getLastName());
     }
 }

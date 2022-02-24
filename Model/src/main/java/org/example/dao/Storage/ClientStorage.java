@@ -10,6 +10,8 @@ import org.example.model.Client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
+
 public class ClientStorage extends Storage<Client>{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -88,7 +90,9 @@ public class ClientStorage extends Storage<Client>{
         if(getAllElementsFromStorage().isEmpty()) {
             return 0;
         } else {
-            return getAllElementsFromStorage().get(getAllElementsFromStorage().size()-1).getID();
+            var list = getAllElementsFromStorage();
+            Collections.sort(list);
+            return list.get(list.size()-1).getID();
         }
     }
 

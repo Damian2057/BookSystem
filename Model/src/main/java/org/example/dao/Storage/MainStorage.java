@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainStorage {
 
@@ -113,7 +114,9 @@ public class MainStorage {
     }
 
     public ArrayList<Client> getAllClients() {
-        return clientStorage.getAllElementsFromStorage();
+        var list = clientStorage.getAllElementsFromStorage();
+        Collections.sort(list);
+        return list;
     }
 
     public ArrayList<Order> getAllOrders() {

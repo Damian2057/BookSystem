@@ -60,7 +60,7 @@
       </Text>
       <TextField fx:id="addressfield" layoutX="15.0" layoutY="285.0" prefHeight="25.0" prefWidth="187.0" styleClass="textfield-background" />
       <TextField fx:id="orderscount" layoutX="474.0" layoutY="219.0" prefHeight="35.0" prefWidth="36.0" styleClass="textfield-background" />
-      <Text fill="WHITE" layoutX="436.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%orderscount" textAlignment="CENTER" wrappingWidth="112.0">
+      <Text fill="WHITE" layoutX="417.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%orderscount" textAlignment="CENTER" wrappingWidth="151.0">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>

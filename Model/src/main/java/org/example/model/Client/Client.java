@@ -4,7 +4,7 @@ import org.example.model.Client.types.Normal;
 import org.example.model.Client.types.Premium;
 import org.example.model.Client.types.Type;
 
-public class Client {
+public class Client implements Comparable<Client>{
     private final int ID;
     private String firstName;
     private String lastName;
@@ -92,5 +92,16 @@ public class Client {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public int compareTo(Client o) {
+        if (this.getID() == o.getID()) {
+            return 0;
+        } else if (this.getID() > o.getID()) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }

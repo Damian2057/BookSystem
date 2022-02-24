@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -22,7 +21,6 @@ import javafx.stage.StageStyle;
 import org.example.App;
 import org.example.dao.ClassFactory;
 import org.example.dao.Storage.MainStorage;
-import org.example.model.Author;
 import org.example.model.Book;
 import org.example.model.Order;
 import org.example.systemDialog.AdminOptionWindow;
@@ -172,30 +170,29 @@ public class BookOptions implements Initializable {
     }
 
     public void addbook(MouseEvent event) throws IOException {
-        if(AdminOptionWindow.addStage == null) {
-            AdminOptionWindow.addStage = new Stage();
-            AdminOptionWindow.addStage.initStyle(StageStyle.UNDECORATED);
-            AdminOptionWindow.addStage.setAlwaysOnTop(true);
+        if(AdminOptionWindow.addStageB == null) {
+            AdminOptionWindow.addStageB = new Stage();
+            AdminOptionWindow.addStageB.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.addStageB.setAlwaysOnTop(true);
             FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("addBookOption.fxml"));
             fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
             Scene scene = new Scene(fxmlLoader2.load());
-            AdminOptionWindow.addStage.setScene(scene);
-            AdminOptionWindow.addStage.show();
+            AdminOptionWindow.addStageB.setScene(scene);
+            AdminOptionWindow.addStageB.show();
         }
     }
 
     public void modifyBook(MouseEvent event) throws IOException {
-        if(AdminOptionWindow.modifyStage == null) {
-            AdminOptionWindow.modifyStage = new Stage();
-            AdminOptionWindow.modifyStage.initStyle(StageStyle.UNDECORATED);
-            AdminOptionWindow.modifyStage.setAlwaysOnTop(true);
+        if(AdminOptionWindow.modifyStageB == null) {
+            AdminOptionWindow.modifyStageB = new Stage();
+            AdminOptionWindow.modifyStageB.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.modifyStageB.setAlwaysOnTop(true);
             FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("modifyBookOption.fxml"));
             fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
             Scene scene = new Scene(fxmlLoader2.load());
-            AdminOptionWindow.modifyStage.setScene(scene);
-            AdminOptionWindow.modifyStage.show();
+            AdminOptionWindow.modifyStageB.setScene(scene);
+            AdminOptionWindow.modifyStageB.show();
         }
-
     }
 
     @Override
@@ -279,22 +276,21 @@ public class BookOptions implements Initializable {
                     ,createDate()
                     ,Integer.parseInt(pagefield.getText())
                     ,Double.parseDouble(pricefield.getText()));
-            AdminOptionWindow.addStage.close();
-            AdminOptionWindow.addStage = null;
+            AdminOptionWindow.addStageB.close();
+            AdminOptionWindow.addStageB = null;
         } catch (Exception e) {
             logger.error("Error during book addition");
         }
-
     }
 
     public void oncancel(ActionEvent actionEvent) {
-        AdminOptionWindow.addStage.close();
-        AdminOptionWindow.addStage = null;
+        AdminOptionWindow.addStageB.close();
+        AdminOptionWindow.addStageB = null;
     }
 
     public void onexit(ActionEvent actionEvent) {
-        AdminOptionWindow.addStage.close();
-        AdminOptionWindow.addStage = null;
+        AdminOptionWindow.addStageB.close();
+        AdminOptionWindow.addStageB = null;
     }
 
     public void onUpdate(ActionEvent actionEvent) throws Exception {
@@ -313,18 +309,18 @@ public class BookOptions implements Initializable {
         mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
                 createDate().toString(),"publicationDate");
 
-        AdminOptionWindow.modifyStage.close();
-        AdminOptionWindow.modifyStage = null;
+        AdminOptionWindow.modifyStageB.close();
+        AdminOptionWindow.modifyStageB = null;
     }
 
     public void oncancelM(ActionEvent actionEvent) {
-        AdminOptionWindow.modifyStage.close();
-        AdminOptionWindow.modifyStage = null;
+        AdminOptionWindow.modifyStageB.close();
+        AdminOptionWindow.modifyStageB = null;
     }
 
     public void onexitM(ActionEvent actionEvent) {
-        AdminOptionWindow.modifyStage.close();
-        AdminOptionWindow.modifyStage = null;
+        AdminOptionWindow.modifyStageB.close();
+        AdminOptionWindow.modifyStageB = null;
     }
 
     public void onIDSelected(ActionEvent actionEvent) throws Exception {

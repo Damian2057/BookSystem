@@ -1,24 +1,47 @@
 package org.example.systemDialog.nomalOptions;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.example.App;
 import org.example.dao.Storage.MainStorage;
+import org.example.model.Book;
 import org.example.model.Client.Client;
+import org.example.systemDialog.AdminOptionWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Locale;
 import java.util.ResourceBundle;
+
+import static java.util.ResourceBundle.getBundle;
 
 public class ClientOptions implements Initializable {
 
+    public Button addoption;
+    public Button canceloption;
+    public Button exitoption;
+    public TextField firstfield;
+    public TextField lastfield;
+    public TextField phonefield;
+    public TextField emailfield;
+    public TextField addressfield;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
@@ -97,13 +120,31 @@ public class ClientOptions implements Initializable {
 
 
     @FXML
-    void modifyClient(MouseEvent event) {
-
+    void modifyClient(MouseEvent event) throws IOException {
+        if(AdminOptionWindow.modifyStageC == null) {
+            AdminOptionWindow.modifyStageC = new Stage();
+            AdminOptionWindow.modifyStageC.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.modifyStageC.setAlwaysOnTop(true);
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("modifyClient.fxml"));
+            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+            Scene scene = new Scene(fxmlLoader2.load());
+            AdminOptionWindow.modifyStageC.setScene(scene);
+            AdminOptionWindow.modifyStageC.show();
+        }
     }
 
     @FXML
-    void addClient(MouseEvent event) {
-
+    void addClient(MouseEvent event) throws IOException {
+        if(AdminOptionWindow.addStageC == null) {
+            AdminOptionWindow.addStageC = new Stage();
+            AdminOptionWindow.addStageC.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.addStageC.setAlwaysOnTop(true);
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("addclient.fxml"));
+            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+            Scene scene = new Scene(fxmlLoader2.load());
+            AdminOptionWindow.addStageC.setScene(scene);
+            AdminOptionWindow.addStageC.show();
+        }
     }
 
     @FXML
@@ -116,8 +157,41 @@ public class ClientOptions implements Initializable {
 
     }
 
+    public void updateTable(ObservableList<Client> list) {
+        idtable.setCellValueFactory(new PropertyValueFactory<Client,Integer>("ID"));
+        firsttable.setCellValueFactory(new PropertyValueFactory<Client,String>("FirstName"));
+        lasttable.setCellValueFactory(new PropertyValueFactory<Client,String>("LastName"));
+        phonetable.setCellValueFactory(new PropertyValueFactory<Client, String>("PhoneNumber"));
+        emailtable.setCellValueFactory(new PropertyValueFactory<Client, String>("EmailAddress"));
+        addresstable.setCellValueFactory(new PropertyValueFactory<Client,String>("Address"));
+        table.setItems(list);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<Client> listOfClients = FXCollections.observableArrayList(mainStorage.getAllClients());
+        updateTable(listOfClients);
+    }
 
+    public void onadd(ActionEvent actionEvent) {
+        try {
+
+            mainStorage.addClient(firstfield.getText(),lastfield.getText()
+                    ,phonefield.getText(),emailfield.getText(),addressfield.getText());
+            AdminOptionWindow.addStageC.close();
+            AdminOptionWindow.addStageC = null;
+        } catch (Exception e) {
+            logger.error("Error during Client addition");
+        }
+    }
+
+    public void oncancel(ActionEvent actionEvent) {
+        AdminOptionWindow.addStageC.close();
+        AdminOptionWindow.addStageC = null;
+    }
+
+    public void onexit(ActionEvent actionEvent) {
+        AdminOptionWindow.addStageC.close();
+        AdminOptionWindow.addStageC = null;
     }
 }

@@ -18,9 +18,12 @@ public class AdminOptionWindow {
 
     public AnchorPane changepane;
 
-    public static Stage addStage;
-    public static Stage modifyStage;
-    public static Stage removeStage;
+    public static Stage addStageB;
+    public static Stage modifyStageB;
+
+    public static Stage addStageC;
+    public static Stage modifyStageC;
+    public static Stage removeStageC;
 
     public void show() throws IOException {
         Stage stage = new Stage();

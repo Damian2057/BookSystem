@@ -18,4 +18,6 @@ module org.example {
     exports org.example.systemDialog;
     opens org.example.systemDialog.nomalOptions;
     exports org.example.systemDialog.nomalOptions;
+    exports org.example.systemDialog.adminOptions;
+    opens org.example.systemDialog.adminOptions;
 }

@@ -162,7 +162,7 @@ public class JDBCLoginSystem implements AutoCloseable {
                 .prepareStatement(readstatement("@../../SQLoginStatements/getAllPersonel.sql"))) {
             try {
                 var resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
+                while (resultSet.next()) { // here error
                     Personnel temp;
                     if(resultSet.getInt(4) == 1){
                         temp = new Admin(resultSet.getString(1)
@@ -174,6 +174,7 @@ public class JDBCLoginSystem implements AutoCloseable {
                     PersonelList.add(temp);
                 }
                 close();
+                System.out.println(PersonelList);
                 return PersonelList;
             } catch (SQLException throwables) {
                 logger.error("Error during getting Workers list");

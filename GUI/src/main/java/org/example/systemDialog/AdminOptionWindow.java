@@ -51,7 +51,9 @@ public class AdminOptionWindow {
     public void ordersget(ActionEvent actionEvent) {
     }
 
-    public void workersget(ActionEvent actionEvent) {
+    public void workersget(ActionEvent actionEvent) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("WorkerOption.fxml"),getBundle("bundle", Locale.getDefault()));
+        changepane.getChildren().setAll(pane);
     }
 
     public void logout(ActionEvent actionEvent) {

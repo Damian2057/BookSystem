@@ -29,7 +29,7 @@ public class App extends Application {
         try(var loginSystem= ClassFactory
                 .getJDBCLoginSystem(LoginURL
                         , user, password)) {
-            logger.info("BookSystem Database exist");
+            logger.info("LoginSystem Database exist");
         }
     }
 

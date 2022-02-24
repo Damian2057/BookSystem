@@ -22,7 +22,7 @@
                         <String fx:value="onExit" />
                     </styleClass>
                 </Rectangle>
-                <Text fill="WHITE" layoutX="41.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%addbooktext" textAlignment="CENTER" wrappingWidth="153.13671875">
+                <Text fill="WHITE" layoutX="41.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%addAuthor" textAlignment="CENTER" wrappingWidth="153.13671875">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
@@ -38,7 +38,7 @@
                         <String fx:value="onExit" />
                     </styleClass>
                 </Rectangle>
-                <Text fill="WHITE" layoutX="41.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%modify" textAlignment="CENTER" wrappingWidth="153.13671875">
+                <Text fill="WHITE" layoutX="41.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%modifyAuthor" textAlignment="CENTER" wrappingWidth="153.13671875">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>

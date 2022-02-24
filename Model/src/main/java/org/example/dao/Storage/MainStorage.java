@@ -97,6 +97,10 @@ public class MainStorage {
         clientStorage.UpdateClient(ID,newData,partToUpdate);
     }
 
+    public void updateAuthor(int ID, String newData ,String partToUpdate) throws Exception {
+        authorStorage.updateAuthor(ID,newData,partToUpdate);
+    }
+
     public void addElementToAccessible(int ID) throws Exception {
         bookStorage.addElementToAccessible(ID);
     }

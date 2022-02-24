@@ -43,6 +43,7 @@ public class AuthorOptions implements Initializable {
     public ComboBox monthbox1 = new ComboBox();
     public ComboBox yearbox1 = new ComboBox();
     public ComboBox daybox1 = new ComboBox();
+    public ComboBox idBox = new ComboBox();
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
@@ -172,6 +173,11 @@ public class AuthorOptions implements Initializable {
             yearbox.getItems().add(i);
             yearbox1.getItems().add(i);
         }
+        idBox.setVisibleRowCount(7);
+        var listAuthors = mainStorage.getAllAuthors();
+        for (int i = 0; i < listAuthors.size(); i++) {
+            idBox.getItems().add(listAuthors.get(i).getID());
+        }
     }
 
     private LocalDate createDate(ComboBox yearbox, ComboBox monthbox, ComboBox daybox) {
@@ -223,5 +229,44 @@ public class AuthorOptions implements Initializable {
     public void onexit(ActionEvent actionEvent) {
         AdminOptionWindow.addStageA.close();
         AdminOptionWindow.addStageA = null;
+    }
+
+    public void onIDSelected(ActionEvent actionEvent) throws Exception {
+        Author temp = mainStorage.getAuthor(Integer.parseInt(idBox.getValue().toString()));
+        firstfield.setText(temp.getFirstName());
+        lastfield.setText(temp.getLastName());
+
+        daybox.setValue(temp.getBirthDay().getDayOfMonth());
+        monthbox.setValue(temp.getBirthDay().getMonthValue());
+        yearbox.setValue(temp.getBirthDay().getYear());
+
+        daybox1.setValue(temp.getDeathDate().getDayOfMonth());
+        monthbox1.setValue(temp.getDeathDate().getMonthValue());
+        yearbox1.setValue(temp.getDeathDate().getYear());
+    }
+
+    public void onUpdate(ActionEvent actionEvent) throws Exception {
+        try {
+            mainStorage.updateAuthor(Integer.parseInt(idBox.getValue().toString()),
+                    firstfield.getText(),"name");
+            mainStorage.updateAuthor(Integer.parseInt(idBox.getValue().toString()),
+                    lastfield.getText(),"lastname");
+            mainStorage.updateAuthor(Integer.parseInt(idBox.getValue().toString()),
+                    createDate(yearbox1,monthbox1,daybox1).toString(),"deathdate");
+            AdminOptionWindow.modifyStageA.close();
+            AdminOptionWindow.modifyStageA = null;
+        } catch (Exception e) {
+            logger.error("Any ID selected");
+        }
+    }
+
+    public void oncancelM(ActionEvent actionEvent) {
+        AdminOptionWindow.modifyStageA.close();
+        AdminOptionWindow.modifyStageA = null;
+    }
+
+    public void onexitM(ActionEvent actionEvent) {
+        AdminOptionWindow.modifyStageA.close();
+        AdminOptionWindow.modifyStageA = null;
     }
 }

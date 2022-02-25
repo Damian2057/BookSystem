@@ -43,7 +43,8 @@ import static java.util.ResourceBundle.getBundle;
 public class WorkerOptions implements Initializable {
 
     public TextField nickfield;
-    public TextField passField;
+    public PasswordField passField;
+    public PasswordField passField2 = new PasswordField();
 
     public ComboBox idBox = new ComboBox();
     public TextField Nicknamefield = new TextField();
@@ -56,6 +57,7 @@ public class WorkerOptions implements Initializable {
     public PasswordField pass1;
     public PasswordField pass2 = new PasswordField();
     public AnchorPane isok;
+    public AnchorPane isok2;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private LoginStorage loginStorage = new LoginStorage(App.LoginURL,App.user,App.password);
@@ -205,14 +207,17 @@ public class WorkerOptions implements Initializable {
         Adminerror.setVisible(false);
         Workersucce.setVisible(false);
         pass2.setDisable(true);
+        passField2.setDisable(true);
 
     }
 
     public void onadd(ActionEvent actionEvent) {
         try {
-            loginStorage.addPersonnel(nickfield.getText(),passField.getText());
-            AdminOptionWindow.addWorker.close();
-            AdminOptionWindow.addWorker = null;
+            if(Objects.equals(passField.getText(), passField2.getText())) {
+                loginStorage.addPersonnel(nickfield.getText(),passField.getText());
+                AdminOptionWindow.addWorker.close();
+                AdminOptionWindow.addWorker = null;
+            }
         } catch (Exception e) {
             throw new WrongLoginDataException();
         }
@@ -307,7 +312,7 @@ public class WorkerOptions implements Initializable {
     }
 
     public void passwproviedd(KeyEvent keyEvent) {
-        if(!pass1.getText().isEmpty() && pass1.getText().length() > 6) {
+        if(!pass1.getText().isEmpty() && pass1.getText().length() > 5) {
             pass2.setDisable(false);
             if(Objects.equals(pass1.getText(), pass2.getText())) {
                 isok.getStyleClass().remove("isnotok");
@@ -326,6 +331,29 @@ public class WorkerOptions implements Initializable {
         } else {
             isok.getStyleClass().remove("isok");
             isok.getStyleClass().add("isnotok");
+        }
+    }
+
+    public void passwprovieddA(KeyEvent keyEvent) {
+        if(!passField.getText().isEmpty() && passField.getText().length() > 5) {
+            passField2.setDisable(false);
+            if(Objects.equals(passField.getText(), passField2.getText())) {
+                isok2.getStyleClass().remove("isnotok");
+                isok2.getStyleClass().add("isok");
+            } else {
+                isok2.getStyleClass().remove("isok");
+                isok2.getStyleClass().add("isnotok");
+            }
+        }
+    }
+
+    public void passwprovieddAA(KeyEvent keyEvent) {
+        if(Objects.equals(passField.getText(), passField2.getText())) {
+            isok2.getStyleClass().remove("isnotok");
+            isok2.getStyleClass().add("isok");
+        } else {
+            isok2.getStyleClass().remove("isok");
+            isok2.getStyleClass().add("isnotok");
         }
     }
 }

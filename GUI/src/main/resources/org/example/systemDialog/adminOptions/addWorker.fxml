@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
@@ -28,6 +29,8 @@
                 <Font name="System Bold" size="17.0" />
             </font>
         </Text>
-        <TextField fx:id="passField" layoutX="333.0" layoutY="188.0" prefHeight="25.0" prefWidth="182.0" styleClass="textfield-background" />
+      <PasswordField fx:id="passField" layoutX="333.0" layoutY="188.0" onKeyReleased="#passwprovieddA" prefHeight="25.0" prefWidth="182.0" styleClass="textfield-background" />
+      <PasswordField fx:id="passField2" layoutX="333.0" layoutY="226.0" onKeyReleased="#passwprovieddAA" prefHeight="25.0" prefWidth="182.0" styleClass="textfield-background" />
+        <AnchorPane fx:id="isok2" layoutX="532.0" layoutY="193.0" prefHeight="40.0" prefWidth="39.0" styleClass="isnotok" stylesheets="@../../../../img/style.css" />
     </children>
 </AnchorPane>

@@ -12,7 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -33,6 +35,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static java.util.ResourceBundle.getBundle;
@@ -41,11 +44,19 @@ public class WorkerOptions implements Initializable {
 
     public TextField nickfield;
     public TextField passField;
+
     public ComboBox idBox = new ComboBox();
     public TextField Nicknamefield = new TextField();
+
     public Text Adminerror = new Text();
     public Text Workersucce = new Text();
     public Button removeOption;
+
+    public TextField NicknameToEdit;
+    public PasswordField pass1;
+    public PasswordField pass2 = new PasswordField();
+    public AnchorPane isok;
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private LoginStorage loginStorage = new LoginStorage(App.LoginURL,App.user,App.password);
 
@@ -111,8 +122,18 @@ public class WorkerOptions implements Initializable {
 
 
     @FXML
-    void modifyWorker(MouseEvent event) {
-
+    void modifyWorker(MouseEvent event) throws IOException {
+        if(AdminOptionWindow.addWorker == null && AdminOptionWindow.modifyWorker == null
+                && AdminOptionWindow.removeWorker == null) {
+            AdminOptionWindow.modifyWorker = new Stage();
+            AdminOptionWindow.modifyWorker.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.modifyWorker.setAlwaysOnTop(true);
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("modifyWorker.fxml"));
+            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+            Scene scene = new Scene(fxmlLoader2.load());
+            AdminOptionWindow.modifyWorker.setScene(scene);
+            AdminOptionWindow.modifyWorker.show();
+        }
     }
 
     @FXML
@@ -183,6 +204,7 @@ public class WorkerOptions implements Initializable {
         }
         Adminerror.setVisible(false);
         Workersucce.setVisible(false);
+        pass2.setDisable(true);
 
     }
 
@@ -254,5 +276,56 @@ public class WorkerOptions implements Initializable {
         Nicknamefield.setText(temp.getNickName());
     }
 
+    public void onUpdate(ActionEvent actionEvent) throws Exception {
+        if(Objects.equals(pass2.getText(), pass1.getText())) {
+            loginStorage.updatePersonnel(Integer.parseInt(idBox.getValue().toString())
+                    ,NicknameToEdit.getText(),"nickName");
+            loginStorage.updatePersonnel(Integer.parseInt(idBox.getValue().toString())
+                    ,pass2.getText(),"Password");
 
+            AdminOptionWindow.modifyWorker.close();
+            AdminOptionWindow.modifyWorker = null;
+        }
+    }
+
+    public void oncancelM(ActionEvent actionEvent) {
+        AdminOptionWindow.modifyWorker.close();
+        AdminOptionWindow.modifyWorker = null;
+    }
+
+    public void onexitM(ActionEvent actionEvent) {
+        AdminOptionWindow.modifyWorker.close();
+        AdminOptionWindow.modifyWorker = null;
+    }
+
+    public void onIDSelected(ActionEvent actionEvent) {
+        isok.getStyleClass().clear();
+        Personnel temp = loginStorage.getPersonnel(Integer.parseInt(idBox.getValue().toString()));
+        NicknameToEdit.setText(temp.getNickName());
+        pass1.setText(temp.getPassword());
+        pass2.setText(temp.getPassword());
+    }
+
+    public void passwproviedd(KeyEvent keyEvent) {
+        if(!pass1.getText().isEmpty() && pass1.getText().length() > 6) {
+            pass2.setDisable(false);
+            if(Objects.equals(pass1.getText(), pass2.getText())) {
+                isok.getStyleClass().remove("isnotok");
+                isok.getStyleClass().add("isok");
+            } else {
+                isok.getStyleClass().remove("isok");
+                isok.getStyleClass().add("isnotok");
+            }
+        }
+    }
+
+    public void passwprovied(KeyEvent keyEvent) {
+        if(Objects.equals(pass1.getText(), pass2.getText())) {
+            isok.getStyleClass().remove("isnotok");
+            isok.getStyleClass().add("isok");
+        } else {
+            isok.getStyleClass().remove("isok");
+            isok.getStyleClass().add("isnotok");
+        }
+    }
 }

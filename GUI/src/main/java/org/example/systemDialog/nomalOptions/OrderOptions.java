@@ -184,6 +184,20 @@ public class OrderOptions implements Initializable {
         });
     }
 
+    private void updateSelectedBooks() {
+        ObservableList<Book> listOfBooks
+                = FXCollections.observableArrayList(bookArrayList);
+        bookIDINOrder.setCellValueFactory(new PropertyValueFactory<Book,Integer>("ID"));
+        bookTitleInOrder.setCellValueFactory(new PropertyValueFactory<Book,String>("Title"));
+        bookinOrderA.setItems(listOfBooks);
+        bookinOrderA.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Book>() {
+            @Override
+            public void changed(ObservableValue<? extends Book> observableValue, Book client, Book t1) {
+                selectedBook = observableValue.getValue();
+            }
+        });
+    }
+
     public void updateTable(ObservableList<Order> list) {
         idtable.setCellValueFactory(new PropertyValueFactory<Order,Integer>("ID"));
         clientID.setCellValueFactory(new PropertyValueFactory<Order,Integer>("ClientID"));
@@ -201,6 +215,28 @@ public class OrderOptions implements Initializable {
                 bookTable.setItems(listOfBooks);
             }
         });
+    }
+
+    private LocalDate createDate(ComboBox yearbox, ComboBox monthbox, ComboBox daybox) {
+        String year;
+        String month;
+        String day;
+        if(Integer.parseInt(yearbox.getSelectionModel().getSelectedItem().toString()) < 1000) {
+            year = "0" + yearbox.getSelectionModel().getSelectedItem().toString();
+        } else {
+            year = yearbox.getSelectionModel().getSelectedItem().toString();
+        }
+        if(Integer.parseInt(monthbox.getSelectionModel().getSelectedItem().toString()) < 10) {
+            month = "0" + monthbox.getItems().get(monthbox.getSelectionModel().getSelectedIndex()).toString();
+        } else {
+            month = monthbox.getItems().get(monthbox.getSelectionModel().getSelectedIndex()).toString();
+        }
+        if(Integer.parseInt(daybox.getSelectionModel().getSelectedItem().toString()) < 10) {
+            day = "0" + daybox.getItems().get(daybox.getSelectionModel().getSelectedIndex()).toString();
+        } else {
+            day = daybox.getItems().get(daybox.getSelectionModel().getSelectedIndex()).toString();
+        }
+        return LocalDate.parse(year+"-"+month+"-"+day);
     }
 
     @Override
@@ -238,6 +274,7 @@ public class OrderOptions implements Initializable {
 
     private Client selectedclient;
     private Book selectedBook;
+    private ArrayList<Book> bookArrayList = new ArrayList<>();
 
     @FXML
     private TableView<Book> BookTableA = new TableView<>();
@@ -286,7 +323,16 @@ public class OrderOptions implements Initializable {
 
     @FXML
     void onadd(ActionEvent event) {
-
+        try {
+            int temp = mainStorage.createOrder(selectedclient.getID()
+                    ,bookArrayList.get(0).getID(),createDate(yearbox,monthbox,daybox)
+                    ,createDate(yearbox1,monthbox1,daybox1));
+            for (int i = 1; i < bookArrayList.size(); i++) {
+                mainStorage.addBookToOrder(temp,bookArrayList.get(i).getID());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -334,10 +380,26 @@ public class OrderOptions implements Initializable {
     }
 
     public void addbooktoOrder(ActionEvent actionEvent) {
-        System.out.println(selectedBook.getID());
+        try {
+            onsearchbook.setText("");
+            ObservableList<Book> listOfBooks
+                    = FXCollections.observableArrayList(mainStorage.getAllBooks());
+            updateBooks(listOfBooks);
+            bookArrayList.add(selectedBook);
+            updateSelectedBooks();
+        } catch (Exception e) {
+            logger.error("Any Book selected");
+        }
+
     }
 
     public void removebookfromOrder(ActionEvent actionEvent) {
+        try {
+            bookArrayList.remove(selectedBook);
+            updateSelectedBooks();
+        } catch (Exception e) {
+            logger.error("Any Book selected");
+        }
     }
 
 

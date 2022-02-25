@@ -127,7 +127,7 @@ public class MainStorage {
         return orderStorage.getAllElementsFromStorage();
     }
 
-    public void createOrder(int clientID,int bookID, LocalDate SDate, LocalDate EDate) throws Exception {
+    public int createOrder(int clientID,int bookID, LocalDate SDate, LocalDate EDate) throws Exception {
         //checking if the book is available on that date
         var listBook = ClassFactory.getJDBCBookSystem(URL).getOrderBybookID(bookID);
         for(int i = 0; i < listBook.size(); i++) {
@@ -148,6 +148,7 @@ public class MainStorage {
         Order temp = new Order(orderStorage.getTopID()+1,clientStorage.getClient(clientID), SDate, EDate);
         temp.addBookToOrder(bookStorage.getBook(bookID));
         orderStorage.addElement(temp);
+        return temp.getID();
     }
 
     public boolean checkAvailabilityInDay(ArrayList<Order> list,int bookID, int Day) throws Exception {

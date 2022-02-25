@@ -37,6 +37,7 @@ import static java.util.ResourceBundle.getBundle;
 public class OrderOptions implements Initializable {
 
     public TextField onsearchclient;
+    public TextField onsearchbook;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
@@ -159,7 +160,7 @@ public class OrderOptions implements Initializable {
         updateTable(listOfOrders);
     }
 
-    public void updateClients(ObservableList<Client> list) {
+    private void updateClients(ObservableList<Client> list) {
         clientIDinOrder.setCellValueFactory(new PropertyValueFactory<Client,Integer>("ID"));
         fullNameInOrder.setCellValueFactory(new PropertyValueFactory<Client,String>("FullName"));
         clientTableA.setItems(list);
@@ -167,6 +168,18 @@ public class OrderOptions implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Client> observableValue, Client order, Client t1) {
                 selectedclient = observableValue.getValue();
+            }
+        });
+    }
+
+    private void updateBooks(ObservableList<Book> list) {
+        bookIDinAccessible.setCellValueFactory(new PropertyValueFactory<Book,Integer>("ID"));
+        titleinAccesible.setCellValueFactory(new PropertyValueFactory<Book,String>("Title"));
+        BookTableA.setItems(list);
+        BookTableA.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Book>() {
+            @Override
+            public void changed(ObservableValue<? extends Book> observableValue, Book client, Book t1) {
+                selectedBook = observableValue.getValue();
             }
         });
     }
@@ -206,7 +219,7 @@ public class OrderOptions implements Initializable {
             monthbox1.getItems().add(i);
         }
 
-        for (int i = 500; i < LocalDate.now().getYear()+6; i++) {
+        for (int i = LocalDate.now().getYear(); i < LocalDate.now().getYear()+6; i++) {
             yearbox.getItems().add(i);
             yearbox1.getItems().add(i);
         }
@@ -215,11 +228,16 @@ public class OrderOptions implements Initializable {
                 = FXCollections.observableArrayList(mainStorage.getAllClients());
         updateClients(listOfClients);
 
+        ObservableList<Book> listOfBooks
+                = FXCollections.observableArrayList(mainStorage.getAllBooks());
+        updateBooks(listOfBooks);
+
     }
 
-    //-------------------------------------Create
+    //-------------------------------------Create-------------------
 
     private Client selectedclient;
+    private Book selectedBook;
 
     @FXML
     private TableView<Book> BookTableA = new TableView<>();
@@ -299,6 +317,27 @@ public class OrderOptions implements Initializable {
         }
         ObservableList<Client> listOfClients = FXCollections.observableArrayList(clientlist);
         updateClients(listOfClients);
+    }
+
+    public void onsearchbook(KeyEvent keyEvent) {
+        ArrayList<Book> allbook = mainStorage.getAllBooks();
+        ArrayList<Book> booklist = new ArrayList<>();
+        for (Book book :
+                allbook) {
+            if (book.getTitle().contains(onsearchbook.getText())
+                    || book.getFullName().contains(onsearchbook.getText())) {
+                booklist.add(book);
+            }
+        }
+        ObservableList<Book> listOfBooks = FXCollections.observableArrayList(booklist);
+        updateBooks(listOfBooks);
+    }
+
+    public void addbooktoOrder(ActionEvent actionEvent) {
+        System.out.println(selectedBook.getID());
+    }
+
+    public void removebookfromOrder(ActionEvent actionEvent) {
     }
 
 

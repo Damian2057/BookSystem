@@ -68,19 +68,19 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <TextField layoutX="265.0" layoutY="219.0" prefHeight="33.0" prefWidth="164.0" styleClass="textfield-background" />
+      <TextField fx:id="onsearchbook" layoutX="265.0" layoutY="219.0" onKeyReleased="#onsearchbook" prefHeight="33.0" prefWidth="164.0" styleClass="textfield-background" />
       <TableView fx:id="BookTableA" layoutX="265.0" layoutY="252.0" prefHeight="213.0" prefWidth="229.0">
          <columns>
             <TableColumn fx:id="bookIDinAccessible" prefWidth="61.0" text="%bookID" />
             <TableColumn fx:id="titleinAccesible" prefWidth="167.0" text="%title" />
          </columns>
       </TableView>
-      <Button layoutX="422.0" layoutY="218.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="34.0" styleClass="choicebutton" text="+" textFill="WHITE">
+      <Button layoutX="422.0" layoutY="218.0" mnemonicParsing="false" onAction="#addbooktoOrder" prefHeight="33.0" prefWidth="34.0" styleClass="choicebutton" text="+" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="456.0" layoutY="218.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="38.0" styleClass="choicebutton" text="-" textFill="WHITE">
+      <Button layoutX="456.0" layoutY="218.0" mnemonicParsing="false" onAction="#removebookfromOrder" prefHeight="33.0" prefWidth="38.0" styleClass="choicebutton" text="-" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

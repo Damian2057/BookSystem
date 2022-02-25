@@ -32,6 +32,10 @@ public class AdminOptionWindow {
     public static Stage modifyWorker;
     public static Stage removeWorker;
 
+    public static Stage addOrder;
+    public static Stage modifyOrder;
+    public static Stage removeOrder;
+
     public void show() throws IOException {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("AdminScene.fxml"));

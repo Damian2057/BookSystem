@@ -6,28 +6,37 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.example.App;
 import org.example.dao.Storage.MainStorage;
 import org.example.model.Book;
 import org.example.model.Client.Client;
 import org.example.model.Order;
+import org.example.systemDialog.AdminOptionWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class OderOptions implements Initializable {
+import static java.util.ResourceBundle.getBundle;
 
+public class OrderOptions implements Initializable {
+
+    public TextField onsearchclient;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
@@ -48,7 +57,6 @@ public class OderOptions implements Initializable {
 
     @FXML
     private TableColumn<Book, String> booktitleTable;
-
 
     @FXML
     private TableColumn<Order, Integer> clientID = new TableColumn<>();
@@ -71,7 +79,7 @@ public class OderOptions implements Initializable {
     @FXML
     private TableView<Order> table = new TableView<>();
 
-    public OderOptions() throws Exception {
+    public OrderOptions() throws Exception {
     }
 
     @FXML
@@ -112,8 +120,18 @@ public class OderOptions implements Initializable {
 
 
     @FXML
-    void createOrder(MouseEvent event) {
-
+    void createOrder(MouseEvent event) throws IOException {
+        if(AdminOptionWindow.addOrder == null && AdminOptionWindow.modifyOrder == null
+                && AdminOptionWindow.removeOrder == null) {
+            AdminOptionWindow.addOrder = new Stage();
+            AdminOptionWindow.addOrder.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.addOrder.setAlwaysOnTop(true);
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("addOrder.fxml"));
+            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+            Scene scene = new Scene(fxmlLoader2.load());
+            AdminOptionWindow.addOrder.setScene(scene);
+            AdminOptionWindow.addOrder.show();
+        }
     }
 
     @FXML
@@ -141,6 +159,18 @@ public class OderOptions implements Initializable {
         updateTable(listOfOrders);
     }
 
+    public void updateClients(ObservableList<Client> list) {
+        clientIDinOrder.setCellValueFactory(new PropertyValueFactory<Client,Integer>("ID"));
+        fullNameInOrder.setCellValueFactory(new PropertyValueFactory<Client,String>("FullName"));
+        clientTableA.setItems(list);
+        clientTableA.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Client>() {
+            @Override
+            public void changed(ObservableValue<? extends Client> observableValue, Client order, Client t1) {
+                selectedclient = observableValue.getValue();
+            }
+        });
+    }
+
     public void updateTable(ObservableList<Order> list) {
         idtable.setCellValueFactory(new PropertyValueFactory<Order,Integer>("ID"));
         clientID.setCellValueFactory(new PropertyValueFactory<Order,Integer>("ClientID"));
@@ -162,8 +192,115 @@ public class OderOptions implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<Order> listOfClients
+        ObservableList<Order> listOfOrders
                 = FXCollections.observableArrayList(mainStorage.getAllOrders());
-        updateTable(listOfClients);
+        updateTable(listOfOrders);
+
+        for (int i = 1; i < 32; i++) {
+            daybox.getItems().add(i);
+            daybox1.getItems().add(i);
+        }
+
+        for (int i = 1; i < 13; i++) {
+            monthbox.getItems().add(i);
+            monthbox1.getItems().add(i);
+        }
+
+        for (int i = 500; i < LocalDate.now().getYear()+6; i++) {
+            yearbox.getItems().add(i);
+            yearbox1.getItems().add(i);
+        }
+
+        ObservableList<Client> listOfClients
+                = FXCollections.observableArrayList(mainStorage.getAllClients());
+        updateClients(listOfClients);
+
     }
+
+    //-------------------------------------Create
+
+    private Client selectedclient;
+
+    @FXML
+    private TableView<Book> BookTableA = new TableView<>();
+
+    @FXML
+    private TableColumn<Book, Integer> bookIDINOrder = new TableColumn<>();
+
+    @FXML
+    private TableColumn<Book, Integer> bookIDinAccessible = new TableColumn<>();
+
+    @FXML
+    private TableColumn<Book, String> bookTitleInOrder = new TableColumn<>();
+
+    @FXML
+    private TableView<Book> bookinOrderA = new TableView<>();
+
+    @FXML
+    private TableColumn<Client, Integer> clientIDinOrder = new TableColumn<>();
+
+    @FXML
+    private TableView<Client> clientTableA = new TableView<>();
+
+    @FXML
+    private ComboBox daybox = new ComboBox();
+
+    @FXML
+    private ComboBox daybox1 = new ComboBox();
+
+    @FXML
+    private TableColumn<Client, String> fullNameInOrder = new TableColumn<>();
+
+    @FXML
+    private ComboBox monthbox = new ComboBox();
+
+    @FXML
+    private ComboBox monthbox1 = new ComboBox();
+
+    @FXML
+    private TableColumn<Book, String> titleinAccesible = new TableColumn<>();
+
+    @FXML
+    private ComboBox yearbox = new ComboBox();
+
+    @FXML
+    private ComboBox yearbox1 = new ComboBox();
+
+    @FXML
+    void onadd(ActionEvent event) {
+
+    }
+
+    @FXML
+    void oncancel(ActionEvent event) {
+        AdminOptionWindow.addOrder.close();
+        AdminOptionWindow.addOrder = null;
+    }
+
+    @FXML
+    void onexit(ActionEvent event) {
+        AdminOptionWindow.addOrder.close();
+        AdminOptionWindow.addOrder = null;
+    }
+
+    public void selectClient(ActionEvent actionEvent) {
+        System.out.println(selectedclient.getID());
+    }
+
+    public void onsearchclient(KeyEvent keyEvent) {
+        ArrayList<Client> allclients = mainStorage.getAllClients();
+        ArrayList<Client> clientlist = new ArrayList<>();
+        for (Client client :
+                allclients) {
+            if (client.getFirstName().contains(onsearchclient.getText())
+                    || client.getLastName().contains(onsearchclient.getText())) {
+                clientlist.add(client);
+            }
+        }
+        ObservableList<Client> listOfClients = FXCollections.observableArrayList(clientlist);
+        updateClients(listOfClients);
+    }
+
+
+    //-------------------------------------Create
 }

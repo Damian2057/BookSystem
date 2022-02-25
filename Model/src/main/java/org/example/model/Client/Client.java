@@ -94,6 +94,10 @@ public class Client implements Comparable<Client>{
         this.lastName = lastName;
     }
 
+    public String getFullName() {
+        return firstName+" "+lastName;
+    }
+
     @Override
     public int compareTo(Client o) {
         if (this.getID() == o.getID()) {

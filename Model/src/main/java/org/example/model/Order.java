@@ -147,4 +147,8 @@ public class Order {
     public int getID() {
         return ID;
     }
+
+    public String getClientfullName() {
+        return client.getFirstName() + " " + client.getLastName();
+    }
 }

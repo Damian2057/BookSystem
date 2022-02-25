@@ -56,9 +56,10 @@
         <TableView fx:id="table" layoutX="240.0" layoutY="106.0" prefHeight="609.0" prefWidth="637.0">
             <columns>
                 <TableColumn fx:id="idtable" editable="false" prefWidth="38.0" text="ID" />
-                <TableColumn fx:id="clientID" editable="false" prefWidth="90.0" text="%clientID" />
-                <TableColumn fx:id="StartDate" editable="false" prefWidth="229.0" text="%StartReserv" />
-                <TableColumn fx:id="EndDate" editable="false" prefWidth="279.0" text="%EndReserv" />
+                <TableColumn fx:id="clientID" editable="false" prefWidth="85.0" text="%clientID" />
+            <TableColumn fx:id="fullnametable" prefWidth="206.0" text="%fullname" />
+                <TableColumn fx:id="StartDate" editable="false" prefWidth="155.0" text="%StartReserv" />
+                <TableColumn fx:id="EndDate" editable="false" prefWidth="152.0" text="%EndReserv" />
             </columns>
         </TableView>
         <Group layoutX="-4.0" layoutY="18.0">

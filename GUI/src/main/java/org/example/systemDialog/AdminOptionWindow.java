@@ -52,7 +52,9 @@ public class AdminOptionWindow {
         changepane.getChildren().setAll(pane);
     }
 
-    public void ordersget(ActionEvent actionEvent) {
+    public void ordersget(ActionEvent actionEvent) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("OrderOption.fxml"),getBundle("bundle", Locale.getDefault()));
+        changepane.getChildren().setAll(pane);
     }
 
     public void workersget(ActionEvent actionEvent) throws IOException {

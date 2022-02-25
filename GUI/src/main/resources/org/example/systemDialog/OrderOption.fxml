@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="777.0" prefWidth="1250.0" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.nomalOptions.OderOptions">
+    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7e00c4" height="500.0" layoutX="888.0" layoutY="73.0" stroke="BLACK" strokeType="INSIDE" width="340.0" />
+        <Group layoutX="-4.0" layoutY="245.0">
+            <children>
+                <Rectangle fx:id="addbutton" arcHeight="5.0" arcWidth="5.0" fill="#9355ff" height="200.0" layoutX="18.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
+                    <styleClass>
+                        <String fx:value="button" />
+                        <String fx:value="onExit" />
+                    </styleClass>
+                </Rectangle>
+                <Text fill="WHITE" layoutX="41.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%modifyOrder" textAlignment="CENTER" wrappingWidth="153.13671875">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Text>
+                <Pane layoutX="55.0" layoutY="32.0" onMouseClicked="#modifyOrder" onMouseEntered="#hoverin" onMouseExited="#hoverout" prefHeight="127.0" prefWidth="127.0" styleClass="modifyclient" stylesheets="@../../../img/style.css" />
+            </children>
+        </Group>
+        <Group layoutX="-4.0" layoutY="465.0">
+            <children>
+                <Rectangle fx:id="addbutton1" arcHeight="5.0" arcWidth="5.0" fill="#9355ff" height="200.0" layoutX="18.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
+                    <styleClass>
+                        <String fx:value="button" />
+                        <String fx:value="onExit" />
+                    </styleClass>
+                </Rectangle>
+                <Text fill="WHITE" layoutX="41.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%endOrder" textAlignment="CENTER" wrappingWidth="153.13671875">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Text>
+                <Pane layoutX="55.0" layoutY="32.0" onMouseClicked="#endOrder" onMouseEntered="#hoverinn" onMouseExited="#hoveroutt" prefHeight="127.0" prefWidth="127.0" styleClass="removeclient" stylesheets="@../../../img/style.css" />
+            </children>
+        </Group>
+        <TextField fx:id="searchfield" layoutX="241.0" layoutY="62.0" prefHeight="44.0" prefWidth="554.0" />
+        <Button layoutX="795.0" layoutY="62.0" mnemonicParsing="false" onAction="#onsearch" prefHeight="44.0" prefWidth="81.0" styleClass="choicebutton" stylesheets="@../../../img/style.css" text="%search">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Button>
+        <TableView fx:id="table" layoutX="240.0" layoutY="106.0" prefHeight="609.0" prefWidth="637.0">
+            <columns>
+                <TableColumn fx:id="idtable" editable="false" prefWidth="38.0" text="ID" />
+                <TableColumn fx:id="clientID" editable="false" prefWidth="90.0" text="%clientID" />
+                <TableColumn fx:id="StartDate" editable="false" prefWidth="229.0" text="%StartReserv" />
+                <TableColumn fx:id="EndDate" editable="false" prefWidth="279.0" text="%EndReserv" />
+            </columns>
+        </TableView>
+        <Group layoutX="-4.0" layoutY="18.0">
+            <children>
+                <Rectangle fx:id="addbutton2" arcHeight="5.0" arcWidth="5.0" fill="#9355ff" height="200.0" layoutX="18.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
+                    <styleClass>
+                        <String fx:value="button" />
+                        <String fx:value="onExit" />
+                    </styleClass>
+                </Rectangle>
+                <Text fill="WHITE" layoutX="41.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%createOrder" textAlignment="CENTER" wrappingWidth="153.13671875">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Text>
+                <Pane layoutX="55.0" layoutY="32.0" onMouseClicked="#createOrder" onMouseEntered="#hoverinnn" onMouseExited="#hoverouttt" prefHeight="127.0" prefWidth="127.0" styleClass="addclient" stylesheets="@../../../img/style.css" />
+            </children>
+        </Group>
+      <TableView fx:id="bookTable" layoutX="899.0" layoutY="136.0" prefHeight="401.0" prefWidth="319.0">
+        <columns>
+          <TableColumn fx:id="bookIDtable" prefWidth="59.0" text="%bookID" />
+          <TableColumn fx:id="booktitleTable" prefWidth="259.0" text="%title" />
+        </columns>
+      </TableView>
+      <Text fill="WHITE" layoutX="928.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%bookINorder" textAlignment="CENTER" wrappingWidth="260.13671875">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+    </children>
+</AnchorPane>

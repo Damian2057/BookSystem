@@ -43,4 +43,5 @@ module org.example.model {
 
     exports org.example.dao.filemodel;
     opens org.example.dao.filemodel;
+    exports org.example.dao.usersManager;
 }

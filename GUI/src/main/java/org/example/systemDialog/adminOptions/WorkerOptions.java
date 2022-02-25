@@ -2,29 +2,52 @@ package org.example.systemDialog.adminOptions;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.example.App;
+import org.example.Exceptions.Dao.AdminInSystemException;
+import org.example.Exceptions.Dao.ObjectsDependentException;
+import org.example.Exceptions.Dao.WrongLoginDataException;
 import org.example.dao.ClassFactory;
-import org.example.dao.Storage.MainStorage;
+import org.example.dao.usersManager.LoginStorage;
+import org.example.model.Author;
+import org.example.model.Client.Client;
 import org.example.model.users.Personnel;
+import org.example.systemDialog.AdminOptionWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
+
+import static java.util.ResourceBundle.getBundle;
 
 public class WorkerOptions implements Initializable {
 
+    public TextField nickfield;
+    public TextField passField;
+    public ComboBox idBox = new ComboBox();
+    public TextField Nicknamefield = new TextField();
+    public Text Adminerror = new Text();
+    public Text Workersucce = new Text();
+    public Button removeOption;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private LoginStorage loginStorage = new LoginStorage(App.LoginURL,App.user,App.password);
 
     @FXML
     private Rectangle addbutton;
@@ -46,6 +69,9 @@ public class WorkerOptions implements Initializable {
 
     @FXML
     private TableView<Personnel> table = new TableView<>();
+
+    public WorkerOptions() throws Exception {
+    }
 
     @FXML
     void hoverin(MouseEvent event) {
@@ -83,24 +109,55 @@ public class WorkerOptions implements Initializable {
         addbutton2.getStyleClass().add("onExit");
     }
 
+
     @FXML
     void modifyWorker(MouseEvent event) {
 
     }
 
     @FXML
-    void addWorker(MouseEvent event) {
-
+    void addWorker(MouseEvent event) throws IOException {
+        if(AdminOptionWindow.addWorker == null && AdminOptionWindow.modifyWorker == null
+                && AdminOptionWindow.removeWorker == null) {
+            AdminOptionWindow.addWorker = new Stage();
+            AdminOptionWindow.addWorker.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.addWorker.setAlwaysOnTop(true);
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("addWorker.fxml"));
+            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+            Scene scene = new Scene(fxmlLoader2.load());
+            AdminOptionWindow.addWorker.setScene(scene);
+            AdminOptionWindow.addWorker.show();
+        }
     }
 
     @FXML
-    void removeWorker(MouseEvent event) {
-
+    void removeWorker(MouseEvent event) throws IOException {
+        if(AdminOptionWindow.addWorker == null && AdminOptionWindow.modifyWorker == null
+                && AdminOptionWindow.removeWorker == null) {
+            AdminOptionWindow.removeWorker = new Stage();
+            AdminOptionWindow.removeWorker.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.removeWorker.setAlwaysOnTop(true);
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("removeWorker.fxml"));
+            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+            Scene scene = new Scene(fxmlLoader2.load());
+            AdminOptionWindow.removeWorker.setScene(scene);
+            AdminOptionWindow.removeWorker.show();
+        }
     }
 
     @FXML
     void onsearch(ActionEvent event) {
-
+        ArrayList<Personnel> allPersonnel = loginStorage.getAllElementsFromStorage();
+        ArrayList<Personnel> personnelArrayList = new ArrayList<>();
+        for (Personnel personnel :
+                allPersonnel) {
+            if (personnel.getNickName().contains(searchfield.getText())
+                    || String.valueOf(personnel.getID()).contains(searchfield.getText())) {
+                personnelArrayList.add(personnel);
+            }
+        }
+        ObservableList<Personnel> listOfPersonnel = FXCollections.observableArrayList(personnelArrayList);
+        updateTable(listOfPersonnel);
     }
 
     public void updateTable(ObservableList<Personnel> list) {
@@ -112,12 +169,90 @@ public class WorkerOptions implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            System.out.println("--------------------");
             ObservableList<Personnel> listOfPersonnel = FXCollections.observableArrayList(ClassFactory.getJDBCLoginSystem(App.LoginURL
             , App.user, App.password).getListofworkers());
             updateTable(listOfPersonnel);
         } catch (Exception e) {
             logger.error("Error while recruiting staff");
         }
+        Nicknamefield.setDisable(true);
+        idBox.setVisibleRowCount(7);
+        var listPersonnel = loginStorage.getAllElementsFromStorage();
+        for (int i = 0; i < listPersonnel.size(); i++) {
+            idBox.getItems().add(listPersonnel.get(i).getID());
+        }
+        Adminerror.setVisible(false);
+        Workersucce.setVisible(false);
+
     }
+
+    public void onadd(ActionEvent actionEvent) {
+        try {
+            loginStorage.addPersonnel(nickfield.getText(),passField.getText());
+            AdminOptionWindow.addWorker.close();
+            AdminOptionWindow.addWorker = null;
+        } catch (Exception e) {
+            throw new WrongLoginDataException();
+        }
+    }
+
+    public void oncancel(ActionEvent actionEvent) {
+        AdminOptionWindow.addWorker.close();
+        AdminOptionWindow.addWorker = null;
+    }
+
+    public void onexit(ActionEvent actionEvent) {
+        AdminOptionWindow.addWorker.close();
+        AdminOptionWindow.addWorker = null;
+    }
+
+    public void ondelete(ActionEvent actionEvent) throws Exception {
+        try {
+            removeOption.setDisable(true);
+            loginStorage.removePersonnel(Integer.parseInt(idBox.getValue().toString()));
+            Workersucce.setVisible(true);
+            Task<Void> sleeper = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    try {
+                        Thread.sleep(2500);
+                    } catch (InterruptedException e) {
+                    }
+                    return null;
+                }
+            };
+            sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                @Override
+                public void handle(WorkerStateEvent event) {
+                    AdminOptionWindow.removeWorker.close();
+                    AdminOptionWindow.removeWorker = null;
+                }
+            });
+            new Thread(sleeper).start();
+
+        } catch (AdminInSystemException e) {
+            removeOption.setDisable(false);
+            Workersucce.setVisible(false);
+            Adminerror.setVisible(true);
+        }
+    }
+
+    public void oncancelR(ActionEvent actionEvent) {
+        AdminOptionWindow.removeWorker.close();
+        AdminOptionWindow.removeWorker = null;
+    }
+
+    public void onexitR(ActionEvent actionEvent) {
+        AdminOptionWindow.removeWorker.close();
+        AdminOptionWindow.removeWorker = null;
+    }
+
+    public void onIDSelectedR(ActionEvent actionEvent) {
+        Workersucce.setVisible(false);
+        Adminerror.setVisible(false);
+        Personnel temp = loginStorage.getPersonnel(Integer.parseInt(idBox.getValue().toString()));
+        Nicknamefield.setText(temp.getNickName());
+    }
+
+
 }

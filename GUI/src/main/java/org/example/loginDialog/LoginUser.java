@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.example.App;
 import org.example.Exceptions.Dao.WrongLoginDataException;
 import org.example.dao.ClassFactory;
 import org.example.model.users.Admin;
@@ -78,7 +79,7 @@ public class LoginUser implements Initializable {
     }
 
     public void login(ActionEvent actionEvent) {
-        try(var loginSystem= ClassFactory.getJDBCLoginSystem("jdbc:derby:LoginSystem", "adminnn", "adminnn")) {
+        try(var loginSystem= ClassFactory.getJDBCLoginSystem(App.LoginURL,App.user,App.password)) {
             Personnel personnel = loginSystem.loginPersonel(nickname.getText(),pass.getText());
             logger.info("Login to the System ID:{} ,nickname:{}", personnel.getID(),personnel.getNickName());
             Stage stage = (Stage) loginbutton.getScene().getWindow();

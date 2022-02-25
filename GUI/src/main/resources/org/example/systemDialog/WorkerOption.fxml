@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="777.0" prefWidth="1250.0" stylesheets="@../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.adminOptions.WorkerOptions">
     <children>
-        <Group layoutX="264.0" layoutY="245.0">
+        <Group layoutX="53.0" layoutY="245.0">
             <children>
                 <Rectangle fx:id="addbutton" arcHeight="5.0" arcWidth="5.0" fill="#9355ff" height="200.0" layoutX="18.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
                     <styleClass>
@@ -30,7 +30,7 @@
                 <Pane layoutX="55.0" layoutY="32.0" onMouseClicked="#modifyWorker" onMouseEntered="#hoverin" onMouseExited="#hoverout" prefHeight="127.0" prefWidth="127.0" styleClass="modifyclient" stylesheets="@../../../img/style.css" />
             </children>
         </Group>
-        <Group layoutX="264.0" layoutY="465.0">
+        <Group layoutX="53.0" layoutY="465.0">
             <children>
                 <Rectangle fx:id="addbutton1" arcHeight="5.0" arcWidth="5.0" fill="#9355ff" height="200.0" layoutX="18.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
                     <styleClass>
@@ -46,19 +46,19 @@
                 <Pane layoutX="55.0" layoutY="32.0" onMouseClicked="#removeWorker" onMouseEntered="#hoverinn" onMouseExited="#hoveroutt" prefHeight="127.0" prefWidth="127.0" styleClass="removeclient" stylesheets="@../../../img/style.css" />
             </children>
         </Group>
-        <TextField fx:id="searchfield" layoutX="574.0" layoutY="56.0" prefHeight="44.0" prefWidth="313.0" />
-        <Button layoutX="887.0" layoutY="56.0" mnemonicParsing="false" onAction="#onsearch" prefHeight="44.0" prefWidth="81.0" styleClass="choicebutton" stylesheets="@../../../img/style.css" text="%search">
+        <TextField fx:id="searchfield" layoutX="434.0" layoutY="62.0" prefHeight="44.0" prefWidth="313.0" />
+        <Button layoutX="747.0" layoutY="62.0" mnemonicParsing="false" onAction="#onsearch" prefHeight="44.0" prefWidth="81.0" styleClass="choicebutton" stylesheets="@../../../img/style.css" text="%search">
             <font>
                 <Font name="System Bold" size="13.0" />
             </font>
         </Button>
-        <TableView fx:id="table" layoutX="574.0" layoutY="100.0" prefHeight="558.0" prefWidth="394.0">
+        <TableView fx:id="table" layoutX="434.0" layoutY="106.0" prefHeight="558.0" prefWidth="394.0">
             <columns>
                 <TableColumn fx:id="idtable" editable="false" prefWidth="62.0" text="ID" />
                 <TableColumn fx:id="nickname" editable="false" prefWidth="331.0" text="%nicknameW" />
             </columns>
         </TableView>
-        <Group layoutX="264.0" layoutY="18.0">
+        <Group layoutX="53.0" layoutY="18.0">
             <children>
                 <Rectangle fx:id="addbutton2" arcHeight="5.0" arcWidth="5.0" fill="#9355ff" height="200.0" layoutX="18.0" layoutY="18.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
                     <styleClass>

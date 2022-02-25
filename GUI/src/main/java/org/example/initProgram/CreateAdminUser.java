@@ -109,7 +109,7 @@ public class CreateAdminUser implements Initializable {
                 App.config.setAppGeneralPassword(pass2.getText());
                 system.write(App.config);
             }
-            try(var loginSystem = ClassFactory.getJDBCLoginSystem("jdbc:derby:LoginSystem", "adminnn", "adminnn")) {
+            try(var loginSystem = ClassFactory.getJDBCLoginSystem(App.LoginURL,App.user,App.password)) {
                 loginSystem.addPersonel(new Admin(adminnick.getText(), pass4.getText(),1));
             }
                 conf.setDisable(true);

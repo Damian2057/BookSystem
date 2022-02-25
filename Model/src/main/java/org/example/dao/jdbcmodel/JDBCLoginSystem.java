@@ -35,8 +35,7 @@ public class JDBCLoginSystem implements AutoCloseable {
         connectToDataBase();
         try {
             createDataBase();
-        } catch (Exception except) {
-            logger.info("Personel Database exist");
+        } catch (Exception ignored) {
         }
         close();
     }
@@ -174,7 +173,6 @@ public class JDBCLoginSystem implements AutoCloseable {
                     PersonelList.add(temp);
                 }
                 close();
-                System.out.println(PersonelList);
                 return PersonelList;
             } catch (SQLException throwables) {
                 logger.error("Error during getting Workers list");
@@ -189,9 +187,10 @@ public class JDBCLoginSystem implements AutoCloseable {
     }
 
     public Personnel getPersonnelbyID(int ID) throws Exception {
-        for(int i = 0; i < getListofworkers().size(); i++) {
-            if(ID == getListofworkers().get(i).getID()) {
-                return getListofworkers().get(i);
+        var list = getListofworkers();
+        for(int i = 0; i < list.size(); i++) {
+            if(ID == list.get(i).getID()) {
+                return list.get(i);
             }
         }
         return null;

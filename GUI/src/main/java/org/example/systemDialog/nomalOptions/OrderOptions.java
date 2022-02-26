@@ -4,7 +4,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,9 +17,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.example.App;
+import org.example.Exceptions.Model.IncorrectOrderDateException;
+import org.example.Exceptions.Model.OrderTimeException;
+import org.example.Exceptions.data.DataConflictException;
 import org.example.dao.Storage.MainStorage;
 import org.example.model.Book;
 import org.example.model.Client.Client;
@@ -38,6 +45,7 @@ public class OrderOptions implements Initializable {
 
     public TextField onsearchclient;
     public TextField onsearchbook;
+    public Text ordererror = new Text();
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
@@ -241,6 +249,7 @@ public class OrderOptions implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ordererror.setText("");
         ObservableList<Order> listOfOrders
                 = FXCollections.observableArrayList(mainStorage.getAllOrders());
         updateTable(listOfOrders);
@@ -322,7 +331,7 @@ public class OrderOptions implements Initializable {
     private ComboBox yearbox1 = new ComboBox();
 
     @FXML
-    void onadd(ActionEvent event) {
+    void onadd(ActionEvent event) throws Exception {
         try {
             int temp = mainStorage.createOrder(selectedclient.getID()
                     ,bookArrayList.get(0).getID(),createDate(yearbox,monthbox,daybox)
@@ -330,9 +339,38 @@ public class OrderOptions implements Initializable {
             for (int i = 1; i < bookArrayList.size(); i++) {
                 mainStorage.addBookToOrder(temp,bookArrayList.get(i).getID());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            AdminOptionWindow.addOrder.close();
+            AdminOptionWindow.addOrder = null;
+        } catch (DataConflictException e) {
+            ordererror.setText(getBundle("ExceptionsMessages").getString("DataConflict"));
+            cleartext();
+        } catch (IncorrectOrderDateException e) {
+            ordererror.setText(getBundle("ExceptionsMessages").getString("incorrectOrderDate"));
+            cleartext();
+        } catch (OrderTimeException e) {
+            ordererror.setText(getBundle("ExceptionsMessages").getString("OrderInProgress"));
+            cleartext();
         }
+    }
+
+    private void cleartext() {
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Thread.sleep(2500);
+                } catch (InterruptedException e) {
+                }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                ordererror.setText("");
+            }
+        });
+        new Thread(sleeper).start();
     }
 
     @FXML
@@ -348,7 +386,6 @@ public class OrderOptions implements Initializable {
     }
 
     public void selectClient(ActionEvent actionEvent) {
-        System.out.println(selectedclient.getID());
     }
 
     public void onsearchclient(KeyEvent keyEvent) {
@@ -401,7 +438,23 @@ public class OrderOptions implements Initializable {
             logger.error("Any Book selected");
         }
     }
+    //-------------------------------------Modify------------
+
+    public ComboBox idBox = new ComboBox();
+
+    public TextField idclientM;
+    public TextField clientnameM;
 
 
-    //-------------------------------------Create
+    public void onIDSelected(ActionEvent actionEvent) {
+    }
+
+    public void onupdate(ActionEvent actionEvent) {
+    }
+
+    public void oncancelM(ActionEvent actionEvent) {
+    }
+
+    public void onexitM(ActionEvent actionEvent) {
+    }
 }

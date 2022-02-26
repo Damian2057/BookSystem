@@ -96,5 +96,10 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </Text>
+      <Text fx:id="ordererror" fill="RED" layoutX="229.0" layoutY="559.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="342.13671875">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

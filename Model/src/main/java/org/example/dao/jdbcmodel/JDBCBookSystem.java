@@ -307,7 +307,8 @@ public class JDBCBookSystem implements AutoCloseable{
         }
     }
 
-    public ArrayList<Book> getListofBooks() throws Exception {
+    public ArrayList<Book> getListofBooks() throws Exception
+    {
         connectToDataBase();
         var BookList = new ArrayList<Book>();
         try(PreparedStatement preparedStatement = connection
@@ -677,9 +678,10 @@ public class JDBCBookSystem implements AutoCloseable{
     }
 
     public Order getOrderByID(int ID) throws Exception {
-        for(int i = 0; i < getAllofOrders().size(); i++) {
-            if(ID == getAllofOrders().get(i).getID()) {
-                return getAllofOrders().get(i);
+        var list = getAllofOrders();
+        for(int i = 0; i < list.size(); i++) {
+            if(ID == list.get(i).getID()) {
+                return list.get(i);
             }
         }
         return null;
@@ -699,18 +701,20 @@ public class JDBCBookSystem implements AutoCloseable{
     }
 
     private Client getClientbyID(int ID) throws Exception {
-        for(int i = 0; i < getListofClients().size(); i++) {
-            if(ID == getListofClients().get(i).getID()) {
-                return getListofClients().get(i);
+        var list = getListofClients();
+        for(int i = 0; i < list.size(); i++) {
+            if(ID == list.get(i).getID()) {
+                return list.get(i);
             }
         }
         return null;
     }
 
     private Book getBookbyID(int ID) throws Exception {
-        for(int i = 0; i < getListofBooks().size(); i++) {
-            if(ID == getListofBooks().get(i).getID()) {
-                return getListofBooks().get(i);
+        var list = getListofBooks();
+        for(int i = 0; i < list.size(); i++) {
+            if(ID == list.get(i).getID()) {
+                return list.get(i);
             }
         }
         return null;

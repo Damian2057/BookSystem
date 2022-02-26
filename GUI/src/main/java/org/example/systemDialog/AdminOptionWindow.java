@@ -42,7 +42,6 @@ public class AdminOptionWindow {
         fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
         Scene scene = new Scene(fxmlLoader2.load());
         stage.setScene(scene);
-        stage.setResizable(false);
         stage.show();
     }
 

@@ -25,9 +25,6 @@
                 <Font name="System Bold" size="17.0" />
             </font>
         </Text>
-        <ComboBox fx:id="monthbox" layoutX="128.0" layoutY="138.0" prefHeight="34.0" prefWidth="136.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
-        <ComboBox fx:id="yearbox" layoutX="286.0" layoutY="139.0" prefHeight="34.0" prefWidth="94.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
-        <ComboBox fx:id="daybox" layoutX="29.0" layoutY="139.0" prefHeight="25.0" prefWidth="75.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
         <Text fill="WHITE" layoutX="104.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" wrappingWidth="24.89453125">
             <font>
                 <Font name="System Bold" size="22.0" />
@@ -44,20 +41,7 @@
             </font>
         </Text>
         <ComboBox fx:id="idBox" layoutX="373.0" layoutY="61.0" onAction="#onIDSelected" prefHeight="25.0" prefWidth="75.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
-        <ComboBox fx:id="monthbox1" layoutX="520.0" layoutY="139.0" prefHeight="34.0" prefWidth="136.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
-        <ComboBox fx:id="yearbox1" layoutX="678.0" layoutY="140.0" prefHeight="34.0" prefWidth="94.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
-        <ComboBox fx:id="daybox1" layoutX="421.0" layoutY="140.0" prefHeight="25.0" prefWidth="75.0" styleClass="choice" stylesheets="@../../../../img/style.css" />
-        <Text fill="WHITE" layoutX="496.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" wrappingWidth="24.89453125">
-            <font>
-                <Font name="System Bold" size="22.0" />
-            </font>
-        </Text>
-        <Text fill="WHITE" layoutX="655.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" wrappingWidth="24.89453125">
-            <font>
-                <Font name="System Bold" size="22.0" />
-            </font>
-        </Text>
-        <TextField fx:id="idclientM" layoutX="14.0" layoutY="322.0" onKeyReleased="#onsearchclient" prefHeight="33.0" prefWidth="65.0" styleClass="textfield-background" />
+        <TextField fx:id="idclientM" layoutX="14.0" layoutY="322.0" prefHeight="33.0" prefWidth="65.0" styleClass="textfield-background" />
         <TextField fx:id="onsearchbook" layoutX="264.0" layoutY="241.0" onKeyReleased="#onsearchbook" prefHeight="33.0" prefWidth="164.0" styleClass="textfield-background" />
         <TableView fx:id="BookTableA" layoutX="264.0" layoutY="274.0" prefHeight="213.0" prefWidth="229.0">
             <columns>
@@ -91,11 +75,27 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </Text>
-      <TextField fx:id="clientnameM" layoutX="82.0" layoutY="322.0" onKeyReleased="#onsearchclient" prefHeight="33.0" prefWidth="164.0" styleClass="textfield-background" />
+      <TextField fx:id="clientnameM" layoutX="82.0" layoutY="322.0" prefHeight="33.0" prefWidth="164.0" styleClass="textfield-background" />
       <Text fill="WHITE" layoutX="197.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%SelectOrderid" textAlignment="CENTER" wrappingWidth="427.0">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Text>
+      <TextField fx:id="dayfield" layoutX="39.0" layoutY="139.0" prefHeight="33.0" prefWidth="65.0" styleClass="textfield-background" />
+      <TextField fx:id="monthfield" layoutX="129.0" layoutY="140.0" prefHeight="33.0" prefWidth="129.0" styleClass="textfield-background" />
+      <TextField fx:id="yearfield1" layoutX="288.0" layoutY="140.0" prefHeight="33.0" prefWidth="75.0" styleClass="textfield-background" />
+      <Text fill="WHITE" layoutX="513.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" wrappingWidth="24.89453125">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="672.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" wrappingWidth="24.89453125">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Text>
+      <TextField fx:id="dayfield1" layoutX="448.0" layoutY="140.0" prefHeight="33.0" prefWidth="65.0" styleClass="textfield-background" />
+      <TextField fx:id="monthfield1" layoutX="538.0" layoutY="141.0" prefHeight="33.0" prefWidth="129.0" styleClass="textfield-background" />
+      <TextField fx:id="yearfield11" layoutX="697.0" layoutY="141.0" prefHeight="33.0" prefWidth="75.0" styleClass="textfield-background" />
     </children>
 </AnchorPane>

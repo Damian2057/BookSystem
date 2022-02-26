@@ -149,8 +149,18 @@ public class OrderOptions implements Initializable {
     }
 
     @FXML
-    void modifyOrder(MouseEvent event) {
-
+    void modifyOrder(MouseEvent event) throws IOException {
+        if(AdminOptionWindow.addOrder == null && AdminOptionWindow.modifyOrder == null
+                && AdminOptionWindow.removeOrder == null) {
+            AdminOptionWindow.modifyOrder = new Stage();
+            AdminOptionWindow.modifyOrder.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.modifyOrder.setAlwaysOnTop(true);
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("modifyOrder.fxml"));
+            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+            Scene scene = new Scene(fxmlLoader2.load());
+            AdminOptionWindow.modifyOrder.setScene(scene);
+            AdminOptionWindow.modifyOrder.show();
+        }
     }
 
     @FXML
@@ -276,6 +286,15 @@ public class OrderOptions implements Initializable {
         ObservableList<Book> listOfBooks
                 = FXCollections.observableArrayList(mainStorage.getAllBooks());
         updateBooks(listOfBooks);
+
+        idclientM.setEditable(false);
+        clientnameM.setEditable(false);
+
+        idBox.setVisibleRowCount(7);
+        var OrderList = mainStorage.getAllOrders();
+        for (Order order : OrderList) {
+            idBox.getItems().add(order.getID());
+        }
 
     }
 
@@ -442,19 +461,64 @@ public class OrderOptions implements Initializable {
 
     public ComboBox idBox = new ComboBox();
 
-    public TextField idclientM;
-    public TextField clientnameM;
+    public TextField idclientM = new TextField();
+    public TextField clientnameM = new TextField();
+
+    public TextField dayfield;
+    public TextField monthfield;
+    public TextField yearfield1;
+    public TextField dayfield1;
+    public TextField monthfield1;
+    public TextField yearfield11;
 
 
-    public void onIDSelected(ActionEvent actionEvent) {
+
+    public void onIDSelected(ActionEvent actionEvent) throws Exception {
+        Order temp = mainStorage.getOrder(Integer.parseInt(idBox.getValue().toString()));
+        idclientM.setText(String.valueOf(temp.getClientID()));
+        clientnameM.setText(temp.getClientfullName());
+        bookArrayList = mainStorage.getOrder(Integer.parseInt(idBox.getValue()
+                .toString())).getListofBooks();
+        updateSelectedBooks();
+
+        dayfield.setText(String.valueOf(temp.getStartReservationdate().getDayOfMonth()));
+        monthfield.setText(String.valueOf(temp.getStartReservationdate().getMonthValue()));
+        yearfield1.setText(String.valueOf(temp.getStartReservationdate().getYear()));
+
+        dayfield1.setText(String.valueOf(temp.getEndReservationDate().getDayOfMonth()));
+        monthfield1.setText(String.valueOf(temp.getEndReservationDate().getMonthValue()));
+        yearfield11.setText(String.valueOf(temp.getEndReservationDate().getYear()));
     }
 
     public void onupdate(ActionEvent actionEvent) {
+        try {
+            if(bookArrayList.isEmpty()) {
+                //ORDER cannot be empty
+                return;
+            }
+
+            Order temp = mainStorage.getOrder(Integer.parseInt(idBox.getValue().toString()));
+            for (int i = 0; i < temp.getListofBooks().size(); i++) {
+
+            }
+
+            AdminOptionWindow.modifyOrder.close();
+            AdminOptionWindow.modifyOrder = null;
+        } catch (Exception e) {
+            logger.error("Any ID selected");
+        }
     }
 
     public void oncancelM(ActionEvent actionEvent) {
+        AdminOptionWindow.modifyOrder.close();
+        AdminOptionWindow.modifyOrder = null;
     }
 
     public void onexitM(ActionEvent actionEvent) {
+        AdminOptionWindow.modifyOrder.close();
+        AdminOptionWindow.modifyOrder = null;
     }
+
+    //-------------------------------------Modify------------
+
 }

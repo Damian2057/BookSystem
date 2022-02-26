@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import org.example.model.Book;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -35,6 +36,8 @@ public class AdminOptionWindow {
     public static Stage addOrder;
     public static Stage modifyOrder;
     public static Stage removeOrder;
+
+    public static Book selectedBook;
 
     public void show() throws IOException {
         Stage stage = new Stage();

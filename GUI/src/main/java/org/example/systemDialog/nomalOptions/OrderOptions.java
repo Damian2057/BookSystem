@@ -46,6 +46,7 @@ public class OrderOptions implements Initializable {
     public TextField onsearchclient;
     public TextField onsearchbook;
     public Text ordererror = new Text();
+    public Text info;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
@@ -191,18 +192,20 @@ public class OrderOptions implements Initializable {
     }
 
     private void updateBooks(ObservableList<Book> list) {
+        //left column
         bookIDinAccessible.setCellValueFactory(new PropertyValueFactory<Book,Integer>("ID"));
         titleinAccesible.setCellValueFactory(new PropertyValueFactory<Book,String>("Title"));
         BookTableA.setItems(list);
         BookTableA.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Book>() {
             @Override
             public void changed(ObservableValue<? extends Book> observableValue, Book client, Book t1) {
-                selectedBook = observableValue.getValue();
+                AdminOptionWindow.selectedBook = observableValue.getValue();
             }
         });
     }
 
     private void updateSelectedBooks() {
+        //right column
         ObservableList<Book> listOfBooks
                 = FXCollections.observableArrayList(bookArrayList);
         bookIDINOrder.setCellValueFactory(new PropertyValueFactory<Book,Integer>("ID"));
@@ -211,7 +214,7 @@ public class OrderOptions implements Initializable {
         bookinOrderA.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Book>() {
             @Override
             public void changed(ObservableValue<? extends Book> observableValue, Book client, Book t1) {
-                selectedBook = observableValue.getValue();
+                AdminOptionWindow.selectedBook = observableValue.getValue();
             }
         });
     }
@@ -296,12 +299,19 @@ public class OrderOptions implements Initializable {
             idBox.getItems().add(order.getID());
         }
 
+        dayfield.setEditable(false);
+        monthfield.setEditable(false);
+        yearfield1.setEditable(false);
+        dayfield1.setEditable(false);
+        monthfield1.setEditable(false);
+        yearfield11.setEditable(false);
+
     }
 
     //-------------------------------------Create-------------------
 
     private Client selectedclient;
-    private Book selectedBook;
+    //private Book selectedBook;
     private ArrayList<Book> bookArrayList = new ArrayList<>();
 
     @FXML
@@ -362,17 +372,17 @@ public class OrderOptions implements Initializable {
             AdminOptionWindow.addOrder = null;
         } catch (DataConflictException e) {
             ordererror.setText(getBundle("ExceptionsMessages").getString("DataConflict"));
-            cleartext();
+            cleartext(ordererror);
         } catch (IncorrectOrderDateException e) {
             ordererror.setText(getBundle("ExceptionsMessages").getString("incorrectOrderDate"));
-            cleartext();
+            cleartext(ordererror);
         } catch (OrderTimeException e) {
             ordererror.setText(getBundle("ExceptionsMessages").getString("OrderInProgress"));
-            cleartext();
+            cleartext(ordererror);
         }
     }
 
-    private void cleartext() {
+    private void cleartext(Text text) {
         Task<Void> sleeper = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -386,7 +396,7 @@ public class OrderOptions implements Initializable {
         sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
-                ordererror.setText("");
+                text.setText("");
             }
         });
         new Thread(sleeper).start();
@@ -441,17 +451,16 @@ public class OrderOptions implements Initializable {
             ObservableList<Book> listOfBooks
                     = FXCollections.observableArrayList(mainStorage.getAllBooks());
             updateBooks(listOfBooks);
-            bookArrayList.add(selectedBook);
+            bookArrayList.add(AdminOptionWindow.selectedBook);
             updateSelectedBooks();
         } catch (Exception e) {
             logger.error("Any Book selected");
         }
-
     }
 
     public void removebookfromOrder(ActionEvent actionEvent) {
         try {
-            bookArrayList.remove(selectedBook);
+            bookArrayList.remove(AdminOptionWindow.selectedBook);
             updateSelectedBooks();
         } catch (Exception e) {
             logger.error("Any Book selected");
@@ -464,13 +473,19 @@ public class OrderOptions implements Initializable {
     public TextField idclientM = new TextField();
     public TextField clientnameM = new TextField();
 
-    public TextField dayfield;
-    public TextField monthfield;
-    public TextField yearfield1;
-    public TextField dayfield1;
-    public TextField monthfield1;
-    public TextField yearfield11;
+    public TextField dayfield = new TextField();
+    public TextField monthfield = new TextField();
+    public TextField yearfield1 = new TextField();
+    public TextField dayfield1 = new TextField();
+    public TextField monthfield1 = new TextField();
+    public TextField yearfield11 = new TextField();
 
+    @FXML
+    private TableView<Book> bookinOrderM = new TableView<>();
+    @FXML
+    private TableColumn<Book, String> bookIDINOrderM = new TableColumn<>();
+    @FXML
+    private TableColumn<Book, String> bookTitleInOrderM = new TableColumn<>();
 
 
     public void onIDSelected(ActionEvent actionEvent) throws Exception {
@@ -491,25 +506,6 @@ public class OrderOptions implements Initializable {
     }
 
     public void onupdate(ActionEvent actionEvent) {
-        try {
-            if(bookArrayList.isEmpty()) {
-                //ORDER cannot be empty
-                return;
-            }
-
-            Order temp = mainStorage.getOrder(Integer.parseInt(idBox.getValue().toString()));
-            for (int i = 0; i < temp.getListofBooks().size(); i++) {
-
-            }
-
-            AdminOptionWindow.modifyOrder.close();
-            AdminOptionWindow.modifyOrder = null;
-        } catch (Exception e) {
-            logger.error("Any ID selected");
-        }
-    }
-
-    public void oncancelM(ActionEvent actionEvent) {
         AdminOptionWindow.modifyOrder.close();
         AdminOptionWindow.modifyOrder = null;
     }
@@ -517,6 +513,40 @@ public class OrderOptions implements Initializable {
     public void onexitM(ActionEvent actionEvent) {
         AdminOptionWindow.modifyOrder.close();
         AdminOptionWindow.modifyOrder = null;
+    }
+
+    public void addbooktoOrderM(ActionEvent actionEvent) throws Exception {
+        try {
+            onsearchbook.setText("");
+            mainStorage.addBookToOrder(Integer.parseInt(idBox.getValue().toString())
+                    ,AdminOptionWindow.selectedBook.getID());
+
+            ObservableList<Book> listOfBooks
+                    = FXCollections.observableArrayList(mainStorage.getAllBooks());
+            updateBooks(listOfBooks);
+            updateSelectedBooks();
+        } catch (DataConflictException e) {
+            info.setText(getBundle("ExceptionsMessages").getString("DataConflict"));
+            logger.error("Data Conflict");
+            cleartext(info);
+        } catch (OrderTimeException e) {
+            info.setText(getBundle("ExceptionsMessages").getString("OrderInProgress"));
+            logger.error("Order In Progress");
+            cleartext(info);
+        }
+    }
+
+    public void removebookfromOrderM(ActionEvent actionEvent) {
+        if(bookArrayList.size() > 1) {
+            try {
+                mainStorage.removeBookFromOrder(Integer.parseInt(idBox.getValue().toString())
+                        ,AdminOptionWindow.selectedBook.getID());
+                bookArrayList.remove(AdminOptionWindow.selectedBook);
+                updateSelectedBooks();
+            } catch (Exception e) {
+                logger.error("Any Book selected");
+            }
+        }
     }
 
     //-------------------------------------Modify------------

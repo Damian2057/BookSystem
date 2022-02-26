@@ -12,8 +12,10 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="bigBackGround" stylesheets="@../../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.nomalOptions.OrderOptions">
     <children>
-        <Button fx:id="addoption" layoutX="571.0" layoutY="535.0" mnemonicParsing="false" onAction="#onupdate" prefHeight="65.0" prefWidth="229.0" styleClass="choiceoption" text="%update" />
-        <Button fx:id="canceloption" layoutY="535.0" mnemonicParsing="false" onAction="#oncancelM" prefHeight="65.0" prefWidth="229.0" styleClass="choiceoption" text="%cancel" />
+        <Button fx:id="addoption" layoutX="296.0" layoutY="530.0" mnemonicParsing="false" onAction="#onupdate" prefHeight="65.0" prefWidth="229.0" styleClass="choiceoption" text="OK" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font></Button>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7b00c2e8" height="35.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />
         <Button fx:id="exitoption" layoutX="725.0" mnemonicParsing="false" onAction="#onexitM" prefHeight="30.0" prefWidth="75.0" styleClass="choicebutton" stylesheets="@../../../../img/style.css" text="X" textFill="WHITE">
             <font>
@@ -49,17 +51,17 @@
                 <TableColumn fx:id="titleinAccesible" prefWidth="167.0" text="%title" />
             </columns>
         </TableView>
-        <Button layoutX="421.0" layoutY="240.0" mnemonicParsing="false" onAction="#addbooktoOrder" prefHeight="33.0" prefWidth="73.0" styleClass="choicebutton" text="+" textFill="WHITE">
+        <Button layoutX="421.0" layoutY="240.0" mnemonicParsing="false" onAction="#addbooktoOrderM" prefHeight="33.0" prefWidth="73.0" styleClass="choicebutton" text="+" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>
         </Button>
-        <Button layoutX="685.0" layoutY="487.0" mnemonicParsing="false" onAction="#removebookfromOrder" prefHeight="33.0" prefWidth="85.0" styleClass="choicebutton" text="-" textFill="WHITE">
+        <Button layoutX="685.0" layoutY="487.0" mnemonicParsing="false" onAction="#removebookfromOrderM" prefHeight="33.0" prefWidth="85.0" styleClass="choicebutton" text="-" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>
         </Button>
-        <TableView fx:id="bookinOrderA" layoutX="540.0" layoutY="233.0" prefHeight="255.0" prefWidth="229.0">
+        <TableView fx:id="bookinOrderA" layoutX="541.0" layoutY="211.0" prefHeight="255.0" prefWidth="229.0">
             <columns>
                 <TableColumn fx:id="bookIDINOrder" prefWidth="61.0" text="%bookID" />
                 <TableColumn fx:id="bookTitleInOrder" prefWidth="167.0" text="%title" />
@@ -97,5 +99,10 @@
       <TextField fx:id="dayfield1" layoutX="448.0" layoutY="140.0" prefHeight="33.0" prefWidth="65.0" styleClass="textfield-background" />
       <TextField fx:id="monthfield1" layoutX="538.0" layoutY="141.0" prefHeight="33.0" prefWidth="129.0" styleClass="textfield-background" />
       <TextField fx:id="yearfield11" layoutX="697.0" layoutY="141.0" prefHeight="33.0" prefWidth="75.0" styleClass="textfield-background" />
+      <Text fx:id="info" fill="#b41d00" layoutX="14.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="229.5999999999999">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

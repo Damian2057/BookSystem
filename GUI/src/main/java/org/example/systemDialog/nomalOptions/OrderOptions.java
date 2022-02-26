@@ -47,6 +47,8 @@ public class OrderOptions implements Initializable {
     public TextField onsearchbook;
     public Text ordererror = new Text();
     public Text info;
+    public Text amount = new Text();
+    public Button okbutton;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
@@ -145,8 +147,18 @@ public class OrderOptions implements Initializable {
     }
 
     @FXML
-    void endOrder(MouseEvent event) {
-
+    void endOrder(MouseEvent event) throws IOException {
+        if(AdminOptionWindow.addOrder == null && AdminOptionWindow.modifyOrder == null
+                && AdminOptionWindow.removeOrder == null) {
+            AdminOptionWindow.removeOrder = new Stage();
+            AdminOptionWindow.removeOrder.initStyle(StageStyle.UNDECORATED);
+            AdminOptionWindow.removeOrder.setAlwaysOnTop(true);
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("endOrder.fxml"));
+            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+            Scene scene = new Scene(fxmlLoader2.load());
+            AdminOptionWindow.removeOrder.setScene(scene);
+            AdminOptionWindow.removeOrder.show();
+        }
     }
 
     @FXML
@@ -305,6 +317,9 @@ public class OrderOptions implements Initializable {
         dayfield1.setEditable(false);
         monthfield1.setEditable(false);
         yearfield11.setEditable(false);
+
+        fullnameR.setEditable(false);
+        idclientR.setEditable(false);
 
     }
 
@@ -549,6 +564,53 @@ public class OrderOptions implements Initializable {
         }
     }
 
-    //-------------------------------------Modify------------
+    //-------------------------------------END------------
 
+    public TextField fullnameR = new TextField();
+    public TextField idclientR = new TextField();
+
+    public void onend(ActionEvent actionEvent) throws IOException {
+        if(AdminOptionWindow.removeOrder != null) {
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setAlwaysOnTop(true);
+            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("OrderPayment.fxml"));
+            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+            Scene scene = new Scene(fxmlLoader2.load());
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+
+    public void onexitR(ActionEvent actionEvent) {
+        AdminOptionWindow.removeOrder.close();
+        AdminOptionWindow.removeOrder = null;
+    }
+
+    public void onIDSelectedR(ActionEvent actionEvent) throws Exception {
+        Order temp = mainStorage.getOrder(Integer.parseInt(idBox.getValue().toString()));
+        idclientR.setText(String.valueOf(temp.getClientID()));
+        fullnameR.setText(temp.getClientfullName());
+        bookArrayList = mainStorage.getOrder(Integer.parseInt(idBox.getValue()
+                .toString())).getListofBooks();
+        updateSelectedBooks();
+
+        dayfield.setText(String.valueOf(temp.getStartReservationdate().getDayOfMonth()));
+        monthfield.setText(String.valueOf(temp.getStartReservationdate().getMonthValue()));
+        yearfield1.setText(String.valueOf(temp.getStartReservationdate().getYear()));
+
+        dayfield1.setText(String.valueOf(temp.getEndReservationDate().getDayOfMonth()));
+        monthfield1.setText(String.valueOf(temp.getEndReservationDate().getMonthValue()));
+        yearfield11.setText(String.valueOf(temp.getEndReservationDate().getYear()));
+        //endORDER
+//        amount.setText(String.valueOf(mainStorage
+//                .endOrderandGetSum(Integer.parseInt(idBox.getValue().toString()))));
+    }
+
+    public void finalize(ActionEvent actionEvent) {
+        Stage stage = (Stage) okbutton.getScene().getWindow();
+        stage.close();
+        AdminOptionWindow.removeOrder.close();
+        AdminOptionWindow.removeOrder = null;
+    }
 }

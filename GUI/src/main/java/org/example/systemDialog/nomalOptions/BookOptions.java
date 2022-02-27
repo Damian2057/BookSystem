@@ -267,14 +267,15 @@ public class BookOptions implements Initializable {
 
     public void onadd(ActionEvent actionEvent) {
         try {
-
-            mainStorage.addBook(titlefield.getText()
-                    , mainStorage.getAuthorStorage().getAuthorIDbydata(authorbox.getSelectionModel().getSelectedItem().toString())
-                    ,createDate()
-                    ,Integer.parseInt(pagefield.getText())
-                    ,Double.parseDouble(pricefield.getText()));
-            AdminOptionWindow.addStageB.close();
-            AdminOptionWindow.addStageB = null;
+            if(Integer.parseInt(pagefield.getText()) > 5 && Double.parseDouble(pricefield.getText()) >= 0) {
+                mainStorage.addBook(titlefield.getText()
+                        , mainStorage.getAuthorStorage().getAuthorIDbydata(authorbox.getSelectionModel().getSelectedItem().toString())
+                        ,createDate()
+                        ,Integer.parseInt(pagefield.getText())
+                        ,Double.parseDouble(pricefield.getText()));
+                AdminOptionWindow.addStageB.close();
+                AdminOptionWindow.addStageB = null;
+            }
         } catch (Exception e) {
             logger.error("Error during book addition");
         }
@@ -291,23 +292,28 @@ public class BookOptions implements Initializable {
     }
 
     public void onUpdate(ActionEvent actionEvent) throws Exception {
-        mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
-                titlefieldM.getText(),"title");
-        mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
-                pricefieldM.getText(),"price");
-        String status;
-        if(Objects.equals(avalibox.getSelectionModel().getSelectedItem().toString(), getBundle("bundle").getString("yes"))) {
-            status = "true";
-        } else {
-            status = "false";
-        }
-        mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
-                status,"status");
-        mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
-                createDate().toString(),"publicationDate");
+        try {
+            mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
+                    titlefieldM.getText(),"title");
+            mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
+                    pricefieldM.getText(),"price");
+            String status;
+            if(Objects.equals(avalibox.getSelectionModel().getSelectedItem().toString(), getBundle("bundle").getString("yes"))) {
+                status = "true";
+            } else {
+                status = "false";
+            }
+            mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
+                    status,"status");
+            mainStorage.updateBook(Integer.parseInt(idBox.getValue().toString()),
+                    createDate().toString(),"publicationDate");
 
-        AdminOptionWindow.modifyStageB.close();
-        AdminOptionWindow.modifyStageB = null;
+            AdminOptionWindow.modifyStageB.close();
+            AdminOptionWindow.modifyStageB = null;
+        } catch (Exception e) {
+            logger.info("No ID selected");
+        }
+
     }
 
     public void oncancelM(ActionEvent actionEvent) {

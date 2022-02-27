@@ -212,6 +212,9 @@ public class WorkerOptions implements Initializable {
     }
 
     public void onadd(ActionEvent actionEvent) {
+        if(nickfield.getText().length() > 4 && passField.getText().length() > 5
+                && passField2.getText().length() > 5
+                && Objects.equals(passField.getText(), passField2.getText()))
         try {
             if(Objects.equals(passField.getText(), passField2.getText())) {
                 loginStorage.addPersonnel(nickfield.getText(),passField.getText());
@@ -261,6 +264,9 @@ public class WorkerOptions implements Initializable {
             removeOption.setDisable(false);
             Workersucce.setVisible(false);
             Adminerror.setVisible(true);
+        } catch (Exception e ) {
+            removeOption.setDisable(false);
+            logger.error("No ID selected");
         }
     }
 
@@ -282,15 +288,20 @@ public class WorkerOptions implements Initializable {
     }
 
     public void onUpdate(ActionEvent actionEvent) throws Exception {
-        if(Objects.equals(pass2.getText(), pass1.getText())) {
-            loginStorage.updatePersonnel(Integer.parseInt(idBox.getValue().toString())
-                    ,NicknameToEdit.getText(),"nickName");
-            loginStorage.updatePersonnel(Integer.parseInt(idBox.getValue().toString())
-                    ,pass2.getText(),"Password");
+        try {
+            if (Objects.equals(pass2.getText(), pass1.getText()) && pass2.getText().length() > 5) {
+                loginStorage.updatePersonnel(Integer.parseInt(idBox.getValue().toString())
+                        , NicknameToEdit.getText(), "nickName");
+                loginStorage.updatePersonnel(Integer.parseInt(idBox.getValue().toString())
+                        , pass2.getText(), "Password");
 
-            AdminOptionWindow.modifyWorker.close();
-            AdminOptionWindow.modifyWorker = null;
+                AdminOptionWindow.modifyWorker.close();
+                AdminOptionWindow.modifyWorker = null;
+            }
+        } catch (Exception e){
+            logger.error("No ID selected");
         }
+
     }
 
     public void oncancelM(ActionEvent actionEvent) {

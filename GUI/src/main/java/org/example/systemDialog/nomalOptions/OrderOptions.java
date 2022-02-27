@@ -234,22 +234,30 @@ public class OrderOptions implements Initializable {
     }
 
     public void updateTable(ObservableList<Order> list) {
-        idtable.setCellValueFactory(new PropertyValueFactory<Order,Integer>("ID"));
-        clientID.setCellValueFactory(new PropertyValueFactory<Order,Integer>("ClientID"));
-        fullnametable.setCellValueFactory(new PropertyValueFactory<Order,String>("ClientfullName"));
-        StartDate.setCellValueFactory(new PropertyValueFactory<Order,LocalDate>("StartReservationdate"));
-        EndDate.setCellValueFactory(new PropertyValueFactory<Order, LocalDate>("EndReservationDate"));
-        table.setItems(list);
-        table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Order>() {
-            @Override
-            public void changed(ObservableValue<? extends Order> observableValue, Order order, Order t1) {
-                ObservableList<Book> listOfBooks
-                        = FXCollections.observableArrayList(observableValue.getValue().getListofBooks());
-                bookIDtable.setCellValueFactory(new PropertyValueFactory<Book, Integer>("ID"));
-                booktitleTable.setCellValueFactory(new PropertyValueFactory<Book,String>("Title"));
-                bookTable.setItems(listOfBooks);
-            }
-        });
+        try {
+            idtable.setCellValueFactory(new PropertyValueFactory<Order,Integer>("ID"));
+            clientID.setCellValueFactory(new PropertyValueFactory<Order,Integer>("ClientID"));
+            fullnametable.setCellValueFactory(new PropertyValueFactory<Order,String>("ClientfullName"));
+            StartDate.setCellValueFactory(new PropertyValueFactory<Order,LocalDate>("StartReservationdate"));
+            EndDate.setCellValueFactory(new PropertyValueFactory<Order, LocalDate>("EndReservationDate"));
+            table.setItems(list);
+            table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Order>() {
+                @Override
+                public void changed(ObservableValue<? extends Order> observableValue, Order order, Order t1) {
+                    try {
+                        ObservableList<Book> listOfBooks
+                                = FXCollections.observableArrayList(observableValue.getValue().getListofBooks());
+                        bookIDtable.setCellValueFactory(new PropertyValueFactory<Book, Integer>("ID"));
+                        booktitleTable.setCellValueFactory(new PropertyValueFactory<Book,String>("Title"));
+                        bookTable.setItems(listOfBooks);
+                    } catch (Exception e) {
+                    }
+                }
+            });
+        } catch (Exception e) {
+            ObservableList<Order> listOfOrders = FXCollections.observableArrayList(mainStorage.getAllOrders());
+            updateTable(listOfOrders);
+        }
     }
 
     private LocalDate createDate(ComboBox yearbox, ComboBox monthbox, ComboBox daybox) {
@@ -397,7 +405,8 @@ public class OrderOptions implements Initializable {
             ordererror.setText(getBundle("ExceptionsMessages").getString("OrderInProgress"));
             cleartext(ordererror);
         } catch (Exception e) {
-            logger.error("Attempt of saving empty Order");
+            ordererror.setText(getBundle("ExceptionsMessages").getString("EmptyData"));
+            cleartext(ordererror);
         }
     }
 
@@ -552,6 +561,10 @@ public class OrderOptions implements Initializable {
             info.setText(getBundle("ExceptionsMessages").getString("OrderInProgress"));
             logger.error("Order In Progress");
             cleartext(info);
+        } catch (Exception e) {
+            info.setText(getBundle("ExceptionsMessages").getString("AnyIDSelected"));
+            logger.error("Order In Progress");
+            cleartext(info);
         }
     }
 
@@ -575,25 +588,31 @@ public class OrderOptions implements Initializable {
 
     public void onend(ActionEvent actionEvent) throws Exception {
         if(AdminOptionWindow.removeOrder != null && AdminOptionWindow.payment == null) {
-            endButton.setDisable(true);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/systemDialog/OrderPayment.fxml"),getBundle("bundle", Locale.getDefault()));
-            Parent root = loader.load();
-            PaymentStage paymentStage = loader.getController();
+            try {
+                endButton.setDisable(true);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/systemDialog/OrderPayment.fxml"),getBundle("bundle", Locale.getDefault()));
+                Parent root = loader.load();
+                PaymentStage paymentStage = loader.getController();
 
-            paymentStage.setSum(mainStorage.endOrderandGetSum(Integer.parseInt(idBox.getValue().toString())));
-            AdminOptionWindow.payment = new Stage();
+                paymentStage.setSum(mainStorage.endOrderandGetSum(Integer.parseInt(idBox.getValue().toString())));
+                AdminOptionWindow.payment = new Stage();
 
-            AdminOptionWindow.payment.initStyle(StageStyle.UNDECORATED);
+                AdminOptionWindow.payment.initStyle(StageStyle.UNDECORATED);
 
-            AdminOptionWindow.payment.setScene(new Scene(root));
-            AdminOptionWindow.payment.setAlwaysOnTop(true);
-            AdminOptionWindow.payment.setResizable(false);
-            AdminOptionWindow.payment.show();
+                AdminOptionWindow.payment.setScene(new Scene(root));
+                AdminOptionWindow.payment.setAlwaysOnTop(true);
+                AdminOptionWindow.payment.setResizable(false);
+                AdminOptionWindow.payment.show();
 
-            AdminOptionWindow.payment.setOnHidden(windowEvent -> {
-                AdminOptionWindow.payment = null;
+                AdminOptionWindow.payment.setOnHidden(windowEvent -> {
+                    AdminOptionWindow.payment = null;
+                    endButton.setDisable(false);
+                });
+            } catch (Exception e) {
+                logger.error("No ID was selected");
                 endButton.setDisable(false);
-            });
+            }
+
         }
     }
 

@@ -208,17 +208,20 @@ public class AuthorOptions implements Initializable {
                         ,lastfield.getText()
                         ,createDate(yearbox,monthbox,daybox)
                         ,createDate(yearbox1,monthbox1,daybox1));
+            AdminOptionWindow.addStageA.close();
+            AdminOptionWindow.addStageA = null;
         } catch (NullPointerException e) {
             try {
                 mainStorage.addAuthor(firstfield.getText()
                         ,lastfield.getText()
                         ,createDate(yearbox,monthbox,daybox));
+                AdminOptionWindow.addStageA.close();
+                AdminOptionWindow.addStageA = null;
             } catch (Exception exception) {
                 logger.error("error during Author saving");
+
             }
         }
-        AdminOptionWindow.addStageA.close();
-        AdminOptionWindow.addStageA = null;
     }
 
     public void oncancel(ActionEvent actionEvent) {
@@ -232,17 +235,22 @@ public class AuthorOptions implements Initializable {
     }
 
     public void onIDSelected(ActionEvent actionEvent) throws Exception {
-        Author temp = mainStorage.getAuthor(Integer.parseInt(idBox.getValue().toString()));
-        firstfield.setText(temp.getFirstName());
-        lastfield.setText(temp.getLastName());
+        try {
+            Author temp = mainStorage.getAuthor(Integer.parseInt(idBox.getValue().toString()));
+            firstfield.setText(temp.getFirstName());
+            lastfield.setText(temp.getLastName());
 
-        daybox.setValue(temp.getBirthDay().getDayOfMonth());
-        monthbox.setValue(temp.getBirthDay().getMonthValue());
-        yearbox.setValue(temp.getBirthDay().getYear());
+            daybox.setValue(temp.getBirthDay().getDayOfMonth());
+            monthbox.setValue(temp.getBirthDay().getMonthValue());
+            yearbox.setValue(temp.getBirthDay().getYear());
 
-        daybox1.setValue(temp.getDeathDate().getDayOfMonth());
-        monthbox1.setValue(temp.getDeathDate().getMonthValue());
-        yearbox1.setValue(temp.getDeathDate().getYear());
+            daybox1.setValue(temp.getDeathDate().getDayOfMonth());
+            monthbox1.setValue(temp.getDeathDate().getMonthValue());
+            yearbox1.setValue(temp.getDeathDate().getYear());
+        } catch (Exception e) {
+            logger.info("No death date to selected Author");
+        }
+
     }
 
     public void onUpdate(ActionEvent actionEvent) throws Exception {

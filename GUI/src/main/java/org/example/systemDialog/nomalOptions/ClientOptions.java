@@ -45,8 +45,8 @@ public class ClientOptions implements Initializable {
     public TextField addressfield;
     public ComboBox idBox = new ComboBox();
     public TextField orderscount;
-    public TextField firstfieldR;
-    public TextField lastfieldR;
+    public TextField firstfieldR = new TextField();
+    public TextField lastfieldR = new TextField();
     public Text clienterror = new Text();
     public Text clientsucce = new Text();
     public Button removeOption;
@@ -211,15 +211,23 @@ public class ClientOptions implements Initializable {
         }
         clienterror.setVisible(false);
         clientsucce.setVisible(false);
+
+        firstfieldR.setEditable(false);
+        lastfieldR.setEditable(false);
     }
 
     public void onadd(ActionEvent actionEvent) {
         try {
+            if(firstfield.getText().length() > 3 && lastfield.getText().length() > 3
+                    && phonefield.getText().length() >= 9
+                    && emailfield.getText().length() > 4
+                    && addressfield.getText().length() > 4) {
+                mainStorage.addClient(firstfield.getText(),lastfield.getText()
+                        ,phonefield.getText(),emailfield.getText(),addressfield.getText());
+                AdminOptionWindow.addStageC.close();
+                AdminOptionWindow.addStageC = null;
+            }
 
-            mainStorage.addClient(firstfield.getText(),lastfield.getText()
-                    ,phonefield.getText(),emailfield.getText(),addressfield.getText());
-            AdminOptionWindow.addStageC.close();
-            AdminOptionWindow.addStageC = null;
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("Error during Client addition");
@@ -237,20 +245,29 @@ public class ClientOptions implements Initializable {
     }
 
     public void onUpdate(ActionEvent actionEvent) throws Exception {
-        mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
-                ,firstfield.getText(),"name");
-        mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
-                ,lastfield.getText(),"lastname");
-        mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
-                ,phonefield.getText(),"phone");
-        mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
-                ,emailfield.getText(),"email");
-        mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
-                ,addressfield.getText(),"address");
-        mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
-                ,orderscount.getText(),"order");
-        AdminOptionWindow.modifyStageC.close();
-        AdminOptionWindow.modifyStageC = null;
+        try {
+            if(firstfield.getText().length() > 3 && lastfield.getText().length() > 3
+                    && phonefield.getText().length() >= 9
+                    && emailfield.getText().length() > 4
+                    && addressfield.getText().length() > 4) {
+                mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
+                        ,firstfield.getText(),"name");
+                mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
+                        ,lastfield.getText(),"lastname");
+                mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
+                        ,phonefield.getText(),"phone");
+                mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
+                        ,emailfield.getText(),"email");
+                mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
+                        ,addressfield.getText(),"address");
+                mainStorage.updateClient(Integer.parseInt(idBox.getValue().toString())
+                        ,orderscount.getText(),"order");
+                AdminOptionWindow.modifyStageC.close();
+                AdminOptionWindow.modifyStageC = null;
+            }
+        } catch (Exception e) {
+            logger.error("No ID selected");
+        }
     }
 
     public void oncancelM(ActionEvent actionEvent) {
@@ -302,6 +319,9 @@ public class ClientOptions implements Initializable {
             removeOption.setDisable(false);
             clientsucce.setVisible(false);
             clienterror.setVisible(true);
+        } catch (Exception e) {
+            removeOption.setDisable(false);
+            logger.error("No ID selected");
         }
     }
 

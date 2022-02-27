@@ -58,7 +58,7 @@
             <Pane prefHeight="308.0" prefWidth="263.0" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#settings" prefHeight="67.0" prefWidth="67.0" textAlignment="CENTER">
+                  <Button fx:id="settingbutton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#settings" prefHeight="67.0" prefWidth="67.0" textAlignment="CENTER">
                      <graphic>
                         <ImageView fitHeight="53.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" styleClass="settings" />
                      </graphic>

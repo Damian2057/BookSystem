@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -39,10 +40,19 @@ public class LoginUser implements Initializable {
     public PasswordField pass = new PasswordField();
     public Button loginbutton;
     public AnchorPane loginpane;
+    public Button goNext;
+    public ComboBox languageBox;
+    public PasswordField oldpass;
+    public PasswordField newPass;
+    public PasswordField newPass2;
     private String password;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    public Text textchoose;
+
     public PasswordField pinpass;
+
+    public static Personnel loggedPersonnel;
 
     public void show() throws IOException {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("loginScene.fxml"),getBundle("bundle", Locale.getDefault()));
@@ -85,7 +95,7 @@ public class LoginUser implements Initializable {
             Stage stage = (Stage) loginbutton.getScene().getWindow();
             stage.close();
             if(personnel.getPermLevel() == 1) {
-                Admin admin = (Admin) personnel;
+                LoginUser.loggedPersonnel = (Admin) personnel;
                 AdminOptionWindow adminOptionWindow = new AdminOptionWindow();
                 adminOptionWindow.show();
 
@@ -107,4 +117,14 @@ public class LoginUser implements Initializable {
     }
 
 
+    public void chooselang(ActionEvent actionEvent) {
+
+    }
+
+    public void GoNext(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage) goNext.getScene().getWindow();
+        stage.close();
+        AdminOptionWindow adminOptionWindow = new AdminOptionWindow();
+        adminOptionWindow.show();
+    }
 }

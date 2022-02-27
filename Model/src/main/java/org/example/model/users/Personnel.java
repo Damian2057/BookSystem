@@ -51,10 +51,6 @@ public abstract class Personnel {
         this.permLevel = permLevel;
     }
 
-    public void initAccess(String URL) throws Exception {
-        this.mainStorage = new MainStorage(URL);
-    }
-
     public MainStorage getMainStorage() {
         return mainStorage;
     }
@@ -62,55 +58,4 @@ public abstract class Personnel {
     public void addClient(String firstName, String lastName, String phoneNumber, String email, String address) throws Exception {
         mainStorage.addClient(firstName,lastName,phoneNumber,email,address);
     }
-
-    public Client getClient(int ID) throws Exception {
-        return mainStorage.getClient(ID);
-    }
-
-    public void addAuthor(String firstName, String lastName, LocalDate  birthdate, LocalDate  deathDate) throws Exception {
-        mainStorage.addAuthor(firstName, lastName, birthdate, deathDate);
-    }
-
-    public Author getAuthor(int ID) throws Exception {
-        return mainStorage.getAuthor(ID);
-    }
-
-    public void addBook(String title, int AuthorID, LocalDate publishDate
-            , int pagecount, double price) throws Exception {
-        mainStorage.addBook(title, AuthorID,publishDate,pagecount,price);
-    }
-
-    public Book getBook(int ID) throws Exception {
-        return mainStorage.getBook(ID);
-    }
-
-    public void removeBook(int ID) throws Exception {
-        mainStorage.removeElementfromAccessible(ID);
-    }
-
-    public void createOrder(int clientID, int bookID, LocalDate SDate, LocalDate EDate) throws Exception {
-        mainStorage.createOrder(clientID,bookID,SDate,EDate);
-    }
-
-    public Order getOrder(int ID) throws Exception {
-        return mainStorage.getOrder(ID);
-    }
-
-    public void addBookToOrder(int orderID, int bookID) throws Exception {
-        mainStorage.addBookToOrder(orderID, bookID);
-    }
-
-    public void removeBookFromOrder(int orderID, int bookID) throws Exception {
-        mainStorage.removeBookFromOrder(orderID, bookID);
-    }
-
-    public ArrayList<Order> getOrdersByClientID(int clientID) {
-        return mainStorage.getOrdersByClientID(clientID);
-    }
-
-    public double endOrderandGetSum(int ID) throws Exception {
-        return mainStorage.endOrderandGetSum(ID);
-    }
-
-
 }

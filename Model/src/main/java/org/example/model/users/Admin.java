@@ -13,19 +13,4 @@ public class Admin extends Personnel {
         super(nickName, password, ID);
         setPermLevel(1);
     }
-
-    public void removeClient(int ID) throws Exception {
-        getMainStorage().getClientStorage().removeElement(ID);
-    }
-
-    public void addWorker(String nickName, String password) throws Exception {
-        ClassFactory.getJDBCLoginSystem(PermUrl,user,password).addPersonel(new Worker(nickName
-                ,password,ClassFactory.getJDBCLoginSystem(PermUrl,user,password).getListofworkers().get(
-                        ClassFactory.getJDBCLoginSystem(PermUrl,user,password).getListofworkers().size()-1).getID()+1));
-
-    }
-
-    public void removeWorker(int ID) throws Exception {
-        ClassFactory.getJDBCLoginSystem(PermUrl,user,password).removePersonel(ID);
-    }
 }

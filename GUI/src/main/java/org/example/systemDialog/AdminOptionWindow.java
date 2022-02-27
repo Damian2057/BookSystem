@@ -3,11 +3,13 @@ package org.example.systemDialog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.example.model.Book;
 
 import java.io.IOException;
@@ -40,6 +42,7 @@ public class AdminOptionWindow {
     public static Book selectedBook;
 
     public static Stage payment;
+    public Button settingbutton;
 
     public void show() throws IOException {
         Stage stage = new Stage();
@@ -74,7 +77,18 @@ public class AdminOptionWindow {
         System.exit(0);
     }
 
-    public void settings(ActionEvent actionEvent) {
+    public void settings(ActionEvent actionEvent) throws IOException {
+        Stage prevstage = (Stage) settingbutton.getScene().getWindow();
+        prevstage.close();
+
+        Stage stage = new Stage();
+       // AdminOptionWindow.addStageC.initStyle(StageStyle.UNDECORATED);
+        stage.setAlwaysOnTop(true);
+        FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("settings.fxml"));
+        fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
+        Scene scene = new Scene(fxmlLoader2.load());
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void authorsget(ActionEvent actionEvent) throws IOException {

@@ -13,8 +13,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.App;
+import org.example.AppConfiguration.Config;
 import org.example.Exceptions.Dao.WrongLoginDataException;
 import org.example.dao.ClassFactory;
+import org.example.dao.usersManager.LoginStorage;
 import org.example.model.users.Admin;
 import org.example.model.users.Personnel;
 import org.example.model.users.Worker;
@@ -41,10 +43,13 @@ public class LoginUser implements Initializable {
     public Button loginbutton;
     public AnchorPane loginpane;
     public Button goNext;
-    public ComboBox languageBox;
+    public ComboBox languageBox = new ComboBox();
     public PasswordField oldpass;
     public PasswordField newPass;
     public PasswordField newPass2;
+    public Text oldfield;
+    public Text newfield;
+    public AnchorPane isok3;
     private String password;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -86,6 +91,35 @@ public class LoginUser implements Initializable {
         } catch (Exception e) {
             logger.error("error occurred");
         }
+
+        try {
+            var system = ClassFactory.getFileSaverSystem("@../../Config/configuration");
+            var config = ClassFactory.getFileSaverSystem("@../../Config/configuration").read();
+            Logger logger = LoggerFactory.getLogger(this.getClass());
+            languageBox.getItems().add("Polish");
+            languageBox.getItems().add("English");
+            languageBox.setOnAction((actionEvent -> {
+                if(Objects.equals(languageBox.getSelectionModel().getSelectedItem().toString(), "Polish")) {
+                    logger.info("Language set to Polish");
+                    config.setBundlePL();
+                    Locale.setDefault(new Locale("pl","PL"));
+                } else /*(Objects.equals(languageBox.getSelectionModel().getSelectedItem().toString(), "English")) */{
+                    logger.info("Language set to English");
+                    config.setBundleENG();
+                    Locale.setDefault(new Locale("eng","ENG"));
+                }
+                try {
+                    system.write(config);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                setnames();
+            }));
+            newPass.setDisable(true);
+            newPass2.setDisable(true);
+        } catch (Exception e) {
+            logger.error("error occurred");
+        }
     }
 
     public void login(ActionEvent actionEvent) {
@@ -100,7 +134,7 @@ public class LoginUser implements Initializable {
                 adminOptionWindow.show();
 
             } else {
-                Worker worker = (Worker) personnel;
+                LoginUser.loggedPersonnel = (Worker) personnel;
                 WorkerOptionWindow workerOptionWindow = new WorkerOptionWindow();
 
             }
@@ -118,13 +152,54 @@ public class LoginUser implements Initializable {
 
 
     public void chooselang(ActionEvent actionEvent) {
-
     }
 
-    public void GoNext(ActionEvent actionEvent) throws IOException {
+    public void GoNext(ActionEvent actionEvent) throws Exception {
+        if(Objects.equals(newPass.getText(), newPass2.getText())) {
+            logger.info("USER: {}, change password",LoginUser.loggedPersonnel.getID());
+            LoginStorage loginStorage = new LoginStorage(App.LoginURL,App.user,App.password);
+            loginStorage.updatePersonnel(LoginUser.loggedPersonnel.getID(),newPass.getText(),"Password");
+        }
         Stage stage = (Stage) goNext.getScene().getWindow();
         stage.close();
         AdminOptionWindow adminOptionWindow = new AdminOptionWindow();
         adminOptionWindow.show();
+    }
+
+
+    private void setnames() {
+        goNext.setText(getBundle("bundle").getString("next"));
+        textchoose.setText(getBundle("bundle").getString("chooseLang"));
+        oldfield.setText(getBundle("bundle").getString("oldPass"));
+        newfield.setText(getBundle("bundle").getString("newPass"));
+    }
+
+    public void oldpassType(KeyEvent keyEvent) {
+        if(Objects.equals(oldpass.getText(), loggedPersonnel.getPassword())) {
+            newPass.setDisable(false);
+        }
+    }
+
+    public void newpassType(KeyEvent keyEvent) {
+        if(!newPass.getText().isEmpty() && newPass.getText().length() > 5) {
+            newPass2.setDisable(false);
+            if(Objects.equals(newPass.getText(), newPass2.getText())) {
+                isok3.getStyleClass().remove("isnotok");
+                isok3.getStyleClass().add("isok");
+            } else {
+                isok3.getStyleClass().remove("isok");
+                isok3.getStyleClass().add("isnotok");
+            }
+        }
+    }
+
+    public void newpassTypee(KeyEvent keyEvent) {
+        if(Objects.equals(newPass.getText(), newPass2.getText())) {
+            isok3.getStyleClass().remove("isnotok");
+            isok3.getStyleClass().add("isok");
+        } else {
+            isok3.getStyleClass().remove("isok");
+            isok3.getStyleClass().add("isnotok");
+        }
     }
 }

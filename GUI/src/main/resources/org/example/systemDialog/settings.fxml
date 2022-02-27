@@ -19,18 +19,19 @@
                 <Font name="System Bold" size="12.0" />
             </font></Button>
         <ComboBox fx:id="languageBox" layoutX="99.0" layoutY="57.0" onAction="#chooselang" prefHeight="26.0" prefWidth="203.0" promptText="%defaultselect" styleClass="choice" stylesheets="@../../../img/style.css" />
-      <PasswordField fx:id="oldpass" layoutX="15.0" layoutY="145.0" styleClass="textfield-background" stylesheets="@../../../img/style.css" />
-      <Text fill="WHITE" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%oldPass" textAlignment="CENTER" wrappingWidth="179.13671875">
+      <PasswordField fx:id="oldpass" layoutX="15.0" layoutY="145.0" onKeyReleased="#oldpassType" styleClass="textfield-background" stylesheets="@../../../img/style.css" />
+      <Text fx:id="oldfield" fill="WHITE" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%oldPass" textAlignment="CENTER" wrappingWidth="179.13671875">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="212.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%newPass" textAlignment="CENTER" wrappingWidth="179.13671875">
+      <Text fx:id="newfield" fill="WHITE" layoutX="212.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%newPass" textAlignment="CENTER" wrappingWidth="179.13671875">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <PasswordField fx:id="newPass" layoutX="227.0" layoutY="145.0" styleClass="textfield-background" stylesheets="@../../../img/style.css" />
-      <PasswordField fx:id="newPass2" layoutX="228.0" layoutY="188.0" styleClass="textfield-background" stylesheets="@../../../img/style.css" />
+      <PasswordField fx:id="newPass" layoutX="227.0" layoutY="145.0" onKeyReleased="#newpassType" styleClass="textfield-background" stylesheets="@../../../img/style.css" />
+      <PasswordField fx:id="newPass2" layoutX="228.0" layoutY="188.0" onKeyReleased="#newpassTypee" styleClass="textfield-background" stylesheets="@../../../img/style.css" />
+        <AnchorPane fx:id="isok3" layoutX="282.0" layoutY="220.0" prefHeight="40.0" prefWidth="39.0" styleClass="isnotok" stylesheets="@../../../img/style.css" />
     </children>
 </AnchorPane>

@@ -9,6 +9,7 @@ import org.example.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class OrderStorage extends Storage<Order>{
@@ -72,7 +73,10 @@ public class OrderStorage extends Storage<Order>{
         for (int i = 0; i < getAllElementsFromStorage().size(); i++) {
             if(OrderID == getAllElementsFromStorage().get(i).getID()){
                 sum = getOrder(OrderID).endOrder();
-                ClassFactory.getJDBCBookSystem(URL).addClientOrderCount(getOrder(OrderID).getClientID());
+                if(LocalDate.now().isAfter(getOrder(OrderID).getStartReservationdate())) {
+                    logger.info("The number of orders to the customer has been added");
+                    ClassFactory.getJDBCBookSystem(URL).addClientOrderCount(getOrder(OrderID).getClientID());
+                }
                 getAllElementsFromStorage().remove(i);
                 ClassFactory.getJDBCBookSystem(URL).removeOrder(OrderID);
                 flag = true;

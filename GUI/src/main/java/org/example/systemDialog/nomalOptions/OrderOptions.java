@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -32,6 +33,7 @@ import org.example.systemDialog.AdminOptionWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -47,8 +49,8 @@ public class OrderOptions implements Initializable {
     public TextField onsearchbook;
     public Text ordererror = new Text();
     public Text info;
-    public Text amount = new Text();
     public Button okbutton;
+    public Button endButton;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
@@ -394,6 +396,8 @@ public class OrderOptions implements Initializable {
         } catch (OrderTimeException e) {
             ordererror.setText(getBundle("ExceptionsMessages").getString("OrderInProgress"));
             cleartext(ordererror);
+        } catch (Exception e) {
+            logger.error("Attempt of saving empty Order");
         }
     }
 
@@ -569,16 +573,27 @@ public class OrderOptions implements Initializable {
     public TextField fullnameR = new TextField();
     public TextField idclientR = new TextField();
 
-    public void onend(ActionEvent actionEvent) throws IOException {
-        if(AdminOptionWindow.removeOrder != null) {
-            Stage stage = new Stage();
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setAlwaysOnTop(true);
-            FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("OrderPayment.fxml"));
-            fxmlLoader2.setResources(getBundle("bundle", Locale.getDefault()));
-            Scene scene = new Scene(fxmlLoader2.load());
-            stage.setScene(scene);
-            stage.show();
+    public void onend(ActionEvent actionEvent) throws Exception {
+        if(AdminOptionWindow.removeOrder != null && AdminOptionWindow.payment == null) {
+            endButton.setDisable(true);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/systemDialog/OrderPayment.fxml"),getBundle("bundle", Locale.getDefault()));
+            Parent root = loader.load();
+            PaymentStage paymentStage = loader.getController();
+
+            paymentStage.setSum(mainStorage.endOrderandGetSum(Integer.parseInt(idBox.getValue().toString())));
+            AdminOptionWindow.payment = new Stage();
+
+            AdminOptionWindow.payment.initStyle(StageStyle.UNDECORATED);
+
+            AdminOptionWindow.payment.setScene(new Scene(root));
+            AdminOptionWindow.payment.setAlwaysOnTop(true);
+            AdminOptionWindow.payment.setResizable(false);
+            AdminOptionWindow.payment.show();
+
+            AdminOptionWindow.payment.setOnHidden(windowEvent -> {
+                AdminOptionWindow.payment = null;
+                endButton.setDisable(false);
+            });
         }
     }
 
@@ -602,15 +617,5 @@ public class OrderOptions implements Initializable {
         dayfield1.setText(String.valueOf(temp.getEndReservationDate().getDayOfMonth()));
         monthfield1.setText(String.valueOf(temp.getEndReservationDate().getMonthValue()));
         yearfield11.setText(String.valueOf(temp.getEndReservationDate().getYear()));
-        //endORDER
-//        amount.setText(String.valueOf(mainStorage
-//                .endOrderandGetSum(Integer.parseInt(idBox.getValue().toString()))));
-    }
-
-    public void finalize(ActionEvent actionEvent) {
-        Stage stage = (Stage) okbutton.getScene().getWindow();
-        stage.close();
-        AdminOptionWindow.removeOrder.close();
-        AdminOptionWindow.removeOrder = null;
     }
 }

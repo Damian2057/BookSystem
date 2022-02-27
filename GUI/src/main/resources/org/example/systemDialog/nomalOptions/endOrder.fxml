@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="bigBackGround" stylesheets="@../../../../img/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.systemDialog.nomalOptions.OrderOptions">
     <children>
-        <Button fx:id="addoption" layoutX="296.0" layoutY="530.0" mnemonicParsing="false" onAction="#onend" prefHeight="65.0" prefWidth="229.0" styleClass="choiceoption" text="%end" textFill="WHITE">
+        <Button fx:id="endButton" layoutX="296.0" layoutY="530.0" mnemonicParsing="false" onAction="#onend" prefHeight="65.0" prefWidth="229.0" styleClass="choiceoption" text="%end" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="28.0" />
             </font></Button>

@@ -255,14 +255,19 @@ public class AuthorOptions implements Initializable {
 
     public void onUpdate(ActionEvent actionEvent) throws Exception {
         try {
-            mainStorage.updateAuthor(Integer.parseInt(idBox.getValue().toString()),
-                    firstfield.getText(),"name");
-            mainStorage.updateAuthor(Integer.parseInt(idBox.getValue().toString()),
-                    lastfield.getText(),"lastname");
-            mainStorage.updateAuthor(Integer.parseInt(idBox.getValue().toString()),
-                    createDate(yearbox1,monthbox1,daybox1).toString(),"deathdate");
-            AdminOptionWindow.modifyStageA.close();
-            AdminOptionWindow.modifyStageA = null;
+            if(mainStorage.getAuthor(Integer.parseInt(idBox.getValue().toString()))
+                    .getBirthDay().isBefore(createDate(yearbox1,monthbox1,daybox1))
+                    && firstfield.getText().length() > 3
+                    && lastfield.getText().length() > 3) {
+                mainStorage.updateAuthor(Integer.parseInt(idBox.getValue().toString()),
+                        firstfield.getText(),"name");
+                mainStorage.updateAuthor(Integer.parseInt(idBox.getValue().toString()),
+                        lastfield.getText(),"lastname");
+                mainStorage.updateAuthor(Integer.parseInt(idBox.getValue().toString()),
+                        createDate(yearbox1,monthbox1,daybox1).toString(),"deathdate");
+                AdminOptionWindow.modifyStageA.close();
+                AdminOptionWindow.modifyStageA = null;
+            }
         } catch (Exception e) {
             logger.error("Any ID selected");
         }

@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -20,6 +21,7 @@ import javafx.stage.StageStyle;
 import org.example.App;
 import org.example.Exceptions.Dao.ObjectsDependentException;
 import org.example.dao.Storage.MainStorage;
+import org.example.loginDialog.LoginUser;
 import org.example.model.Book;
 import org.example.model.Client.Client;
 import org.example.systemDialog.AdminOptionWindow;
@@ -50,6 +52,8 @@ public class ClientOptions implements Initializable {
     public Text clienterror = new Text();
     public Text clientsucce = new Text();
     public Button removeOption;
+    public Pane removepane = new Pane();
+    public Text removeclientfield = new Text();
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private MainStorage mainStorage = new MainStorage(App.BookURL);
 
@@ -200,6 +204,10 @@ public class ClientOptions implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(LoginUser.loggedPersonnel.getPermLevel() == 0) {
+            removepane.setDisable(true);
+            removeclientfield.setText(getBundle("bundle").getString("disabled"));
+        }
         ObservableList<Client> listOfClients
                 = FXCollections.observableArrayList(mainStorage.getAllClients());
         updateTable(listOfClients);

@@ -132,11 +132,10 @@ public class LoginUser implements Initializable {
                 LoginUser.loggedPersonnel = (Admin) personnel;
                 AdminOptionWindow adminOptionWindow = new AdminOptionWindow();
                 adminOptionWindow.show();
-
             } else {
                 LoginUser.loggedPersonnel = (Worker) personnel;
                 WorkerOptionWindow workerOptionWindow = new WorkerOptionWindow();
-
+                workerOptionWindow.show();
             }
         } catch (WrongLoginDataException e) {
             logger.info("failed attempt to log into the system");
@@ -155,15 +154,14 @@ public class LoginUser implements Initializable {
     }
 
     public void GoNext(ActionEvent actionEvent) throws Exception {
-        if(Objects.equals(newPass.getText(), newPass2.getText())) {
+        if(Objects.equals(newPass.getText(), newPass2.getText())
+                && Objects.equals(oldpass.getText(), LoginUser.loggedPersonnel.getPassword())) {
             logger.info("USER: {}, change password",LoginUser.loggedPersonnel.getID());
             LoginStorage loginStorage = new LoginStorage(App.LoginURL,App.user,App.password);
             loginStorage.updatePersonnel(LoginUser.loggedPersonnel.getID(),newPass.getText(),"Password");
         }
         Stage stage = (Stage) goNext.getScene().getWindow();
         stage.close();
-        AdminOptionWindow adminOptionWindow = new AdminOptionWindow();
-        adminOptionWindow.show();
     }
 
 

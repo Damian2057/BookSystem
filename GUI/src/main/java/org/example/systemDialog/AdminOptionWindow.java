@@ -89,6 +89,12 @@ public class AdminOptionWindow {
         Scene scene = new Scene(fxmlLoader2.load());
         stage.setScene(scene);
         stage.show();
+        stage.setOnHidden(windowEvent -> {
+            try {
+                show();
+            } catch (IOException ignored) {
+            }
+        });
     }
 
     public void authorsget(ActionEvent actionEvent) throws IOException {

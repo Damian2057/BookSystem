@@ -38,12 +38,12 @@
                   <String fx:value="onExit" />
                </styleClass>
             </Rectangle>
-            <Text fill="WHITE" layoutX="41.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%removeClient" textAlignment="CENTER" wrappingWidth="153.13671875">
+            <Text fx:id="removeclientfield" fill="WHITE" layoutX="41.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%removeClient" textAlignment="CENTER" wrappingWidth="153.13671875">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Pane layoutX="55.0" layoutY="32.0" onMouseClicked="#removeClient" onMouseEntered="#hoverinn" onMouseExited="#hoveroutt" prefHeight="127.0" prefWidth="127.0" styleClass="removeclient" stylesheets="@../../../img/style.css" />
+            <Pane fx:id="removepane" layoutX="55.0" layoutY="32.0" onMouseClicked="#removeClient" onMouseEntered="#hoverinn" onMouseExited="#hoveroutt" prefHeight="127.0" prefWidth="127.0" styleClass="removeclient" stylesheets="@../../../img/style.css" />
          </children>
       </Group>
       <TextField fx:id="searchfield" layoutX="348.0" layoutY="57.0" prefHeight="44.0" prefWidth="554.0" />
